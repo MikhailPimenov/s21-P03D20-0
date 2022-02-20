@@ -28,9 +28,11 @@ void print_lexeme(const Lexeme *lexeme) {
     char action = '\0';
     get_lexeme(lexeme, &operand, &action);
     if (lexeme->actual_type == LT_OPERAND) {
-        printf("operand = %d\n", operand);
+        // printf("operand = %d\n", operand);
+        printf("%d ", operand);
     } else {
-        printf("action  = %c\n", action);
+        // printf("action  = %c\n", action);
+        printf("%c ", action);
     }
 }
 
@@ -97,13 +99,14 @@ void destroy(Stack_node** stack) {
 }
 
 void print_stack(Stack_node* stack) {
-    printf("Stack:\n");
+    printf("---Stack:---\n");
     while(stack) {
         // printf("%d\n", stack->this);
         print_lexeme(&(stack->this));
         stack = stack->previous;
+        printf("\n");
     }
-    printf("\n\n");
+    printf("---bottom of the stack----\n");
 }
 
 
@@ -187,16 +190,17 @@ void visual_test_get_lexeme(void get_lexeme(const Lexeme*, int *, char *)){
     const int length = 33;
     
     for (int index = 0; index < length; ++index) {
-        int operand = -1;
-        char action = '\0';
-        get_lexeme(lexemes + index, &operand, &action);
-        if (lexemes[index].actual_type == LT_OPERAND) {
-            printf("operand = %d\n", operand);
-        }
-        if (lexemes[index].actual_type == LT_ACTION) {
-            printf("action  = %c\n", action);
-        }
-        // print_lexeme(lexemes + index);
+        // int actual_type = -1;
+        // int operand = -1;
+        // char action = '\0';
+        // get_lexeme(lexemes + index, &operand, &action);
+        // if (lexemes[index].actual_type == LT_OPERAND) {
+        //     printf("operand = %d\n", operand);
+        // }
+        // if (lexemes[index].actual_type == LT_ACTION) {
+        //     printf("action  = %c\n", action);
+        // }
+        print_lexeme(lexemes + index);
             
     }
 }
@@ -237,10 +241,16 @@ void test_shunting_yard(void (*shunting_yard_function)(const Lexeme *, int, Lexe
     int actual_length1 = -1;
     shunting_yard_function(case1, length1, actual1, &actual_length1);
     printf("test # 1: ");
-    if (expected_length1 == actual_length1 && are_equal(expected1, actual1, length1)) {
+    if (expected_length1 == actual_length1 && are_equal(expected1, actual1, expected_length1)) {
         printf("ok\n");
     } else {
         printf("FAILED\n");
+        printf("input:\n");
+        print_lexeme_array(case1, length1);
+        printf("output expected:\n");
+        print_lexeme_array(expected1, expected_length1);
+        printf("output   actual:\n");
+        print_lexeme_array(actual1, actual_length1);
     }
     
     // const char *case2 = "59 + 7 / 2";
@@ -267,10 +277,16 @@ void test_shunting_yard(void (*shunting_yard_function)(const Lexeme *, int, Lexe
     int actual_length2 = -1;
     shunting_yard_function(case2, length2, actual2, &actual_length2);
     printf("test # 2: ");
-    if (expected_length2 == actual_length2 && are_equal(expected2, actual2, length2)) {
+    if (expected_length2 == actual_length2 && are_equal(expected2, actual2, expected_length2)) {
         printf("ok\n");
     } else {
         printf("FAILED\n");
+        printf("input:\n");
+        print_lexeme_array(case2, length2);
+        printf("output expected:\n");
+        print_lexeme_array(expected2, expected_length2);
+        printf("output   actual:\n");
+        print_lexeme_array(actual2, actual_length2);
     }
     
     
@@ -301,10 +317,16 @@ void test_shunting_yard(void (*shunting_yard_function)(const Lexeme *, int, Lexe
     int actual_length3 = -1;
     shunting_yard_function(case3, length3, actual3, &actual_length3);
     printf("test # 3: ");
-    if (expected_length3 == actual_length3 && are_equal(expected3, actual3, length3)) {
+    if (expected_length3 == actual_length3 && are_equal(expected3, actual3, expected_length3)) {
         printf("ok\n");
     } else {
         printf("FAILED\n");
+        printf("input:\n");
+        print_lexeme_array(case3, length3);
+        printf("output expected:\n");
+        print_lexeme_array(expected3, expected_length3);
+        printf("output   actual:\n");
+        print_lexeme_array(actual3, actual_length3);
     }
     }
     
@@ -331,10 +353,16 @@ void test_shunting_yard(void (*shunting_yard_function)(const Lexeme *, int, Lexe
     int actual_length4 = -1;
     shunting_yard_function(case4, length4, actual4, &actual_length4);
     printf("test # 4: ");
-    if (expected_length4 == actual_length4 && are_equal(expected4, actual4, length4)) {
+    if (expected_length4 == actual_length4 && are_equal(expected4, actual4, expected_length4)) {
         printf("ok\n");
     } else {
         printf("FAILED\n");
+        printf("input:\n");
+        print_lexeme_array(case4, length4);
+        printf("output expected:\n");
+        print_lexeme_array(expected4, expected_length4);
+        printf("output   actual:\n");
+        print_lexeme_array(actual4, actual_length4);
     }
     
     
@@ -366,10 +394,16 @@ void test_shunting_yard(void (*shunting_yard_function)(const Lexeme *, int, Lexe
     int actual_length5 = -1;
     shunting_yard_function(case5, length5, actual5, &actual_length5);
     printf("test # 5: ");
-    if (expected_length5 == actual_length5 && are_equal(expected5, actual5, length5)) {
+    if (expected_length5 == actual_length5 && are_equal(expected5, actual5, expected_length5)) {
         printf("ok\n");
     } else {
         printf("FAILED\n");
+        printf("input:\n");
+        print_lexeme_array(case5, length5);
+        printf("output expected:\n");
+        print_lexeme_array(expected5, expected_length5);
+        printf("output   actual:\n");
+        print_lexeme_array(actual5, actual_length5);
     }
     
     
@@ -381,14 +415,37 @@ void test_shunting_yard(void (*shunting_yard_function)(const Lexeme *, int, Lexe
 }
 
 int is_operand(const Lexeme* lexeme) {
+    // if (!(lexeme->actual_type == LT_OPERAND)) {
+    //     printf("is_operand(): not operand: ");
+    //     print_lexeme(lexeme);
+    //     printf("\n");
+    // } else {
+    //     printf("is_operand(): operand: ");
+    //     print_lexeme(lexeme);
+    //     printf("\n");
+    // }
+    
     return lexeme->actual_type == LT_OPERAND;
 }
 int is_action(const Lexeme* lexeme) {
+    // if (lexeme->actual_type == LT_ACTION) {
+    //     printf("not operand: ");
+    //     print_lexeme(lexeme);
+    //     printf("\n");
+    // }
     return lexeme->actual_type == LT_ACTION;
 }
 
 int is_brace(const Lexeme* lexeme) {
-    return lexeme->data == ')' && lexeme->data == '('; // may not work, check it
+    
+    // if (lexeme->data == ')' || lexeme->data == '(') {
+    //     print_lexeme(lexeme);
+    //     printf(" is a brace\n");
+    // } else {
+    //     print_lexeme(lexeme);
+    //     printf(" is not a brace\n");
+    // }
+    return lexeme->data == ')' || lexeme->data == '(';
 }
 
 enum operator_precedence {
@@ -404,7 +461,7 @@ int get_precenence(const Lexeme *lexeme) {
     get_lexeme(lexeme, &operand, &action);
     
     switch(action){
-        case '(': return OP_LOWEST;
+        // case '(': return OP_LOWEST;
         case '+': return OP_LOW;
         case '-': return OP_LOW;
         case '*': return OP_MEDIUM;
@@ -415,71 +472,138 @@ int get_precenence(const Lexeme *lexeme) {
         case 'g': return OP_HIGH;
         case 'r': return OP_HIGH;
         case 'l': return OP_HIGH;
-        default: return OP_LOWEST;
     };
+    return OP_LOWEST;
 }
 
 int has_lower_precedence(const Lexeme *left, const Lexeme *right) {
     const int left_precedence = get_precenence(left);
     const int right_precedence = get_precenence(right);
+    
+    
     return left_precedence < right_precedence;
+    /// TODO: YOU ENDED HERE!!!!!!
+    /*
+    "+" 
+    "-" (unary and binary) 
+    "*" 
+    "/" 
+    "()" 
+    sin(x) 
+    cos(x) 
+    tan(x) 
+    ctg(x) 
+    sqrt(x) 
+    ln(x)
+    */
 }
 
-int has_top_higher_precedence(const Lexeme *top, const Lexeme *current_lexeme) {
-    return has_lower_precedence(current_lexeme, top);
+int has_top_higher_precedence(Lexeme top, Lexeme current_lexeme) {
+    // if (has_lower_precedence(top, current_lexeme)) {
+    //     print_lexeme(top);
+    //     printf(" has lower precedence than ");
+    //     print_lexeme(current_lexeme);
+    //     printf("\n");
+    // }
+    return has_lower_precedence(&current_lexeme, &top);
 }
-int is_opening_brace(const Lexeme *lexeme) {
-    return lexeme->data == '(';   // may not work, check it
+int is_opening_brace(Lexeme lexeme) {
+    // if (lexeme.data == '(') {
+    //     printf("opening brace: ");
+    //     print_lexeme(&lexeme);
+    //     printf("\n");
+        
+    // }
+    return lexeme.data == '(';   // may not work, check it
 }
+int is_closing_brace(Lexeme lexeme) {
+    // if (lexeme.data == ')') {
+    //     printf("closing brace: ");
+    //     print_lexeme(&lexeme);
+    //     printf("\n");
+        
+    // }
+    return lexeme.data == ')';
+}
+
+void flush_everything_until_opening_brace_or_empty(Stack_node **stack_for_actions, Lexeme *postfix_notation, int *last_index_postfix_notation) {
+    while(!is_empty(*stack_for_actions) && !is_closing_brace(top(*stack_for_actions))) {
+        const Lexeme action = pop(stack_for_actions);
+        postfix_notation[*last_index_postfix_notation] = action;
+        ++(*last_index_postfix_notation);
+    }
+    if (!is_empty(*stack_for_actions)) {
+        pop(stack_for_actions);
+    }
+}
+
+int get_length_of_postfix_notation(const Lexeme *infix_notation, int length) {
+    int new_length = 0;
+    for (int index = 0; index < length; ++index) {
+        if (is_operand(infix_notation + index) || (is_action(infix_notation + index) && !is_brace(infix_notation + index)))
+            ++new_length;
+    }
+    return new_length;
+}
+
+void push_to_postfix_notation(const Lexeme *lexeme_to_push, Lexeme *postfix_notation, int *last_index_postfix_notation) {
+    postfix_notation[*last_index_postfix_notation] = *lexeme_to_push;
+    ++(*last_index_postfix_notation);
+}
+
+
+void process_lexeme(const Lexeme *lexeme, Lexeme *postfix_notation, int *last_index_postfix_notation, Stack_node **stack_for_actions) {
+    if (is_operand(lexeme)) {
+        push_to_postfix_notation(lexeme, postfix_notation, last_index_postfix_notation); 
+        return;
+    }
+    
+    if (is_opening_brace(*lexeme)) {
+        push(stack_for_actions, *lexeme); 
+        return;
+    }
+    
+    if (is_closing_brace(*lexeme)) {
+        while(!is_opening_brace(top(*stack_for_actions))) {
+            const Lexeme action_from_stack = pop(stack_for_actions);
+            push_to_postfix_notation(&action_from_stack, postfix_notation, last_index_postfix_notation);
+        }
+        pop(stack_for_actions);
+        return;
+    }
+    
+    //  is action:
+    while (!is_empty(*stack_for_actions) && has_top_higher_precedence(top(*stack_for_actions), *lexeme)) {
+        const Lexeme action_from_stack = pop(stack_for_actions);
+        push_to_postfix_notation(&action_from_stack, postfix_notation, last_index_postfix_notation);
+    }
+    push(stack_for_actions, *lexeme);
+}
+
 void shunting_yard(const Lexeme *infix_notation, int length, Lexeme *postfix_notation, int *length_out) {
-    // print_lexeme_array(infix_notation, length);
-    *length_out = length;
+    *length_out = get_length_of_postfix_notation(infix_notation, length);
     int last_index_postfix_notation = 0;
     Stack_node *stack_for_actions = NULL;
     for (int index = 0; index < length; ++index) {
         const Lexeme current_lexeme = infix_notation[index];
-        if (is_operand(&current_lexeme)) {
-            postfix_notation[last_index_postfix_notation] = current_lexeme;
-            ++last_index_postfix_notation;
-            continue;
-        }
         
-        if (is_brace(&current_lexeme))
-            --(*length_out);
-    
+        process_lexeme(&current_lexeme, postfix_notation, &last_index_postfix_notation, &stack_for_actions);
         
-        // if (!is_empty(stack_for_actions))
-        
-        if (!is_empty(stack_for_actions)) {
-            const Lexeme action_on_the_top_of_the_stack = top(stack_for_actions);
-            if (has_top_higher_precedence(&action_on_the_top_of_the_stack, &current_lexeme)) {
-                postfix_notation[last_index_postfix_notation] = current_lexeme;
-                ++last_index_postfix_notation;
-                continue;
-            }
-        }
-        push(&stack_for_actions, current_lexeme);
-                
     }
     
     
     //  flushing what's left in stack into postfix_notation:
-    while(!is_empty(stack_for_actions)) {
-        const Lexeme lexeme_action = pop(&stack_for_actions);
-        postfix_notation[last_index_postfix_notation] = lexeme_action;
-        ++last_index_postfix_notation;
+    while (!is_empty(stack_for_actions)) {
+        const Lexeme action_from_stack = pop(&stack_for_actions);
+        push_to_postfix_notation(&action_from_stack, postfix_notation, &last_index_postfix_notation);
     }
     
-    printf("input:\n");
-    print_lexeme_array(infix_notation, length);
-    printf("output:\n");
-    print_lexeme_array(postfix_notation, *length_out);
-}
+ }
 
 int main() {
     // visual_test_get_lexeme(get_lexeme);
     printf("before test:\n");
-    test_shunting_yard(shunting_yard);
+    test_shunting_yard(shunting_yard2);
     printf("after  test:\n");
 /*
     Stack_node *stack = NULL;
