@@ -7,16 +7,14 @@
 #include "work_with_input.c"
 #include "stack_process.c"
 #include "work_with_massiv.c"
-
 #define width 80
 #define height 25
-
-int main (void) {
+int main(void) {
     char **matrix = (char**) malloc(height * sizeof(char*));
     for (int i = 0; i < height; i++)
         matrix[i] = (char*) malloc(width * sizeof(char));
     init_mas(matrix);
-    //consol_show(matrix);
+    // consol_show(matrix);
     char* mas = (char*) malloc(1 * sizeof(char));
     char* out_mas = (char*) malloc(1 * sizeof(char));
     char* input_str = "x + 1";
@@ -42,9 +40,10 @@ int main (void) {
         } else {
             continue;
         }
-        }
-    
+    }
     consol_show(matrix);
+    free(matrix);
+    free(mas);
+    free(out_mas);
     return 0;
 }
-
