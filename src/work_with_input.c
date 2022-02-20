@@ -35,8 +35,8 @@ int reverse(char* out_mas, char* input_str) {
                 out_mas[from_begin] = 'c';
                 from_end = from_end - 3;
                 from_begin = from_begin + 1;
-            } else if (input_str[from_end] == 'g' && input_str[(from_end-1)] == 't' +
-            && input_str[(from_end-2)] == 'c') {
+            } else if (input_str[from_end] == 'g' && input_str[(from_end-1)] == 't' && +
+            input_str[(from_end-2)] == 'c') {
                 out_mas[from_begin] = 'g';
                 from_end = from_end - 3;
                 from_begin = from_begin + 1;
