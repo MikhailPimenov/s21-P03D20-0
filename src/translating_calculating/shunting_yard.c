@@ -1,6 +1,5 @@
-// #include "shunting_yard.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 enum Lexeme_types {
     LT_OPERAND = 0,
@@ -149,7 +148,7 @@ void print_lexeme_array(const Lexeme *array, int length) {
     printf("\n");
 }
 
-void visual_test_get_lexeme(void (*get_lexeme_function)(const Lexeme*, int *, char *)){
+void visual_test_get_lexeme(void get_lexeme(const Lexeme*, int *, char *)){
     Lexeme lexemes[33];
     lexemes[0] = (Lexeme){.data = 56, .actual_type = LT_OPERAND};
     lexemes[1] = (Lexeme){.data = '-', .actual_type = LT_ACTION};
@@ -190,7 +189,7 @@ void visual_test_get_lexeme(void (*get_lexeme_function)(const Lexeme*, int *, ch
     for (int index = 0; index < length; ++index) {
         int operand = -1;
         char action = '\0';
-        get_lexeme_function(lexemes + index, &operand, &action);
+        get_lexeme(lexemes + index, &operand, &action);
         if (lexemes[index].actual_type == LT_OPERAND) {
             printf("operand = %d\n", operand);
         }
@@ -389,24 +388,78 @@ int is_action(const Lexeme* lexeme) {
 }
 
 int is_brace(const Lexeme* lexeme) {
-    return lexeme->data == ')' && lexeme->data == '(';
+    return lexeme->data == ')' && lexeme->data == '('; // may not work, check it
 }
 
+enum operator_precedence {
+    OP_LOWEST = -1,
+    OP_LOW = 0,
+    OP_MEDIUM = 1,
+    OP_HIGH = 2
+};
+
+int get_precenence(const Lexeme *lexeme) {
+    int operand = -1;
+    char action = '\0';
+    get_lexeme(lexeme, &operand, &action);
+    
+    switch(action){
+        case '(': return OP_LOWEST;
+        case '+': return OP_LOW;
+        case '-': return OP_LOW;
+        case '*': return OP_MEDIUM;
+        case '/': return OP_MEDIUM;
+        case 's': return OP_HIGH;
+        case 'c': return OP_HIGH;
+        case 't': return OP_HIGH;
+        case 'g': return OP_HIGH;
+        case 'r': return OP_HIGH;
+        case 'l': return OP_HIGH;
+        default: return OP_LOWEST;
+    };
+}
+
+int has_lower_precedence(const Lexeme *left, const Lexeme *right) {
+    const int left_precedence = get_precenence(left);
+    const int right_precedence = get_precenence(right);
+    return left_precedence < right_precedence;
+}
+
+int has_top_higher_precedence(const Lexeme *top, const Lexeme *current_lexeme) {
+    return has_lower_precedence(current_lexeme, top);
+}
+int is_opening_brace(const Lexeme *lexeme) {
+    return lexeme->data == '(';   // may not work, check it
+}
 void shunting_yard(const Lexeme *infix_notation, int length, Lexeme *postfix_notation, int *length_out) {
     // print_lexeme_array(infix_notation, length);
     *length_out = length;
     int last_index_postfix_notation = 0;
     Stack_node *stack_for_actions = NULL;
     for (int index = 0; index < length; ++index) {
-        if (is_operand(infix_notation + index)) {
-            postfix_notation[last_index_postfix_notation] = infix_notation[index];
+        const Lexeme current_lexeme = infix_notation[index];
+        if (is_operand(&current_lexeme)) {
+            postfix_notation[last_index_postfix_notation] = current_lexeme;
             ++last_index_postfix_notation;
             continue;
         }
         
-        if (is_brace(infix_notation + index))
+        if (is_brace(&current_lexeme))
             --(*length_out);
-        push(&stack_for_actions, infix_notation[index]);
+    
+        
+        // if (!is_empty(stack_for_actions))
+        
+        if (!is_empty(stack_for_actions)) {
+            const Lexeme action_on_the_top_of_the_stack = top(stack_for_actions);
+            if (has_top_higher_precedence(&action_on_the_top_of_the_stack, &current_lexeme)) {
+                postfix_notation[last_index_postfix_notation] = current_lexeme;
+                ++last_index_postfix_notation;
+                continue;
+            }
+        }
+        push(&stack_for_actions, current_lexeme);
+                
     }
     
     
@@ -421,4 +474,114 @@ void shunting_yard(const Lexeme *infix_notation, int length, Lexeme *postfix_not
     print_lexeme_array(infix_notation, length);
     printf("output:\n");
     print_lexeme_array(postfix_notation, *length_out);
+}
+
+int main() {
+    // visual_test_get_lexeme(get_lexeme);
+    printf("before test:\n");
+    test_shunting_yard(shunting_yard);
+    printf("after  test:\n");
+/*
+    Stack_node *stack = NULL;
+    
+    push(&stack, 1488);
+    print_stack(stack);
+    
+    
+    push(&stack, 228);
+    print_stack(stack);
+    
+
+    push(&stack, 14);
+    print_stack(stack);
+    
+
+    push(&stack, 88);
+    print_stack(stack);
+    
+    
+    
+    int element = -1;
+    if (!is_empty(stack)) {
+        element = pop(&stack);
+        printf("from stack: %d\n", element);
+        print_stack(stack);
+    } else {
+        printf("stack is empty, bitch!!!\n");
+    }
+    element = -1;
+    if (!is_empty(stack)) {
+        element = pop(&stack);
+        printf("from stack: %d\n", element);
+        print_stack(stack);
+    } else {
+        printf("stack is empty, bitch!!!\n");
+    }
+    element = -1;
+    if (!is_empty(stack)) {
+        element = pop(&stack);
+        printf("from stack: %d\n", element);
+        print_stack(stack);
+    } else {
+        printf("stack is empty, bitch!!!\n");
+    }
+    element = -1;
+    if (!is_empty(stack)) {
+        element = pop(&stack);
+        printf("from stack: %d\n", element);
+        print_stack(stack);
+    } else {
+        printf("stack is empty, bitch!!!\n");
+    }
+    element = -1;
+    if (!is_empty(stack)) {
+        element = pop(&stack);
+        printf("from stack: %d\n", element);
+        print_stack(stack);
+    } else {
+        printf("stack is empty, bitch!!!\n");
+    }
+    element = -1;
+    if (!is_empty(stack)) {
+        element = pop(&stack);
+        printf("from stack: %d\n", element);
+        print_stack(stack);
+    } else {
+        printf("stack is empty, bitch!!!\n");
+    }
+    element = -1;
+    if (!is_empty(stack)) {
+        element = pop(&stack);
+        printf("from stack: %d\n", element);
+        print_stack(stack);
+    } else {
+        printf("stack is empty, bitch!!!\n");
+    }
+    element = -1;
+    if (!is_empty(stack)) {
+        element = pop(&stack);
+        printf("from stack: %d\n", element);
+        print_stack(stack);
+    } else {
+        printf("stack is empty, bitch!!!\n");
+    }
+    element = -1;
+    if (!is_empty(stack)) {
+        element = pop(&stack);
+        printf("from stack: %d\n", element);
+        print_stack(stack);
+    } else {
+        printf("stack is empty, bitch!!!\n");
+    }
+    element = -1;
+    if (!is_empty(stack)) {
+        element = pop(&stack);
+        printf("from stack: %d\n", element);
+        print_stack(stack);
+    } else {
+        printf("stack is empty, bitch!!!\n");
+    }
+  
+*/
+    return 0;
 }
