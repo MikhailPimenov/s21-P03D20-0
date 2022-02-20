@@ -3,8 +3,8 @@
 
 #include <stdlib.h>
 
-#include "../data_structures/stack.h"
+// #include "../data_structures/stack.h"
 
-const char* shunting_yard(const char *infix_notation);
+void shunting_yard(const Lexeme *infix_notation, int length, Lexeme *postfix_notation, int *length_out);
 
 #endif //  SRC_TRANSLATING_CALCULATING_SHUNTING_YARD_H_
