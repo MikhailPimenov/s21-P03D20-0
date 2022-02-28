@@ -6,32 +6,26 @@
 
 #include "lexeme.h"
 
-// typedef struct Stack_node {
-//     struct Stack_node* previous;
-//     int this;
-// } Stack_node;
-
-// Stack_node* init(int element);
-// void push(Stack_node** stack, int element);
-// // int pop(Stack_node** stack, int *is_pop_failed);
-// int pop(Stack_node** stack);
-// int is_empty(Stack_node *stack);
-// void destroy(Stack_node** stack);
-// void print_stack(Stack_node* stack);
-
+#if defined(LEXEME_T_)
 typedef Lexeme Type_t;
+#elif defined(OPERAND_T_)
+typedef double Type_t;
+#else
+typedef char Type_t;  //  default type
+#endif //  LEXEME_T
+
 
 typedef struct Stack_node {
-    struct Stack_node* previous;
+    struct Stack_node *previous;
     Type_t this;
 } Stack_node;
 
-Stack_node* init(Type_t element);
-void push(Stack_node** stack, Type_t element);
-// int pop(Stack_node** stack, int *is_pop_failed);
-int pop(Stack_node** stack);
+Stack_node *init(Type_t element);
+void push(Stack_node **stack, Type_t element);
+Type_t pop(Stack_node **stack);
+Type_t top(Stack_node *stack);
 int is_empty(Stack_node *stack);
-void destroy(Stack_node** stack);
-void print_stack(Stack_node* stack);
+void destroy(Stack_node **stack);
+void print_stack(Stack_node *stack);
 
 #endif //  SRC_STACK_H_

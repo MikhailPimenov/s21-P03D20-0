@@ -2,35 +2,33 @@
 #include "drawing/drawing.h"
 #include "translating_calculating/calculating.h"
 #include "translating_calculating/translating.h"
-#include "translating_calculating/shunting_yard_test.h"
 #include "translating_calculating/shunting_yard.h"
 
-const char* shunting_yard_first_test_success(const char *infix_notation) {
-    infix_notation = NULL;
-    return "2 1 +";
-}
+#include "data_structures/lexeme.h"
+#include "data_structures/stack.h"
+
+#ifdef TEST_GRAPH_
+#include "data_structures/lexeme_test.h"
+#include "data_structures/stack_test.h"
+#include "translating_calculating/shunting_yard_test.h"
+#endif //  TEST_GRAPH_
+
+
 
 int main() {
-    // printf("Hello from main()\n");
-    // print_from_translating();
+    #ifdef TEST_GRAPH_
+    printf("Test in main():\n");
+    // stack_test_visual();
+    // get_lexeme_test_visual(get_lexeme);  
+    shunting_yard_test(shunting_yard);
+    #endif //  TEST_GRAPH_
 
 
-
-    // const int rows = 25;
-    // const int columns = 80;
- 
-    // char **example_field = NULL;
-    // *example_field = NULL;
-    // example_field = NULL;
-    // printf("Before draw_print():\n");
-
-    shunting_yard_test(shunting_yard, "Testing shunting_yard:");
+    // shunting_yard_test(shunting_yard, "Testing shunting_yard:");
 
     // draw_field(example_field, rows, columns);
 
     // printf("After draw_print():\n");
-    
-    
 
     return 0;
 }
