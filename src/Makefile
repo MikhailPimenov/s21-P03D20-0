@@ -19,8 +19,8 @@ test: $(BUILD)/graph_test.exe
 		# $(CC) $(BUILD)/graph.o $(BUILD)/translating.o  $(BUILD)/shunting_yard.o $(BUILD)/stack.o $(BUILD)/lexeme.o -o $(BUILD)/graph.exe
 
 
-$(BUILD)/graph_test.exe: $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o
-		$(CC) $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o -o $(BUILD)/graph_test.exe
+$(BUILD)/graph_test.exe: $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o
+		$(CC) $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o -o $(BUILD)/graph_test.exe
 
 
 $(BUILD)/graph_test.o: graph.c
@@ -61,6 +61,20 @@ $(BUILD)/lexeme.o: data_structures/lexeme.c data_structures/lexeme.h
 
 $(BUILD)/lexeme_test.o: data_structures/lexeme_test.c data_structures/lexeme_test.h
 		$(CC) $(CFLAGS) data_structures/lexeme_test.c -o $(BUILD)/lexeme_test.o
+
+
+$(BUILD)/common.o: translating_calculating/common.c translating_calculating/common.h
+		$(CC) $(CFLAGS) translating_calculating/common.c -o $(BUILD)/common.o
+
+
+$(BUILD)/calculate_reverse_polish_notation_test.o: translating_calculating/calculate_reverse_polish_notation_test.c translating_calculating/calculate_reverse_polish_notation_test.h
+		$(CC) $(CFLAGS) translating_calculating/calculate_reverse_polish_notation_test.c -o $(BUILD)/calculate_reverse_polish_notation_test.o 
+
+
+$(BUILD)/calculate_reverse_polish_notation.o: translating_calculating/calculate_reverse_polish_notation.c translating_calculating/calculate_reverse_polish_notation.h
+		$(CC) $(CFLAGS) translating_calculating/calculate_reverse_polish_notation.c -o $(BUILD)/calculate_reverse_polish_notation.o
+
+
 
 
 clean:

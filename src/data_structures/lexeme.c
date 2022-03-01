@@ -45,9 +45,13 @@ void print_lexeme(const Lexeme *const lexeme) {
     printf("operand: %lf\n", *(double *)(lexeme->data));
 }
 
-static int are_double_equal(double left, double right, double epsilon) {
-    return ((left > right) ? ((left - right) < epsilon) : ((right - left) < epsilon));  //  fabs(left - right) < epsilon
+void print_lexeme_array(const Lexeme *const array, int length) {
+    for (int index = 0; index < length; ++index) {
+        print_lexeme(array + index);
+    }
+    printf("\n");
 }
+
 
 int are_lexemes_equal(const Lexeme *const left, const Lexeme *const right) {
     if (left->actual_type != right->actual_type)

@@ -1,7 +1,6 @@
 #include "lexeme_test.h"
 
-void get_lexeme_test_visual(void get_lexeme(const Lexeme *const, double *const, char *const))
-{
+void get_lexeme_test_visual(void get_lexeme(const Lexeme *const, double *const, char *const)) {
     Lexeme lexemes[33];
 
     set_lexeme(lexemes + 0, LT_OPERAND,  56.0, '\0');

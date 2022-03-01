@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "drawing/drawing.h"
-#include "translating_calculating/calculating.h"
+#include "translating_calculating/calculate_reverse_polish_notation.h"
 #include "translating_calculating/translating.h"
 #include "translating_calculating/shunting_yard.h"
 
@@ -11,6 +11,7 @@
 #include "data_structures/lexeme_test.h"
 #include "data_structures/stack_test.h"
 #include "translating_calculating/shunting_yard_test.h"
+#include "translating_calculating/calculate_reverse_polish_notation_test.h"
 #endif //  TEST_GRAPH_
 
 
@@ -20,7 +21,8 @@ int main() {
     printf("Test in main():\n");
     // stack_test_visual();
     // get_lexeme_test_visual(get_lexeme);  
-    shunting_yard_test(shunting_yard);
+    // shunting_yard_test(shunting_yard);
+    calculate_reverse_polish_notation_test(calculate_reversed_polish_notation);
     #endif //  TEST_GRAPH_
 
 

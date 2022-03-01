@@ -2,6 +2,7 @@
 #define SRC_DATA_STRUCTURES_LEXEME_H_
 
 #include <stdio.h>
+#include "../translating_calculating/common.h"
 
 enum Lexeme_types {
     LT_OPERAND = 0,
@@ -21,6 +22,8 @@ enum operator_precedence {
 };
 
 void print_lexeme(const Lexeme* lexeme);
+
+void print_lexeme_array(const Lexeme *const array, int length);
 
 void get_lexeme(const Lexeme *const lexeme, double *const operand_out, char *const action_out);
 

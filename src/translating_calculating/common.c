@@ -30,3 +30,8 @@ int get_test_resolution_and_print_output(const char *expected, const char *actua
 
     return 0;
 }
+
+
+int are_double_equal(double left, double right, double epsilon) {
+    return ((left > right) ? ((left - right) < epsilon) : ((right - left) < epsilon));  //  fabs(left - right) < epsilon
+}

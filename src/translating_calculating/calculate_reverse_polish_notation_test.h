@@ -3,8 +3,12 @@
 
 #define LEXEME_T_
 
-#include "../data_structures/lexeme.h"
+#include <stdio.h>
+#include <math.h>
 
-void calculate_reversed_polish_notation_test(double (*calculate_reversed_polish_notation_function)(const Lexeme *const postfix_notation))
+#include "../data_structures/lexeme.h"
+#include "../translating_calculating/common.h"
+
+void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_notation_function)(const Lexeme *const, int, double*));
 
 #endif  //  SRC_TRANSLATING_CALCUCATING_CALCULATE_REVERSED_POLISH_NOTATION_TEST_
