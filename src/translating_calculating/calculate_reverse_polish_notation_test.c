@@ -1,5 +1,29 @@
 #include "calculate_reverse_polish_notation_test.h"
 
+static void compare_actual_and_expected_and_print_resolution(
+    int case_number, 
+    int status_expected, 
+    int status_actual, 
+    double expected, 
+    double actual, 
+    double epsilon, 
+    const Lexeme *lexemes, 
+    int length
+) {
+    printf("Test #%d:\t", case_number);
+    if ((status_actual == status_expected) && are_double_equal(expected, actual, epsilon)) {
+        printf("ok\n");
+        return;
+    }
+    
+    printf("FAILED\n");
+    printf("Error code: %d\n", status_actual);
+    printf("input:\n");
+    print_lexeme_array(lexemes, length);
+    printf("expected: %lf\n", expected);
+    printf("actual  : %lf\n", actual);
+}
+
 void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_notation_function)(const Lexeme *const, int, double*)) {
     static const double epsilon = 1e-12;
     static const int E_SUCCESS = 0;
@@ -17,17 +41,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected1 = 16.0;
     double actual1 = -14.87;
     status = calculate_reversed_polish_notation_function(case1, length1, &actual1);
-    printf("Test # 1: ");
-    if ((status == E_SUCCESS) && are_double_equal(expected1, actual1, epsilon)) {
-        printf("ok\n");
-    } else {
-        printf("FAILED\n");
-        printf("Error code: %d\n", status);
-        printf("input:\n");
-        print_lexeme_array(case1, length1);
-        printf("expected: %.48lf\n", expected1);
-        printf("actual  : %.48lf\n", actual1);
-    }
+    compare_actual_and_expected_and_print_resolution(1, status, E_SUCCESS, expected1, actual1, epsilon, case1, length1);
+
 
     Lexeme case2[5];
     const int length2 = 5;
@@ -41,17 +56,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected2 = 24.0;
     double actual2 = -14.89;
     status = calculate_reversed_polish_notation_function(case2, length2, &actual2);
-    printf("Test # 2: ");
-    if ((status == E_SUCCESS) && are_double_equal(expected2, actual2, epsilon)) {
-        printf("ok\n");
-    } else {
-        printf("FAILED\n");
-        printf("Error code: %d\n", status);
-        printf("input:\n");
-        print_lexeme_array(case2, length2);
-        printf("expected: %lf\n", expected2);
-        printf("actual  : %lf\n", actual2);
-    }
+    compare_actual_and_expected_and_print_resolution(2, status, E_SUCCESS, expected2, actual2, epsilon, case2, length2);
+
 
     Lexeme case3[5];
     const int length3 = 5;
@@ -65,17 +71,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected3 = -5.0;
     double actual3 = -13.88;
     status = calculate_reversed_polish_notation_function(case3, length3, &actual3);
-    printf("Test # 3: ");
-    if ((status == E_SUCCESS) && are_double_equal(expected3, actual3, epsilon)) {
-        printf("ok\n");
-    } else {
-        printf("FAILED\n");
-        printf("Error code: %d\n", status);
-        printf("input:\n");
-        print_lexeme_array(case3, length3);
-        printf("expected: %lf\n", expected3);
-        printf("actual  : %lf\n", actual3);
-    }
+    compare_actual_and_expected_and_print_resolution(3, status, E_SUCCESS, expected3, actual3, epsilon, case3, length3);
 
 
     Lexeme case4[11];
@@ -96,17 +92,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected4 = 2.0;
     double actual4 = -15.88;
     status = calculate_reversed_polish_notation_function(case4, length4, &actual4);
-    printf("Test # 4: ");
-    if ((status == E_SUCCESS) && are_double_equal(expected4, actual4, epsilon)) {
-        printf("ok\n");
-    } else {
-        printf("FAILED\n");
-        printf("Error code: %d\n", status);
-        printf("input:\n");
-        print_lexeme_array(case4, length4);
-        printf("expected: %lf\n", expected4);
-        printf("actual  : %lf\n", actual4);
-    }
+    compare_actual_and_expected_and_print_resolution(4, status, E_SUCCESS, expected4, actual4, epsilon, case4, length4);
 
 
     Lexeme case5[2];
@@ -118,17 +104,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected5 = -88.0;
     double actual5 = -15.88;
     status = calculate_reversed_polish_notation_function(case5, length5, &actual5);
-    printf("Test # 5: ");
-    if ((status == E_SUCCESS) && are_double_equal(expected5, actual5, epsilon)) {
-        printf("ok\n");
-    } else {
-        printf("FAILED\n");
-        printf("Error code: %d\n", status);
-        printf("input:\n");
-        print_lexeme_array(case5, length5);
-        printf("expected: %lf\n", expected5);
-        printf("actual  : %lf\n", actual5);
-    }
+    compare_actual_and_expected_and_print_resolution(5, status, E_SUCCESS, expected5, actual5, epsilon, case5, length5);
 
 
     const double pi_constant = acos(-1);
@@ -141,18 +117,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected6 = 0.0;
     double actual6 = -15.88;
     status = calculate_reversed_polish_notation_function(case6, length6, &actual6);
-    printf("Test # 6: ");
-    if ((status == E_SUCCESS) && are_double_equal(expected6, actual6, epsilon)) {
-        printf("ok\n");
-    } else {
-        printf("FAILED\n");
-        printf("Error code: %d\n", status);
-        printf("input:\n");
-        print_lexeme_array(case6, length6);
-        printf("expected: %lf\n", expected6);
-        printf("actual  : %lf\n", actual6);
-    }
-
+    compare_actual_and_expected_and_print_resolution(6, status, E_SUCCESS, expected6, actual6, epsilon, case6, length6);
 
 
     Lexeme case7[2];
@@ -164,17 +129,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected7 = 0.5;
     double actual7 = -15.88;
     status = calculate_reversed_polish_notation_function(case7, length7, &actual7);
-    printf("Test # 7: ");
-    if ((status == E_SUCCESS) && are_double_equal(expected7, actual7, epsilon)) {
-        printf("ok\n");
-    } else {
-        printf("FAILED\n");
-        printf("Error code: %d\n", status);
-        printf("input:\n");
-        print_lexeme_array(case7, length7);
-        printf("expected: %lf\n", expected7);
-        printf("actual  : %lf\n", actual7);
-    }
+    compare_actual_and_expected_and_print_resolution(7, status, E_SUCCESS, expected7, actual7, epsilon, case7, length7);
 
 
     Lexeme case8[2];
@@ -186,17 +141,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected8 = -0.5;
     double actual8 = -15.88;
     status = calculate_reversed_polish_notation_function(case8, length8, &actual8);
-    printf("Test # 8: ");
-    if ((status == E_SUCCESS) && are_double_equal(expected8, actual8, epsilon)) {
-        printf("ok\n");
-    } else {
-        printf("FAILED\n");
-        printf("Error code: %d\n", status);
-        printf("input:\n");
-        print_lexeme_array(case8, length8);
-        printf("expected: %lf\n", expected8);
-        printf("actual  : %lf\n", actual8);
-    }
+    compare_actual_and_expected_and_print_resolution(8, status, E_SUCCESS, expected8, actual8, epsilon, case8, length8);
 
 
     Lexeme case9[2];
@@ -208,17 +153,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected9 = 1.0;
     double actual9 = -15.88;
     status = calculate_reversed_polish_notation_function(case9, length9, &actual9);
-    printf("Test # 9: ");
-    if ((status == E_SUCCESS) && are_double_equal(expected9, actual9, epsilon)) {
-        printf("ok\n");
-    } else {
-        printf("FAILED\n");
-        printf("Error code: %d\n", status);
-        printf("input:\n");
-        print_lexeme_array(case9, length9);
-        printf("expected: %lf\n", expected9);
-        printf("actual  : %lf\n", actual9);
-    }
+    compare_actual_and_expected_and_print_resolution(9, status, E_SUCCESS, expected9, actual9, epsilon, case9, length9);
 
 
     Lexeme case10[2];
@@ -230,17 +165,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected10 = -1.0;
     double actual10 = -15.88;
     status = calculate_reversed_polish_notation_function(case10, length10, &actual10);
-    printf("Test #10: ");
-    if ((status == E_SUCCESS) && are_double_equal(expected10, actual10, epsilon)) {
-        printf("ok\n");
-    } else {
-        printf("FAILED\n");
-        printf("Error code: %d\n", status);
-        printf("input:\n");
-        print_lexeme_array(case10, length10);
-        printf("expected: %lf\n", expected10);
-        printf("actual  : %lf\n", actual10);
-    }
+    compare_actual_and_expected_and_print_resolution(10, status, E_SUCCESS, expected10, actual10, epsilon, case10, length10);
+
 
     Lexeme case11[2];
     const int length11 = 2;
@@ -251,17 +177,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected11 = 1.0;
     double actual11 = -15.88;
     status = calculate_reversed_polish_notation_function(case11, length11, &actual11);
-    printf("Test #11: ");
-    if ((status == E_SUCCESS) && are_double_equal(expected11, actual11, epsilon)) {
-        printf("ok\n");
-    } else {
-        printf("FAILED\n");
-        printf("Error code: %d\n", status);
-        printf("input:\n");
-        print_lexeme_array(case11, length11);
-        printf("expected: %lf\n", expected11);
-        printf("actual  : %lf\n", actual11);
-    }
+    compare_actual_and_expected_and_print_resolution(11, status, E_SUCCESS, expected11, actual11, epsilon, case11, length11);
+
 
     Lexeme case12[2];
     const int length12 = 2;
@@ -272,18 +189,19 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected12 = 1.0;
     double actual12 = -15.88;
     status = calculate_reversed_polish_notation_function(case12, length12, &actual12);
-    printf("Test #12: ");
-    if ((status == E_SUCCESS) && are_double_equal(expected12, actual12, epsilon)) {
-        printf("ok\n");
-    } else {
-        printf("FAILED\n");
-        printf("Error code: %d\n", status);
-        printf("input:\n");
-        print_lexeme_array(case12, length12);
-        printf("expected: %lf\n", expected12);
-        printf("actual  : %lf\n", actual12);
-    }
-    // compare_actual_and_expected_and_print_resolution(12, status, E_SUCCESS, expected12, actual12);
-    //  TODO: implement fucntion "compare_actual_and_expected_and_print_resolution"
+    compare_actual_and_expected_and_print_resolution(12, status, E_SUCCESS, expected12, actual12, epsilon, case12, length12);
+
+
+    Lexeme case13[2];
+    const int length13 = 3;
+
+    set_lexeme(case13 +  0, LT_OPERAND,  4.0, '\0');
+    set_lexeme(case13 +  1, LT_ACTION,   0.0, 'r' );
+
+    const double expected13 = 2.0;
+    double actual13 = -15.88;
+    status = calculate_reversed_polish_notation_function(case13, length13, &actual13);
+    compare_actual_and_expected_and_print_resolution(13, status, E_SUCCESS, expected13, actual13, epsilon, case13, length13);
+    
     //  TODO: create test-cases for zero-division, invalid tg, invalid ctg, invalid ln, invalid sqrt, invalid power
 }

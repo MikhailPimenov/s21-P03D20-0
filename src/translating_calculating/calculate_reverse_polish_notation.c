@@ -155,12 +155,6 @@ int take_single_operand_calculate_and_push_result(Stack_node **stack, int (*func
 
 
 int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int length, double *result_out) {
-    // printf("calculate_reversed_polish_notation():\n");
-    // print_lexeme_array(postfix_notation, length);
-    // return -14.88;
-
-    // printf("COCKSUCKER!\n");
-
     Stack_node *stack = NULL;
 
     for (int index = 0; index < length; ++index) {
@@ -272,7 +266,19 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
             continue;
         }
 
+        case 'r': {
+            const int status = take_single_operand_calculate_and_push_result(&stack, square_root);
+            if (status == E_EMPTY_STACK_ERROR) {
+                return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            }
+            if (status != E_SUCCESS) {
+                return status;
+            }
+            continue;
+        }
+
         default:
+            printf("COCKSUCKER!\n");
             return E_UNKNOWN_ACTION_ERROR;
         }
     }
@@ -281,9 +287,9 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
     const Lexeme result_lexeme = pop(&stack);
     get_lexeme(&result_lexeme, result_out, &action_dummy);
 
-    if (!is_empty(stack))
+    if (!is_empty(stack)) {
         return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
-
+    }
 
     return E_SUCCESS;
 }
