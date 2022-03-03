@@ -278,7 +278,7 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
         }
 
         default:
-            printf("COCKSUCKER!\n");
+            // printf("calculate_rpn(): default:\n");
             return E_UNKNOWN_ACTION_ERROR;
         }
     }

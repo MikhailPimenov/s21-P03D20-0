@@ -7,11 +7,16 @@
 #include "data_structures/lexeme.h"
 #include "data_structures/stack.h"
 
+#include "parsing_expression/parse_to_lexemes.h"
+
+// #define TEST_GRAPH_
+
 #ifdef TEST_GRAPH_
 #include "data_structures/lexeme_test.h"
 #include "data_structures/stack_test.h"
 #include "translating_calculating/shunting_yard_test.h"
 #include "translating_calculating/calculate_reverse_polish_notation_test.h"
+#include "parsing_expression/parse_to_lexemes_test.h"
 #endif //  TEST_GRAPH_
 
 
@@ -22,7 +27,9 @@ int main() {
     // stack_test_visual();
     // get_lexeme_test_visual(get_lexeme);  
     // shunting_yard_test(shunting_yard);
-    calculate_reverse_polish_notation_test(calculate_reversed_polish_notation);
+    // calculate_reverse_polish_notation_test(calculate_reversed_polish_notation);
+    parse_to_lexemes_test(parse_to_lexemes_allocate);
+
     #endif //  TEST_GRAPH_
 
 

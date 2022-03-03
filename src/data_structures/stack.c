@@ -59,7 +59,7 @@ void print_stack(Stack_node *stack) {
     while (stack) {        
         #if defined(LEXEME_T_)
         printf("         ");
-        print_lexeme(&(stack->this));
+        print_lexeme_with_endline_and_type(&(stack->this));
         #elif defined(OPERAND_T_)
         printf("         %lf\n", stack->this);
         #else

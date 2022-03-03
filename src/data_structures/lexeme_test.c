@@ -1,6 +1,7 @@
 #include "lexeme_test.h"
 
 void get_lexeme_test_visual(void get_lexeme(const Lexeme *const, double *const, char *const)) {
+    printf("get_lexeme_test_visual():\n");
     Lexeme lexemes[33];
 
     set_lexeme(lexemes + 0, LT_OPERAND,  56.0, '\0');
@@ -38,13 +39,13 @@ void get_lexeme_test_visual(void get_lexeme(const Lexeme *const, double *const, 
     set_lexeme(lexemes + 31, LT_ACTION, 0.0 , ')');
     set_lexeme(lexemes + 32, LT_ACTION, 0.0 , 'g');
 
-        const int length = 33;
+    const int length = 33;
 
     for (int index = 0; index < length; ++index) {
-        // int actual_type = -1;
         double operand = -1;
         char action = '$';
         get_lexeme(lexemes + index, &operand, &action);
+        printf("%d ", index);
         if (lexemes[index].actual_type == LT_OPERAND) {
             printf("operand = %lf\n", operand);
         }

@@ -23,6 +23,8 @@ enum operator_precedence {
 
 void print_lexeme(const Lexeme* lexeme);
 
+void print_lexeme_with_endline_and_type(const Lexeme *const lexeme);
+
 void print_lexeme_array(const Lexeme *const array, int length);
 
 void get_lexeme(const Lexeme *const lexeme, double *const operand_out, char *const action_out);
@@ -30,6 +32,8 @@ void get_lexeme(const Lexeme *const lexeme, double *const operand_out, char *con
 void set_lexeme(Lexeme *const lexeme, int actual_type, double operand, char action);
 
 int are_lexemes_equal(const Lexeme *const left, const Lexeme *const right);
+
+int are_lexeme_arrays_equal(const Lexeme *const first, const Lexeme *const second, int length);
 
 int is_operand(const Lexeme *lexeme);
 

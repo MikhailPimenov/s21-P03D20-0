@@ -24,7 +24,7 @@ char get_random_action() {
 }
 
 char get_random_operand() {
-    const int integer_part = rand() % 1000;
+    const int integer_part    = rand() % 1000;
     const int fractional_part = rand() % 100;
     const int sign = 1 - 2 * rand() % 2;
 
@@ -50,7 +50,7 @@ static Lexeme get_element_for_testing() {
 }
 
 static void print_element(Lexeme lexeme) {
-    print_lexeme(&lexeme);
+    print_lexeme_with_endline_and_type(&lexeme);
 }
 
 #elif defined(OPERAND_T_)
