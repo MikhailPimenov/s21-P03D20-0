@@ -6,7 +6,8 @@
 
 enum Lexeme_types {
     LT_OPERAND = 0,
-    LT_ACTION = 1
+    LT_ACTION = 1,
+    LT_OPERAND_PLACEHOLDER = 2
 };
 
 typedef struct Lexeme {
@@ -30,6 +31,8 @@ void print_lexeme_array(const Lexeme *const array, int length);
 void get_lexeme(const Lexeme *const lexeme, double *const operand_out, char *const action_out);
 
 void set_lexeme(Lexeme *const lexeme, int actual_type, double operand, char action);
+
+void set_lexeme_placeholder_array(Lexeme *lexemes, int length, double value_for_placeholder);
 
 int are_lexemes_equal(const Lexeme *const left, const Lexeme *const right);
 

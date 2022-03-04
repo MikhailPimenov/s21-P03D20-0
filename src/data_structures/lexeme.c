@@ -11,8 +11,10 @@ void get_lexeme(const Lexeme *const lexeme, double *const operand_out, char *con
     }
 
     // expecting operand (number, double):
-    const double *const pointer_to_double = (const double *const)(lexeme->data);
-    *operand_out = *pointer_to_double;
+    if (lexeme->actual_type == LT_OPERAND) {
+        const double *const pointer_to_double = (const double *const)(lexeme->data);
+        *operand_out = *pointer_to_double;
+    }
 }
 
 void set_lexeme(Lexeme *lexeme, int actual_type, double operand, char action) {
@@ -34,8 +36,17 @@ void set_lexeme(Lexeme *lexeme, int actual_type, double operand, char action) {
         (lexeme->data)[byte_index] = *(pointer_to_char + byte_index);    
 }
 
-static void __print_lexeme_with_format(const Lexeme *const lexeme, int with_endline, int with_type) {
+static void __set_lexeme_placeholder(Lexeme *lexeme, double value_for_placeholder) {
+    if (lexeme->actual_type == LT_OPERAND_PLACEHOLDER)
+        set_lexeme(lexeme, LT_OPERAND, value_for_placeholder, '\0');
+}
 
+void set_lexeme_placeholders_array(Lexeme *lexemes, int length, double value_for_placeholder) {
+    for (int index = 0; index < length; ++index)
+        __set_lexeme_placeholder(lexemes + index, value_for_placeholder);
+}
+
+static void __print_lexeme_with_format(const Lexeme *const lexeme, int with_endline, int with_type) {
     if (lexeme->actual_type == LT_ACTION) {
         if (with_type)
             printf("action : ");
