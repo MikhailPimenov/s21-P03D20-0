@@ -1,6 +1,6 @@
 #include "parse_to_lexemes_test.h"
 
-static void compare_and_print_input_output_and_resolution(
+static void __compare_and_print_input_output_and_resolution(
     int case_number, 
     const char *input,
     int input_length,
@@ -48,7 +48,7 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         int actual_length1 = -1;
 
         parse_to_lexemes_allocate_function(case1, length_without_terminator_1, &actual1, &actual_length1);
-        compare_and_print_input_output_and_resolution(
+        __compare_and_print_input_output_and_resolution(
             1, 
             case1, 
             length_without_terminator_1, 
@@ -76,7 +76,7 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         int actual_length2 = -1;
         
         parse_to_lexemes_allocate_function(case2, length_without_terminator_2, &actual2, &actual_length2);
-        compare_and_print_input_output_and_resolution(
+        __compare_and_print_input_output_and_resolution(
             2, 
             case2, 
             length_without_terminator_2, 
@@ -106,7 +106,7 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         int actual_length3 = -1;
         
         parse_to_lexemes_allocate_function(case3, length_without_terminator_3, &actual3, &actual_length3);
-        compare_and_print_input_output_and_resolution(
+        __compare_and_print_input_output_and_resolution(
             3, 
             case3, 
             length_without_terminator_3, 
@@ -136,7 +136,7 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         int actual_length4 = -1;
         
         parse_to_lexemes_allocate_function(case4, length_without_terminator_4, &actual4, &actual_length4);
-        compare_and_print_input_output_and_resolution(
+        __compare_and_print_input_output_and_resolution(
             4, 
             case4, 
             length_without_terminator_4, 
@@ -166,7 +166,7 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         int actual_length5 = -1;
         
         parse_to_lexemes_allocate_function(case5, length_without_terminator_5, &actual5, &actual_length5);
-        compare_and_print_input_output_and_resolution(
+        __compare_and_print_input_output_and_resolution(
             5, 
             case5, 
             length_without_terminator_5, 
@@ -191,7 +191,7 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         int actual_length6 = -1;
         
         parse_to_lexemes_allocate_function(case6, length_without_terminator_6, &actual6, &actual_length6);
-        compare_and_print_input_output_and_resolution(
+        __compare_and_print_input_output_and_resolution(
             6, 
             case6, 
             length_without_terminator_6, 
@@ -223,7 +223,7 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         int actual_length7 = -1;
         
         parse_to_lexemes_allocate_function(case7, length_without_terminator_7, &actual7, &actual_length7);
-        compare_and_print_input_output_and_resolution(
+        __compare_and_print_input_output_and_resolution(
             7, 
             case7, 
             length_without_terminator_7, 
@@ -300,7 +300,7 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         int actual_length8 = -1;
         
         parse_to_lexemes_allocate_function(case8, length_without_terminator_8, &actual8, &actual_length8);
-        compare_and_print_input_output_and_resolution(
+        __compare_and_print_input_output_and_resolution(
             8, 
             case8, 
             length_without_terminator_8, 
