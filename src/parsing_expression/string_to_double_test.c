@@ -43,7 +43,7 @@ static void __compare_and_print_input_output_and_resolution(
 
 void string_to_double_test(const char*(string_to_double_function)(const char*, int, double*, int*)) {
     printf("\nstring_to_double_test():\n");
-    static const int E_SUCCESS = 0;
+    // static const int E_SUCCESS = 0;
     static const double epsilon = 1e-12;
     static const int silent_on_success = 1;
 
@@ -53,7 +53,7 @@ void string_to_double_test(const char*(string_to_double_function)(const char*, i
 
     const double expected1 = 123.56;
     const char *next_part_expected1 = case1 + 6;  //  points exactly to '\0' which goes right after "123.56"
-    const int expected_status1 = E_SUCCESS;
+    const int expected_status1 = CS_SUCCESSFUL_CONVERSION;
 
     double actual1 = -14.87;
     int actual_status1 = -1;
@@ -80,7 +80,7 @@ void string_to_double_test(const char*(string_to_double_function)(const char*, i
 
     const double expected2 = 0.12345;
     const char *next_part_expected2 = case2 + 7;  //  points exactly to '\0' which goes right after "0.12345"
-    const int expected_status2 = E_SUCCESS;
+    const int expected_status2 = CS_SUCCESSFUL_CONVERSION;
 
     double actual2 = -14.87;
     int actual_status2 = -1;
@@ -106,7 +106,7 @@ void string_to_double_test(const char*(string_to_double_function)(const char*, i
 
     const double expected3 = -0.12345;
     const char *next_part_expected3 = case3 + 8;  //  points exactly to '\0' which goes right after "-0.12345"
-    const int expected_status3 = E_SUCCESS;
+    const int expected_status3 = CS_SUCCESSFUL_CONVERSION;
 
     double actual3 = -14.87;
     int actual_status3 = -1;
@@ -132,7 +132,7 @@ void string_to_double_test(const char*(string_to_double_function)(const char*, i
 
     const double expected4 = 513.0;
     const char *next_part_expected4 = case4 + 5;  //  points exactly to '\0' which goes right after "123.56"
-    const int expected_status4 = E_SUCCESS;
+    const int expected_status4 = CS_SUCCESSFUL_CONVERSION;
 
     double actual4 = -14.87;
     int actual_status4 = -1;
@@ -160,7 +160,7 @@ void string_to_double_test(const char*(string_to_double_function)(const char*, i
 
     const double expected5 = 513.0;
     const char *next_part_expected5 = case5 + 3;  //  points exactly to '\0' which goes right after "513"
-    const int expected_status5 = E_SUCCESS;
+    const int expected_status5 = CS_SUCCESSFUL_CONVERSION;
 
     double actual5 = -14.87;
     int actual_status5 = -1;
@@ -187,7 +187,7 @@ void string_to_double_test(const char*(string_to_double_function)(const char*, i
 
     const double expected6 = 14.88;
     const char *next_part_expected6 = case6 + 5;  //  points exactly to '\0' which goes right after "14.88"
-    const int expected_status6 = E_SUCCESS;
+    const int expected_status6 = CS_SUCCESSFUL_CONVERSION;
 
     double actual6 = -14.87;
     int actual_status6 = -1;
@@ -213,7 +213,7 @@ void string_to_double_test(const char*(string_to_double_function)(const char*, i
 
     const double expected7 = 14141414.88888888;
     const char *next_part_expected7 = case7 + 17;  //  points exactly to '\0' which goes right after "14141414.88888888"
-    const int expected_status7 = E_SUCCESS;
+    const int expected_status7 = CS_SUCCESSFUL_CONVERSION;
 
     double actual7 = -14.87;
     int actual_status7 = -1;
@@ -238,8 +238,8 @@ void string_to_double_test(const char*(string_to_double_function)(const char*, i
 
 
     const double expected8 = -14141414.88888888;
-    const char *next_part_expected8 = case8 + 18;  //  points exactly to '\0' which goes right after "14141414.88888888"
-    const int expected_status8 = E_SUCCESS;
+    const char *next_part_expected8 = case8 + 18;  //  points exactly to '\0' which goes right after "-14141414.88888888"
+    const int expected_status8 = CS_SUCCESSFUL_CONVERSION;
 
     double actual8 = -14.87;
     int actual_status8 = -1;
@@ -255,6 +255,32 @@ void string_to_double_test(const char*(string_to_double_function)(const char*, i
         next_part_actual8,
         expected8,
         actual8,
+        epsilon,
+        silent_on_success);
+
+
+    const char *case9 = "sin(-14141414.88888888)";
+    const int length_without_terminator9 = 23;
+
+
+    const double expected9 = 0.0;
+    const char *next_part_expected9 = case9;  //  points to the beginning because conversion is failed
+    const int expected_status9 = CS_FAILED_CONVERSION;
+
+    double actual9 = -14.87;
+    int actual_status9 = -1;
+    const char *next_part_actual9 = string_to_double_function(case9, length_without_terminator9, &actual9, &actual_status9);
+
+    __compare_and_print_input_output_and_resolution(
+        9,
+        case9,
+        length_without_terminator9,
+        expected_status9,
+        actual_status9,
+        next_part_expected9,
+        next_part_actual9,
+        expected9,
+        actual9,
         epsilon,
         silent_on_success);
 

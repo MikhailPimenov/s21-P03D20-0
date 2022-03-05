@@ -32,7 +32,7 @@ void get_lexeme(const Lexeme *const lexeme, double *const operand_out, char *con
 
 void set_lexeme(Lexeme *const lexeme, int actual_type, double operand, char action);
 
-void set_lexeme_placeholder_array(Lexeme *lexemes, int length, double value_for_placeholder);
+void set_lexeme_placeholders_array(Lexeme *lexemes, int length, double value_for_placeholder);
 
 int are_lexemes_equal(const Lexeme *const left, const Lexeme *const right);
 

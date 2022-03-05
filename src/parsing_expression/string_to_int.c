@@ -34,7 +34,8 @@ const char* string_to_int(const char* input, int length_of_the_rest_without_term
     const int length = __get_amount_of_digits_in_number(input_shifted, length_of_the_rest_without_terminator);
     if (length == 0) {
         *conversion_status = CS_FAILED_CONVERSION;
-        *result = -1;
+        *result = 0;
+        return input;
     }
     int index = length - 1;
     

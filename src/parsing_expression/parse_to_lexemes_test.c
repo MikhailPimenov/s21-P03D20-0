@@ -311,4 +311,37 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             silent_on_success);
     }
 
+
+    {
+        const char *case9 = "cos(14)/sqrt(x)";
+        const int length_without_terminator_9 = 17;
+        
+        Lexeme expected9[9];
+        const int expected_length9 = 9;
+
+        set_lexeme(expected9 + 0, LT_ACTION,              0.0,   'c');
+        set_lexeme(expected9 + 1, LT_ACTION,              0.0,   '(');
+        set_lexeme(expected9 + 2, LT_OPERAND,             14.0, '\0');
+        set_lexeme(expected9 + 3, LT_ACTION,              0.0,   ')');
+        set_lexeme(expected9 + 4, LT_ACTION,              0.0,   '/');
+        set_lexeme(expected9 + 5, LT_ACTION,              0.0,   'r');
+        set_lexeme(expected9 + 6, LT_ACTION,              0.0,   '(');
+        set_lexeme(expected9 + 7, LT_OPERAND_PLACEHOLDER, 0.0,  '\0');
+        set_lexeme(expected9 + 8, LT_ACTION,              0.0,   ')');
+
+        Lexeme *actual9 = NULL;
+        int actual_length9 = -1;
+        
+        parse_to_lexemes_allocate_function(case9, length_without_terminator_9, &actual9, &actual_length9);
+        __compare_and_print_input_output_and_resolution(
+            9, 
+            case9, 
+            length_without_terminator_9, 
+            expected9, 
+            expected_length9, 
+            actual9, 
+            actual_length9,
+            silent_on_success);
+    }
+
 }

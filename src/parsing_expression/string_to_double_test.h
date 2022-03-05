@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #include "../translating_calculating/common.h"
+#include "string_to_number_error_codes.h"
 
 void string_to_double_test(const char*(string_to_double_function)(const char*, int, double*, int*));
 

@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "string_to_number_error_codes.h"
+
 void string_to_int_test(const char*(string_to_int_function)(const char*, int, int*, int*));
 
 #endif //  SRC_PARSING_EXPRESSION_STRING_TO_INT_TEST_H_

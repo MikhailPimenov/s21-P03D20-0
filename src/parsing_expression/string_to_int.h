@@ -2,11 +2,8 @@
 #define SRC_PARSING_EXPRESSION_STRING_TO_INT_H_
 
 #include <stdlib.h>
+#include "string_to_number_error_codes.h"
 
-enum conversion_status_codes {
-    CS_SUCCESSFUL_CONVERSION = 0,
-    CS_FAILED_CONVERSION = 1
-};
 
 int get_sign(char first_symbol);
 const char* string_to_int(const char* input, int length_of_the_rest_without_terminator, int *result, int *conversion_status);

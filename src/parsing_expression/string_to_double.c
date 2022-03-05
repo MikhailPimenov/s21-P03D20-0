@@ -26,6 +26,7 @@ const char* string_to_double(const char* input, int length_of_the_rest_without_t
     if (integer_part_conversion_status != CS_SUCCESSFUL_CONVERSION) {
         *result = 0.0;
         *conversion_status = CS_FAILED_CONVERSION;
+        // printf("string_to_double(): return #1\n");
         return input;
     }
 
@@ -35,6 +36,7 @@ const char* string_to_double(const char* input, int length_of_the_rest_without_t
     if (fraction_part_with_dot[0] != '.') {
         (*result) *= sign;
         *conversion_status = CS_SUCCESSFUL_CONVERSION;
+        // printf("string_to_double(): return #2\n");
         return fraction_part_with_dot;
     }
 
@@ -54,6 +56,7 @@ const char* string_to_double(const char* input, int length_of_the_rest_without_t
     if (fraction_part_conversion_status != CS_SUCCESSFUL_CONVERSION) {
         *conversion_status = CS_FAILED_CONVERSION;
         *result = 0.0;
+        // printf("string_to_double(): return #3\n");
         return input;
     }
 
@@ -67,5 +70,6 @@ const char* string_to_double(const char* input, int length_of_the_rest_without_t
     (*result) *= sign;
     *conversion_status = CS_SUCCESSFUL_CONVERSION;
 
+    // printf("string_to_double(): main return\n");
     return the_rest_of_the_input_string;
 }

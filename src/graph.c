@@ -33,9 +33,9 @@ int main() {
     // get_lexeme_test_visual(get_lexeme);  
     // shunting_yard_test(shunting_yard);
     // calculate_reverse_polish_notation_test(calculate_reversed_polish_notation);
-    // parse_to_lexemes_test(parse_to_lexemes_allocate);
     string_to_int_test(string_to_int);
     string_to_double_test(string_to_double);
+    parse_to_lexemes_test(parse_to_lexemes_allocate);
     #endif //  TEST_GRAPH_
 
 

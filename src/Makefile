@@ -83,19 +83,19 @@ $(BUILD)/parse_to_lexemes_test.o: parsing_expression/parse_to_lexemes_test.c par
 		$(CC) $(CFLAGS) parsing_expression/parse_to_lexemes_test.c -o $(BUILD)/parse_to_lexemes_test.o
 
 
-$(BUILD)/string_to_int_test.o: parsing_expression/string_to_int_test.c parsing_expression/string_to_int_test.h
+$(BUILD)/string_to_int_test.o: parsing_expression/string_to_int_test.c parsing_expression/string_to_int_test.h parsing_expression/string_to_number_error_codes.h
 		$(CC) $(CFLAGS) parsing_expression/string_to_int_test.c -o $(BUILD)/string_to_int_test.o
 
 
-$(BUILD)/string_to_int.o: parsing_expression/string_to_int.c parsing_expression/string_to_int.h
+$(BUILD)/string_to_int.o: parsing_expression/string_to_int.c parsing_expression/string_to_int.h parsing_expression/string_to_number_error_codes.h
 		$(CC) $(CFLAGS) parsing_expression/string_to_int.c -o $(BUILD)/string_to_int.o
 
 
-$(BUILD)/string_to_double_test.o: parsing_expression/string_to_double_test.c parsing_expression/string_to_double_test.h
+$(BUILD)/string_to_double_test.o: parsing_expression/string_to_double_test.c parsing_expression/string_to_double_test.h parsing_expression/string_to_number_error_codes.h
 		$(CC) $(CFLAGS) parsing_expression/string_to_double_test.c -o $(BUILD)/string_to_double_test.o
 
 
-$(BUILD)/string_to_double.o: parsing_expression/string_to_double.c parsing_expression/string_to_double.h
+$(BUILD)/string_to_double.o: parsing_expression/string_to_double.c parsing_expression/string_to_double.h parsing_expression/string_to_number_error_codes.h
 		$(CC) $(CFLAGS) parsing_expression/string_to_double.c -o $(BUILD)/string_to_double.o
 
 

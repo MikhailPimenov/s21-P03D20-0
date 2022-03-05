@@ -40,14 +40,13 @@ static void __compare_and_print_input_output_and_resolution(
 
 void string_to_int_test(const char*(string_to_int_function)(const char*, int, int*, int*)) {
     printf("\nstring_to_int_test():\n");
-    static const int E_SUCCESS = 0;
     const int silent_on_success = 1;
 
     const char *const case1 = "123";
     const int length_without_terminator1 = 3;
     const int expected1 = 123;
     const char *const next_part_expected1 = case1 + 3;  //  pointer to '\0' which goes right after "123"
-    const int conversion_status_expected1 = E_SUCCESS;
+    const int conversion_status_expected1 = CS_SUCCESSFUL_CONVERSION;
 
 
     int actual1 = 0;
@@ -71,7 +70,7 @@ void string_to_int_test(const char*(string_to_int_function)(const char*, int, in
     const int length_without_terminator2 = 1;
     const int expected2 = 0;
     const char *const next_part_expected2 = case2 + 1;  //  pointer to '\0' which goes right after "0"
-    const int conversion_status_expected2 = E_SUCCESS;
+    const int conversion_status_expected2 = CS_SUCCESSFUL_CONVERSION;
 
 
     int actual2 = 0;
@@ -94,7 +93,7 @@ void string_to_int_test(const char*(string_to_int_function)(const char*, int, in
     const int length_without_terminator3 = 4;
     const int expected3 = 9001;
     const char *const next_part_expected3 = case3 + 4;  //  pointer to '\0' which goes right after "9001"
-    const int conversion_status_expected3 = E_SUCCESS;
+    const int conversion_status_expected3 = CS_SUCCESSFUL_CONVERSION;
 
 
     int actual3 = 0;
@@ -118,7 +117,7 @@ void string_to_int_test(const char*(string_to_int_function)(const char*, int, in
     const int length_without_terminator4 = 7;
     const int expected4 = 9096501;
     const char *const next_part_expected4 = case4 + 7;  //  pointer to '\0' which goes right after "9096501"
-    const int conversion_status_expected4 = E_SUCCESS;
+    const int conversion_status_expected4 = CS_SUCCESSFUL_CONVERSION;
 
 
     int actual4 = 0;
@@ -142,7 +141,7 @@ void string_to_int_test(const char*(string_to_int_function)(const char*, int, in
     const int length_without_terminator5 = 10;
     const int expected5 = 9096501;
     const char *const next_part_expected5 = case5 + 7;  //  pointer to '-' which goes right after "9096501"
-    const int conversion_status_expected5 = E_SUCCESS;
+    const int conversion_status_expected5 = CS_SUCCESSFUL_CONVERSION;
 
 
     int actual5 = 0;
@@ -166,7 +165,7 @@ void string_to_int_test(const char*(string_to_int_function)(const char*, int, in
     const int length_without_terminator6 = 11;
     const int expected6 = 9096501;
     const char *const next_part_expected6 = case6 + 7;  //  pointer to '*' which goes right after "9096501"
-    const int conversion_status_expected6 = E_SUCCESS;
+    const int conversion_status_expected6 = CS_SUCCESSFUL_CONVERSION;
 
 
     int actual6 = 0;
@@ -190,7 +189,7 @@ void string_to_int_test(const char*(string_to_int_function)(const char*, int, in
     const int length_without_terminator7 = 12;
     const int expected7 = 9096;
     const char *const next_part_expected7 = case7 + 4;  //  pointer to '-' which goes right after "9096"
-    const int conversion_status_expected7 = E_SUCCESS;
+    const int conversion_status_expected7 = CS_SUCCESSFUL_CONVERSION;
 
 
     int actual7 = 0;
@@ -216,7 +215,7 @@ void string_to_int_test(const char*(string_to_int_function)(const char*, int, in
     const int length_without_terminator8 = 7;
     const int expected8 = 501;
     const char *const next_part_expected8 = case8 + shift8 + 3;  //  pointer to '*' which goes right after "9096-501"
-    const int conversion_status_expected8 = E_SUCCESS;
+    const int conversion_status_expected8 = CS_SUCCESSFUL_CONVERSION;
 
 
     int actual8 = 0;
@@ -242,7 +241,7 @@ void string_to_int_test(const char*(string_to_int_function)(const char*, int, in
     const int length_without_terminator9 = 2;
     const int expected9 = 45;
     const char *const next_part_expected9 = case9 + shift9 + 2;  //  pointer to '*' which goes right after "9096-501"
-    const int conversion_status_expected9 = E_SUCCESS;
+    const int conversion_status_expected9 = CS_SUCCESSFUL_CONVERSION;
 
 
     int actual9 = 0;
@@ -267,7 +266,7 @@ void string_to_int_test(const char*(string_to_int_function)(const char*, int, in
     const int length_without_terminator10 = 8;
     const int expected10 = -501;
     const char *const next_part_expected10 = case10 + shift10 + 4;  //  pointer to '*' which goes right after "9096-501"
-    const int conversion_status_expected10 = E_SUCCESS;
+    const int conversion_status_expected10 = CS_SUCCESSFUL_CONVERSION;
 
 
     int actual10 = 0;
@@ -292,5 +291,28 @@ void string_to_int_test(const char*(string_to_int_function)(const char*, int, in
 
 
     // TODO: test cases when conversion is failed
+
+    const char *const case11 = "sin(9096)-501*(45";
+    const int length_without_terminator11 = 17;
+    const int expected11 = 0;
+    const char *const next_part_expected11 = case11;  //  points to the beginning because conversion is failed
+    const int conversion_status_expected11 = CS_FAILED_CONVERSION;
+
+
+    int actual11 = 0;
+    int conversion_status_actual11 = -1; 
+    const char *next_part_actual11 = string_to_int_function(case11, length_without_terminator11, &actual11, &conversion_status_actual11);
+    
+    __compare_and_print_input_output_and_resolution(
+        11, 
+        case11, 
+        length_without_terminator11,
+        conversion_status_expected11,
+        conversion_status_actual11,
+        next_part_expected11, 
+        next_part_actual11, 
+        expected11, 
+        actual11, 
+        silent_on_success);
 
 }
