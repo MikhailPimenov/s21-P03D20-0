@@ -10,6 +10,7 @@
 #include "parsing_expression/parse_to_lexemes.h"
 
 #include "parsing_expression/string_to_int.h"
+#include "parsing_expression/string_to_double.h"
 
 // #define TEST_GRAPH_
 
@@ -20,6 +21,7 @@
 #include "translating_calculating/calculate_reverse_polish_notation_test.h"
 #include "parsing_expression/parse_to_lexemes_test.h"
 #include "parsing_expression/string_to_int_test.h"
+#include "parsing_expression/string_to_double_test.h"
 #endif //  TEST_GRAPH_
 
 
@@ -33,6 +35,7 @@ int main() {
     // calculate_reverse_polish_notation_test(calculate_reversed_polish_notation);
     // parse_to_lexemes_test(parse_to_lexemes_allocate);
     string_to_int_test(string_to_int);
+    string_to_double_test(string_to_double);
     #endif //  TEST_GRAPH_
 
 

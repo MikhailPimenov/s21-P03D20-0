@@ -21,19 +21,14 @@ static int __get_int_from_numeric_char(char symbol) {
     return (int)symbol - ascii_shift;
 }
 
-static int __get_sign(char first_symbol, int *shift_because_of_sign) {
-    if (first_symbol == '-'){
-        *shift_because_of_sign = 1;
-        return -1;
-    }
-    *shift_because_of_sign = 0;
-    return 1;
+int get_sign(char first_symbol) {
+    return ((first_symbol == '-') ? (-1) : 1);
 }
 
 const char* string_to_int(const char* input, int length_of_the_rest_without_terminator, int *result, int *conversion_status) {
     static const int base = 10;
-    int shift_because_of_sign = 0;
-    const int sign = __get_sign(input[0], &shift_because_of_sign);
+    const int sign = get_sign(input[0]);
+    const int shift_because_of_sign = (sign == -1) ? 1 : 0;
     const char* input_shifted = input + shift_because_of_sign;
 
     const int length = __get_amount_of_digits_in_number(input_shifted, length_of_the_rest_without_terminator);

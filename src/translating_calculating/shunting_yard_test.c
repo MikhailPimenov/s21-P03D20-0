@@ -1,6 +1,6 @@
 #include "shunting_yard_test.h"
 
-static void compare_and_print_input_output_and_resolution(
+static void __compare_and_print_input_output_and_resolution(
     int case_number,
     const Lexeme *const input,
     int input_length,
@@ -53,7 +53,7 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
         const int expected_length1 = 3;
         int actual_length1 = -1;
         shunting_yard_function(case1, length1, actual1, &actual_length1);
-        compare_and_print_input_output_and_resolution(1, case1, length1, expected1, expected_length1, actual1, actual_length1, silent_on_success);
+        __compare_and_print_input_output_and_resolution(1, case1, length1, expected1, expected_length1, actual1, actual_length1, silent_on_success);
     }
 
     {
@@ -76,7 +76,7 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
         const int expected_length2 = 5;
         int actual_length2 = -1;
         shunting_yard_function(case2, length2, actual2, &actual_length2);
-        compare_and_print_input_output_and_resolution(2, case2, length2, expected2, expected_length2, actual2, actual_length2, silent_on_success);
+        __compare_and_print_input_output_and_resolution(2, case2, length2, expected2, expected_length2, actual2, actual_length2, silent_on_success);
     }
 
     {
@@ -101,7 +101,7 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
         const int expected_length3 = 5;
         int actual_length3 = -1;
         shunting_yard_function(case3, length3, actual3, &actual_length3);
-        compare_and_print_input_output_and_resolution(3, case3, length3, expected3, expected_length3, actual3, actual_length3, silent_on_success);
+        __compare_and_print_input_output_and_resolution(3, case3, length3, expected3, expected_length3, actual3, actual_length3, silent_on_success);
     }
 
     {
@@ -126,7 +126,7 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
         const int expected_length4 = 5;
         int actual_length4 = -1;
         shunting_yard_function(case4, length4, actual4, &actual_length4);
-        compare_and_print_input_output_and_resolution(4, case4, length4, expected4, expected_length4, actual4, actual_length4, silent_on_success);
+        __compare_and_print_input_output_and_resolution(4, case4, length4, expected4, expected_length4, actual4, actual_length4, silent_on_success);
     }
 
     {
@@ -153,7 +153,7 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
         const int expected_length5 = 5;
         int actual_length5 = -1;
         shunting_yard_function(case5, length5, actual5, &actual_length5);
-        compare_and_print_input_output_and_resolution(5, case5, length5, expected5, expected_length5, actual5, actual_length5, silent_on_success);
+        __compare_and_print_input_output_and_resolution(5, case5, length5, expected5, expected_length5, actual5, actual_length5, silent_on_success);
     }
 
     {
@@ -191,6 +191,6 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
         // const int expected_length6 = 5;
         // int actual_length6 = -1;
         // shunting_yard_function(case6, length6, actual6, &actual_length6);
-        // compare_and_print_input_output_and_resolution(6, case6, length6, expected6, expected_length6, actual6, actual_length6, silent_on_success);
+        // __compare_and_print_input_output_and_resolution(6, case6, length6, expected6, expected_length6, actual6, actual_length6, silent_on_success);
     }
 }

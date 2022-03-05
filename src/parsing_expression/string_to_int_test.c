@@ -39,7 +39,7 @@ static void __compare_and_print_input_output_and_resolution(
 }
 
 void string_to_int_test(const char*(string_to_int_function)(const char*, int, int*, int*)) {
-    printf("string_to_int_test():\n");
+    printf("\nstring_to_int_test():\n");
     static const int E_SUCCESS = 0;
     const int silent_on_success = 1;
 
@@ -289,4 +289,8 @@ void string_to_int_test(const char*(string_to_int_function)(const char*, int, in
     
     // const char *case10 = "096-501*(45";
     // const int expected10 = 96;
+
+
+    // TODO: test cases when conversion is failed
+
 }
