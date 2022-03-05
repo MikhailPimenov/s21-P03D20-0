@@ -1,7 +1,7 @@
 #include "string_to_double.h"
 
 
-static int get_multiplier(int base, int amount_of_digits) {
+static int __get_multiplier(int base, int amount_of_digits) {
     int multiplier = 1;
     for (int i = 0; i < amount_of_digits; ++i)
         multiplier *= base;
@@ -60,7 +60,7 @@ const char* string_to_double(const char* input, int length_of_the_rest_without_t
 
     const int amount_of_digits_in_fraction_part = the_rest_of_the_input_string - start_of_fraction_part;
     static const int base = 10;
-    const int multiplier = get_multiplier(base, amount_of_digits_in_fraction_part);
+    const int multiplier = __get_multiplier(base, amount_of_digits_in_fraction_part);
 
 
     (*result) += (double)fraction_part / (double)multiplier;
