@@ -26,14 +26,14 @@ const char *recognize_sinlge_symbol_and_create_lexeme(
         length_without_terminator,
         symbol_to_recognize
     );
-
-    if (recognition_status != RS_RECOGNIZED) 
+    
+    if (recognition_status != RS_RECOGNIZED) {
+        // printf("%c is not recognized, bitch\n", symbol_to_recognize);
         return infix_notation_row;
+    }
 
     printf("%c\n", symbol_to_recognize);
     *lexemes_created_out += 1;
-
-
 
 
     if (symbol_to_recognize == 'x') {
@@ -62,6 +62,8 @@ const char *recognize_closing_brace_and_create_lexeme(const char *infix_notation
     return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, ')', lexeme_out, lexemes_created_out);    
 }
 const char *recognize_add_symbol_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out) {
+    printf("trying to recognize '+'\n");
+    printf("current first symbol is %c\n", infix_notation_row[0]);
     return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, '+', lexeme_out, lexemes_created_out);    
 }
 
@@ -99,13 +101,46 @@ const char *recognize_power_symbol_and_create_lexeme(const char *infix_notation_
 //     return RS_RECOGNIZED;
 // }
 
+int are_strings_equal(const char *left, const char *right, int length_without_terminator) {
+    for (int index = 0; index < length_without_terminator; ++index) {
+        int is_left_null  = (left  + index == NULL);
+        int is_right_null = (right + index == NULL);
+
+        if (is_left_null && is_right_null)
+            return 1;
+
+        if (!is_left_null && !is_right_null && left[index] != right[index])
+            return 0;
+
+    }
+    return 1;
+}
+//  TODO: make this function available for the entire program!
+char get_single_symbol_for_function(const char *function_name_as_string, int function_name_length_without_terminator) {
+    if (are_strings_equal(function_name_as_string, "sin", function_name_length_without_terminator))
+        return 's';
+    if (are_strings_equal(function_name_as_string, "cos", function_name_length_without_terminator))
+        return 'c';
+    if (are_strings_equal(function_name_as_string, "tg", function_name_length_without_terminator))
+        return 't';
+    if (are_strings_equal(function_name_as_string, "ctg", function_name_length_without_terminator))
+        return 'g';
+    if (are_strings_equal(function_name_as_string, "sqrt", function_name_length_without_terminator))
+        return 'r';
+    if (are_strings_equal(function_name_as_string, "ln", function_name_length_without_terminator))
+        return 'l';
+    
+    //  function is not recognized
+    return '\0';
+}
+
 const char *recognize_function_and_create_lexeme(
     const char *infix_notation_row, 
     int length_without_terminator, 
     const char *function_name_as_string, 
     int function_name_length_without_terminator,
-    int *lexeme_counter_out
-    ) {
+    Lexeme *const lexeme_out,
+    int *lexeme_counter_out) {
 
     const int recognition_status = is_function_recognized(
                                             infix_notation_row, 
@@ -119,6 +154,9 @@ const char *recognize_function_and_create_lexeme(
 
     printf("%s\n", function_name_as_string);
     *lexeme_counter_out += 1;
+
+    const char function_as_single_symbol = get_single_symbol_for_function(function_name_as_string, function_name_length_without_terminator);
+    set_lexeme(lexeme_out, LT_ACTION, 0.0, function_as_single_symbol);
 
     //  returning pointer to the next position in infix_notation to recognise
     return infix_notation_row + function_name_length_without_terminator;
@@ -157,14 +195,54 @@ const char *recognize_double_and_create_lexeme(const char *infix_notation_row, i
     if (status == CS_FAILED_CONVERSION)
         return infix_notation_row;
 
-    printf("%lf\n", result);
+    printf("double created: %lf\n", result);
+    set_lexeme(lexeme_out, LT_OPERAND, result, '\0');
     *lexemes_created_out += 1; 
+
+
+    if (current_position_in_string == infix_notation_row)
+        printf("double(): position is not changed!\n");
 
     return current_position_in_string;
 }
 
 
 
-const char *recognize_subtract_symbol_and_create_five_lexemes_instead_of_one(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out) {
-    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, '-', lexeme_out, lexemes_created_out);    
+const char *recognize_subtract_symbol_and_create_three_lexemes_instead_of_one(
+    const char *infix_notation_row, 
+    int length_without_terminator, 
+    Lexeme *const lexeme1_in_array_out, 
+    Lexeme *const lexeme2_in_array_out, 
+    Lexeme *const lexeme3_in_array_out, 
+    int lexemes_length,
+    int *lexemes_created_out) {
+
+    const char symbol_to_recognize = '-';
+
+    const int recognition_status = is_symbol_recognized(
+        infix_notation_row,
+        length_without_terminator,
+        symbol_to_recognize
+    );
+
+    if (recognition_status != RS_RECOGNIZED) 
+        return infix_notation_row;
+
+    // this error should be handled when calling this function, but not here
+    if (*lexemes_created_out + 2 < lexemes_length) {
+        printf("Error: not enough memory to create three lexemes for '-'.\n");
+        return infix_notation_row;
+    }
+
+    printf("%c\n", symbol_to_recognize);
+    
+    *lexemes_created_out += 3;                   //  because "3-5" will be treated like "3+(-1)*5" and then converted to  3, '+', -1, '*', 5
+
+
+    set_lexeme(lexeme1_in_array_out, LT_ACTION,   0.0,  '+');
+    set_lexeme(lexeme2_in_array_out, LT_OPERAND, -1.0, '\0');
+    set_lexeme(lexeme3_in_array_out, LT_ACTION,   0.0,  '*');
+
+
+    return infix_notation_row + 1;
 }

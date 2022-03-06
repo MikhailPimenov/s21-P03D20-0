@@ -19,8 +19,8 @@ test: $(BUILD)/graph_test.exe
 		# $(CC) $(BUILD)/graph.o $(BUILD)/translating.o  $(BUILD)/shunting_yard.o $(BUILD)/stack.o $(BUILD)/lexeme.o -o $(BUILD)/graph.exe
 
 
-$(BUILD)/graph_test.exe: $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o $(BUILD)/parse_to_lexemes.o $(BUILD)/parse_to_lexemes_test.o $(BUILD)/string_to_int.o $(BUILD)/string_to_int_test.o $(BUILD)/string_to_double.o $(BUILD)/string_to_double_test.o $(BUILD)/recognize_lexemes.o
-		$(CC) $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o $(BUILD)/parse_to_lexemes.o $(BUILD)/parse_to_lexemes_test.o $(BUILD)/string_to_int.o $(BUILD)/string_to_int_test.o $(BUILD)/string_to_double.o $(BUILD)/string_to_double_test.o $(BUILD)/recognize_lexemes.o -o $(BUILD)/graph_test.exe
+$(BUILD)/graph_test.exe: $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o $(BUILD)/parse_to_lexemes.o $(BUILD)/parse_to_lexemes_test.o $(BUILD)/string_to_int.o $(BUILD)/string_to_int_test.o $(BUILD)/string_to_double.o $(BUILD)/string_to_double_test.o $(BUILD)/recognize_lexemes.o $(BUILD)/create_lexemes.o
+		$(CC) $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o $(BUILD)/parse_to_lexemes.o $(BUILD)/parse_to_lexemes_test.o $(BUILD)/string_to_int.o $(BUILD)/string_to_int_test.o $(BUILD)/string_to_double.o $(BUILD)/string_to_double_test.o $(BUILD)/recognize_lexemes.o $(BUILD)/create_lexemes.o -o $(BUILD)/graph_test.exe
 
 
 $(BUILD)/graph_test.o: graph.c
@@ -101,6 +101,10 @@ $(BUILD)/string_to_double.o: parsing_expression/string_to_double.c parsing_expre
 
 $(BUILD)/recognize_lexemes.o: parsing_expression/recognize_lexemes.c parsing_expression/recognize_lexemes.h
 		$(CC) $(CFLAGS) parsing_expression/recognize_lexemes.c -o $(BUILD)/recognize_lexemes.o
+
+
+$(BUILD)/create_lexemes.o: parsing_expression/create_lexemes.c parsing_expression/create_lexemes.h
+		$(CC) $(CFLAGS) parsing_expression/create_lexemes.c -o $(BUILD)/create_lexemes.o
 
 
 
