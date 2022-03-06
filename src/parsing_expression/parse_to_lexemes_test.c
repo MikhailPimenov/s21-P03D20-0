@@ -151,16 +151,20 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         const char *case5 = "517*(20-39)";
         const int length_without_terminator_5 = 11;
         
-        Lexeme expected5[7];
-        const int expected_length5 = 7;
+        Lexeme expected5[11];
+        const int expected_length5 = 11;
 
-        set_lexeme(expected5 + 0, LT_OPERAND, 517.0, '\0');
-        set_lexeme(expected5 + 1, LT_ACTION,  0.0,   '*' );
-        set_lexeme(expected5 + 2, LT_ACTION,  0.0,   '(' );
-        set_lexeme(expected5 + 3, LT_OPERAND, 20.0,  '\0');
-        set_lexeme(expected5 + 4, LT_ACTION,  0.0,   '-' );
-        set_lexeme(expected5 + 5, LT_OPERAND, 39.0,  '\0');
-        set_lexeme(expected5 + 6, LT_ACTION,  0.0,   ')' );
+        set_lexeme(expected5 +  0, LT_OPERAND, 517.0, '\0');
+        set_lexeme(expected5 +  1, LT_ACTION,  0.0,   '*' );
+        set_lexeme(expected5 +  2, LT_ACTION,  0.0,   '(' );
+        set_lexeme(expected5 +  3, LT_OPERAND, 20.0,  '\0');
+        set_lexeme(expected5 +  4, LT_ACTION,  0.0,   '+' );
+        set_lexeme(expected5 +  5, LT_ACTION,  0.0,   '(' );
+        set_lexeme(expected5 +  6, LT_OPERAND, -1.0,  '\0');
+        set_lexeme(expected5 +  7, LT_ACTION,  0.0,   ')' );
+        set_lexeme(expected5 +  8, LT_ACTION,  0.0,   '*' );
+        set_lexeme(expected5 +  9, LT_OPERAND, 39.0,  '\0');
+        set_lexeme(expected5 + 10, LT_ACTION,  0.0,   ')' );
 
         Lexeme *actual5 = NULL;
         int actual_length5 = -1;
@@ -235,7 +239,7 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
     }
 
     {
-        const char *case8 = "(sin(2+2^3)+tg(1))+ctg(0.5)+cos(14/88-sqrt(9)*ln(88))*69";
+        const char *case8 = "(sin(2+2^3)+tg(1))+ctg(0.5)+cos(14/88+sqrt(9)*ln(88))*69";
         const int length_without_terminator_8 = 56;
         
         Lexeme expected8[39];
@@ -279,7 +283,7 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         set_lexeme(expected8 + 24, LT_ACTION,  0.0,   '/');
         set_lexeme(expected8 + 25, LT_OPERAND, 88.0, '\0');
 
-        set_lexeme(expected8 + 26, LT_ACTION,  0.0,   '-');
+        set_lexeme(expected8 + 26, LT_ACTION,  0.0,   '+');
 
         set_lexeme(expected8 + 27, LT_ACTION,  0.0,   'r');
         set_lexeme(expected8 + 28, LT_ACTION,  0.0,   '(');
@@ -310,7 +314,6 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             actual_length8,
             silent_on_success);
     }
-
 
     {
         const char *case9 = "cos(14)/sqrt(x)";
@@ -344,4 +347,84 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             silent_on_success);
     }
 
+    {
+        const char *case10 = "(sin(2+2^3)+tg(1))+ctg(0.5)+cos(14/88-sqrt(9)*ln(88))*69";
+        const int length_without_terminator_10 = 56;
+        
+        Lexeme expected10[43];
+        const int expected_length10 = 43;
+
+        set_lexeme(expected10 + 0,  LT_ACTION,  0.0,   '(');
+    
+        set_lexeme(expected10 + 1,  LT_ACTION,  0.0,   's');
+        set_lexeme(expected10 + 2,  LT_ACTION,  0.0,   '(');
+        set_lexeme(expected10 + 3,  LT_OPERAND, 2.0,  '\0');
+        set_lexeme(expected10 + 4,  LT_ACTION,  0.0,   '+');
+        set_lexeme(expected10 + 5,  LT_OPERAND, 2.0,  '\0');
+        set_lexeme(expected10 + 6,  LT_ACTION,  0.0,   '^');
+        set_lexeme(expected10 + 7,  LT_OPERAND, 3.0,  '\0');
+        set_lexeme(expected10 + 8,  LT_ACTION,  0.0,   ')');
+    
+        set_lexeme(expected10 + 9,  LT_ACTION,  0.0,   '+');
+
+        set_lexeme(expected10 + 10, LT_ACTION,  0.0,   't');
+        set_lexeme(expected10 + 11, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected10 + 12, LT_OPERAND, 1.0,  '\0');
+        set_lexeme(expected10 + 13, LT_ACTION,  0.0,   ')');
+
+        set_lexeme(expected10 + 14, LT_ACTION,  0.0,   ')');
+
+
+        set_lexeme(expected10 + 15, LT_ACTION,  0.0,   '+');
+
+
+        set_lexeme(expected10 + 16, LT_ACTION,  0.0,   'g');
+        set_lexeme(expected10 + 17, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected10 + 18, LT_OPERAND, 0.5,  '\0');
+        set_lexeme(expected10 + 19, LT_ACTION,  0.0,   ')');
+
+        set_lexeme(expected10 + 20, LT_ACTION,  0.0,   '+');
+
+
+        set_lexeme(expected10 + 21, LT_ACTION,  0.0,   'c');
+        set_lexeme(expected10 + 22, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected10 + 23, LT_OPERAND, 14.0, '\0');
+        set_lexeme(expected10 + 24, LT_ACTION,  0.0,   '/');
+        set_lexeme(expected10 + 25, LT_OPERAND, 88.0, '\0');
+
+        set_lexeme(expected10 + 26, LT_ACTION,  0.0,   '+');
+        set_lexeme(expected10 + 27, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected10 + 28, LT_OPERAND, -1.0, '\0');
+        set_lexeme(expected10 + 29, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected10 + 30, LT_ACTION,  0.0,   '*');
+
+        set_lexeme(expected10 + 31, LT_ACTION,  0.0,   'r');
+        set_lexeme(expected10 + 32, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected10 + 33, LT_OPERAND, 9.0,  '\0');
+        set_lexeme(expected10 + 34, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected10 + 35, LT_ACTION,  0.0,   '*');
+
+        set_lexeme(expected10 + 36, LT_ACTION,  0.0,   'l');
+        set_lexeme(expected10 + 37, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected10 + 38, LT_OPERAND, 88.0, '\0');
+        set_lexeme(expected10 + 39, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected10 + 40, LT_ACTION,  0.0,   ')');
+
+        set_lexeme(expected10 + 41, LT_ACTION,  0.0,   '*');
+        set_lexeme(expected10 + 42, LT_OPERAND, 69.0, '\0');
+
+        Lexeme *actual10 = NULL;
+        int actual_length10 = -1;
+        
+        parse_to_lexemes_allocate_function(case10, length_without_terminator_10, &actual10, &actual_length10);
+        __compare_and_print_input_output_and_resolution(
+            10, 
+            case10, 
+            length_without_terminator_10, 
+            expected10, 
+            expected_length10, 
+            actual10, 
+            actual_length10,
+            silent_on_success);
+    }
 }

@@ -7,6 +7,8 @@
 #include "../data_structures/stack.h"
 #include "string_to_number_error_codes.h"
 #include "string_to_double.h"
+#include "recognize_lexemes.h"
+#include "create_lexemes.h"
 
 void parse_to_lexemes_allocate(const char *infix_notation_row, int length, Lexeme **infix_notation_out, int *length_out);
 
