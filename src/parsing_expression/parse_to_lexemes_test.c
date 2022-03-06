@@ -24,8 +24,10 @@ static void __compare_and_print_input_output_and_resolution(
     printf("input length = %d\n", input_length);
     printf("expected:\n");
     print_lexeme_array(expected, expected_length);
+    printf("expected length = %d\n", expected_length);
     printf("actual  :\n");
     print_lexeme_array(actual, actual_length);
+    printf("actual length   = %d\n", actual_length);
     printf("\n");
 }
 
@@ -46,9 +48,6 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
 
         Lexeme *actual1 = NULL;
         int actual_length1 = -1;
-
-        printf("pointer to pointer = %p\n", &actual1);
-        printf("pointer = %p\n", actual1);
 
         parse_to_lexemes_allocate_function(case1, length_without_terminator_1, &actual1, &actual_length1);
         __compare_and_print_input_output_and_resolution(
@@ -189,11 +188,13 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         const char *case6 = "sin(2)";
         const int length_without_terminator_6 = 6;
         
-        Lexeme expected6[2];
-        const int expected_length6 = 2;
+        Lexeme expected6[4];
+        const int expected_length6 = 4;
 
-        set_lexeme(expected6 + 1, LT_ACTION,  0.0,  's');
-        set_lexeme(expected6 + 0, LT_OPERAND, 2.0, '\0');
+        set_lexeme(expected6 + 0, LT_ACTION,  0.0,  's');
+        set_lexeme(expected6 + 1, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected6 + 2, LT_OPERAND, 2.0, '\0');
+        set_lexeme(expected6 + 3, LT_ACTION,  0.0,   ')');
 
         Lexeme *actual6 = NULL;
         int actual_length6 = -1;
@@ -319,6 +320,7 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             silent_on_success);
     }
 
+
     {
         const char *case9 = "cos(14)/sqrt(x)";
         const int length_without_terminator_9 = 17;
@@ -333,7 +335,7 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         set_lexeme(expected9 + 4, LT_ACTION,              0.0,   '/');
         set_lexeme(expected9 + 5, LT_ACTION,              0.0,   'r');
         set_lexeme(expected9 + 6, LT_ACTION,              0.0,   '(');
-        set_lexeme(expected9 + 7, LT_OPERAND_PLACEHOLDER, 0.0,  '\0');
+        set_lexeme(expected9 + 7, LT_OPERAND_PLACEHOLDER, 0.0,   'x');
         set_lexeme(expected9 + 8, LT_ACTION,              0.0,   ')');
 
         Lexeme *actual9 = NULL;

@@ -16,9 +16,17 @@ void get_lexeme(const Lexeme *const lexeme, double *const operand_out, char *con
         *operand_out = *pointer_to_double;
     }
 }
+static int __is_actual_type_correct(int actual_type) {
+    return actual_type != LT_OPERAND || 
+           actual_type != LT_ACTION  || 
+           actual_type != LT_OPERAND_PLACEHOLDER;
+}
+static int __is_actual_type_not_correct(int actual_type) {
+    return !__is_actual_type_correct(actual_type);
+}
 
 void set_lexeme(Lexeme *lexeme, int actual_type, double operand, char action) {
-    if (actual_type != LT_OPERAND && actual_type != LT_ACTION)
+    if (__is_actual_type_not_correct(actual_type))
         return;
 
 
@@ -47,7 +55,8 @@ void set_lexeme_placeholders_array(Lexeme *lexemes, int length, double value_for
 }
 
 static void __print_lexeme_with_format(const Lexeme *const lexeme, int with_endline, int with_type) {
-    if (lexeme->actual_type == LT_ACTION) {
+    if (lexeme->actual_type == LT_ACTION ||
+        lexeme->actual_type == LT_OPERAND_PLACEHOLDER) {
         if (with_type)
             printf("action : ");
 
@@ -101,6 +110,7 @@ int are_lexemes_equal(const Lexeme *const left, const Lexeme *const right) {
     if (left->actual_type != right->actual_type)
         return 0;
 
+
     char action_left = '\0';
     double operand_left = -1.0;
     get_lexeme(left, &operand_left, &action_left);
@@ -110,7 +120,9 @@ int are_lexemes_equal(const Lexeme *const left, const Lexeme *const right) {
     get_lexeme(right, &operand_right, &action_right);
 
 
-    if (left->actual_type == LT_ACTION) {  // right->actual_type is also LT_ACTION
+    if (left->actual_type == LT_ACTION ||
+        left->actual_type == LT_OPERAND_PLACEHOLDER ) {  // right->actual_type is also LT_ACTION
+        
         return action_left == action_right;
     }
 

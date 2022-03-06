@@ -34,7 +34,7 @@ const char *recognize_sinlge_symbol_and_count_it(
     if (recognition_status != RS_RECOGNIZED) 
         return infix_notation_row;
 
-    printf("%c\n", symbol_to_recognize);
+    // printf("%c\n", symbol_to_recognize);
     *lexeme_counter_out += 1;
     
     if (symbol_to_recognize == '-')
@@ -110,7 +110,7 @@ const char *recognize_function_and_count_it(
         return infix_notation_row;
 
 
-    printf("%s\n", function_name_as_string);
+    // printf("%s\n", function_name_as_string);
     *lexeme_counter_out += 1;
 
     //  returning pointer to the next position in infix_notation to recognise
@@ -150,7 +150,7 @@ const char *recognize_double_and_count_it(const char *infix_notation_row, int le
     if (status == CS_FAILED_CONVERSION)
         return infix_notation_row;
 
-    printf("%lf\n", result);
+    // printf("%lf\n", result);
     *lexeme_counter_out += 1; 
 
     return current_position_in_string;
