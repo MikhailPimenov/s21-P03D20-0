@@ -103,7 +103,7 @@ void create_lexemes(const char *infix_notation_row, int length_without_terminato
     int lexemes_created = 0;
     printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
     printf("create_lexemes(): lexemes length : %d\n", lexemes_length);
-    const int show_everything = 0;
+    const int show_everything = 1;
     //  chain of responsibility design pattern
     while (lexemes_created < lexemes_length) {
         // const char *old_position_in_string = current_position_in_string;
@@ -254,9 +254,9 @@ void parse_to_lexemes_allocate(const char *infix_notation_row, int length_withou
     printf("%s\n", infix_notation_row);
     printf("length = %d\n", length_without_terminator);
 
-    if (infix_notation_out)
-        infix_notation_out = NULL;
-    *lexeme_list_length_out = 0;
+    // if (infix_notation_out)
+    //     infix_notation_out = NULL;
+    // *lexeme_list_length_out = 0;
    
     const int amount_of_lexemes = get_amount_of_lexemes(infix_notation_row, length_without_terminator);
     printf("amount = %d\n", amount_of_lexemes);
@@ -271,6 +271,10 @@ void parse_to_lexemes_allocate(const char *infix_notation_row, int length_withou
     create_lexemes(infix_notation_row, length_without_terminator, lexemes, amount_of_lexemes);
 
     print_lexeme_array(lexemes, amount_of_lexemes);
+    printf("pointer to pointer = %p\n", infix_notation_out);
     *infix_notation_out = lexemes;
+    *lexeme_list_length_out = amount_of_lexemes;
+    printf("pointer = %p\n", *infix_notation_out);
+    print_lexeme_array(*infix_notation_out, amount_of_lexemes);
     // *lexeme_list_length_out = amount_of_lexemes;
 }

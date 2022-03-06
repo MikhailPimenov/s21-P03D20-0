@@ -229,12 +229,13 @@ const char *recognize_subtract_symbol_and_create_three_lexemes_instead_of_one(
         return infix_notation_row;
 
     // this error should be handled when calling this function, but not here
-    if (*lexemes_created_out + 2 < lexemes_length) {
+    if (*lexemes_created_out + 2 >= lexemes_length) {
+        printf("already created = %d, lexemes_length = %d\n", *lexemes_created_out, lexemes_length);
         printf("Error: not enough memory to create three lexemes for '-'.\n");
         return infix_notation_row;
     }
 
-    printf("%c\n", symbol_to_recognize);
+    printf("symbol '-' is recognized and created three lexemes\n");
     
     *lexemes_created_out += 3;                   //  because "3-5" will be treated like "3+(-1)*5" and then converted to  3, '+', -1, '*', 5
 

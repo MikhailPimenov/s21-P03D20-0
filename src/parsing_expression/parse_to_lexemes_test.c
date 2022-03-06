@@ -32,7 +32,7 @@ static void __compare_and_print_input_output_and_resolution(
 void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char*, int, Lexeme **, int *)) {
     printf("parse_to_lexemes_test():\n");
     int silent_on_success = 1;
-    
+
     {
         const char *case1 = "2+1";
         const int length_without_terminator_1 = 3;
@@ -47,6 +47,9 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         Lexeme *actual1 = NULL;
         int actual_length1 = -1;
 
+        printf("pointer to pointer = %p\n", &actual1);
+        printf("pointer = %p\n", actual1);
+
         parse_to_lexemes_allocate_function(case1, length_without_terminator_1, &actual1, &actual_length1);
         __compare_and_print_input_output_and_resolution(
             1, 
@@ -57,6 +60,9 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             actual1, 
             actual_length1,
             silent_on_success); 
+
+        // if (actual1)
+            // free(actual1);
     }
 
     {
