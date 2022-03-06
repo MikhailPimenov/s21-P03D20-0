@@ -60,8 +60,8 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             actual_length1,
             silent_on_success); 
 
-        // if (actual1)
-            // free(actual1);
+        if (actual1)
+            free(actual1);
     }
 
     {
@@ -90,6 +90,9 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             actual2, 
             actual_length2,
             silent_on_success); 
+
+        if (actual2)
+            free(actual2);
     }
 
     {
@@ -120,6 +123,9 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             actual3, 
             actual_length3,
             silent_on_success);
+
+        if (actual3)
+            free(actual3);
     }
 
     {
@@ -150,6 +156,8 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             actual4, 
             actual_length4,
             silent_on_success);
+        if (actual4)
+            free(actual4);
     }
 
     {
@@ -182,6 +190,8 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             actual5, 
             actual_length5,
             silent_on_success);
+        if (actual5)
+            free(actual5);
     }
 
     {
@@ -209,6 +219,9 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             actual6, 
             actual_length6,
             silent_on_success);
+        
+        if (actual6)
+            free(actual6);
     }
 
     {
@@ -241,6 +254,9 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             actual7, 
             actual_length7,
             silent_on_success);
+
+        if (actual7)
+            free(actual7);
     }
 
     {
@@ -318,6 +334,9 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             actual8, 
             actual_length8,
             silent_on_success);
+        
+        if (actual8)
+            free(actual8);
     }
 
 
@@ -351,6 +370,9 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             actual9, 
             actual_length9,
             silent_on_success);
+
+        if (actual9)
+            free(actual9);
     }
 
     {
@@ -430,5 +452,8 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
             actual10, 
             actual_length10,
             silent_on_success);
+
+        if (actual10)
+            free(actual10);
     }
 }
