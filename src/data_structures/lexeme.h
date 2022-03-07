@@ -45,6 +45,8 @@ int is_action(const Lexeme *lexeme);
 
 int is_brace(const Lexeme *lexeme);
 
+int is_not_brace(const Lexeme *lexeme);
+
 int get_precedence(const Lexeme *lexeme);
 
 int has_lower_precedence(const Lexeme *left, const Lexeme *right);

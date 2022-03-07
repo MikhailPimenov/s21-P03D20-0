@@ -1,111 +1,5 @@
 #include "parse_to_lexemes.h"
 
-enum string_check_codes {
-    SC_STRING_IS_INCORRECT = -1,
-    SC_STRING_IS_CORRECT = 0
-};
-
-int check_input_string_and_count_lexemes(const char *infix_notation_row, int length_without_terminator, int *amount_of_lexemes_out) {
-    const char *current_position_in_string = infix_notation_row;
-    
-    int lexeme_counter = 0;
-    //  chain of responsibility design pattern
-    while (1) {
-        const char *old_position_in_string = current_position_in_string;
-
-        current_position_in_string = recognize_add_symbol_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-        current_position_in_string = recognize_subtract_symbol_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-        current_position_in_string = recognize_multiply_symbol_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-        current_position_in_string = recognize_divide_symbol_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-        current_position_in_string = recognize_power_symbol_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-
-        current_position_in_string = recognize_opening_brace_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-        current_position_in_string = recognize_closing_brace_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-
-        current_position_in_string = recognize_sine_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-        current_position_in_string = recognize_cosine_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-        current_position_in_string = recognize_tangent_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-        current_position_in_string = recognize_cotangent_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-        current_position_in_string = recognize_square_root_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-        current_position_in_string = recognize_natural_logarithm_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-
-        current_position_in_string = recognize_double_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-        current_position_in_string = recognize_placeholder_symbol_and_count_it(
-            current_position_in_string, 
-            length_without_terminator - (current_position_in_string - infix_notation_row),
-            &lexeme_counter);
-
-
-        if (current_position_in_string == old_position_in_string) {
-            break;
-        }
-    }
-    
-    if (current_position_in_string - infix_notation_row < length_without_terminator) {
-        *amount_of_lexemes_out = 0;    
-        // printf("STRING IS NOT CORRECT!\n");
-        return SC_STRING_IS_INCORRECT;
-    }
-    // printf("Congratulations! String is correct.\n");
-    *amount_of_lexemes_out = lexeme_counter;
-    return SC_STRING_IS_CORRECT;
-}
 
 void create_lexemes(const char *infix_notation_row, int length_without_terminator, Lexeme *lexemes, int lexemes_length) {
     const char *current_position_in_string = infix_notation_row;
@@ -269,9 +163,9 @@ void parse_to_lexemes_allocate(const char *infix_notation_row, int length_withou
     // *lexeme_list_length_out = 0;
    
     int amount_of_lexemes = 0;
-    const int status_check = check_input_string_and_count_lexemes(infix_notation_row, length_without_terminator, &amount_of_lexemes);
+    const int status_check = check_expression_and_count_lexemes(infix_notation_row, length_without_terminator, &amount_of_lexemes);
     // printf("amount = %d\n", amount_of_lexemes);
-    if (status_check != SC_STRING_IS_CORRECT) {
+    if (status_check != EC_EXPRESSION_IS_CORRECT) {
         printf("STRING IS NOT CORRECT!\n");
         return;
     }

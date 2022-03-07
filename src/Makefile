@@ -19,8 +19,8 @@ test: $(BUILD)/graph_test.exe
 		# $(CC) $(BUILD)/graph.o $(BUILD)/translating.o  $(BUILD)/shunting_yard.o $(BUILD)/stack.o $(BUILD)/lexeme.o -o $(BUILD)/graph.exe
 
 
-$(BUILD)/graph_test.exe: $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o $(BUILD)/parse_to_lexemes.o $(BUILD)/parse_to_lexemes_test.o $(BUILD)/string_to_int.o $(BUILD)/string_to_int_test.o $(BUILD)/string_to_double.o $(BUILD)/string_to_double_test.o $(BUILD)/recognize_lexemes.o $(BUILD)/create_lexemes.o
-		$(CC) $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o $(BUILD)/parse_to_lexemes.o $(BUILD)/parse_to_lexemes_test.o $(BUILD)/string_to_int.o $(BUILD)/string_to_int_test.o $(BUILD)/string_to_double.o $(BUILD)/string_to_double_test.o $(BUILD)/recognize_lexemes.o $(BUILD)/create_lexemes.o -o $(BUILD)/graph_test.exe
+$(BUILD)/graph_test.exe: $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o $(BUILD)/parse_to_lexemes.o $(BUILD)/parse_to_lexemes_test.o $(BUILD)/string_to_int.o $(BUILD)/string_to_int_test.o $(BUILD)/string_to_double.o $(BUILD)/string_to_double_test.o $(BUILD)/recognize_lexemes.o $(BUILD)/create_lexemes.o $(BUILD)/check_expression_and_count_lexemes_test.o $(BUILD)/check_expression_and_count_lexemes.o
+		$(CC) $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o $(BUILD)/parse_to_lexemes.o $(BUILD)/parse_to_lexemes_test.o $(BUILD)/string_to_int.o $(BUILD)/string_to_int_test.o $(BUILD)/string_to_double.o $(BUILD)/string_to_double_test.o $(BUILD)/recognize_lexemes.o $(BUILD)/create_lexemes.o $(BUILD)/check_expression_and_count_lexemes_test.o $(BUILD)/check_expression_and_count_lexemes.o -o $(BUILD)/graph_test.exe
 
 
 $(BUILD)/graph_test.o: graph.c
@@ -49,10 +49,6 @@ $(BUILD)/shunting_yard_test.o: translating_calculating/shunting_yard_test.c tran
 
 $(BUILD)/shunting_yard.o: translating_calculating/shunting_yard.c translating_calculating/shunting_yard.h
 		$(CC) $(CFLAGS) translating_calculating/shunting_yard.c -o $(BUILD)/shunting_yard.o
-
-
-# $(BUILD)/stack.o: data_structures/stack.c
-		# $(CC) $(CFLAGS) data_structures/stack.c -o $(BUILD)/stack.o
 
 
 $(BUILD)/lexeme.o: data_structures/lexeme.c data_structures/lexeme.h
@@ -106,6 +102,13 @@ $(BUILD)/recognize_lexemes.o: parsing_expression/recognize_lexemes.c parsing_exp
 $(BUILD)/create_lexemes.o: parsing_expression/create_lexemes.c parsing_expression/create_lexemes.h
 		$(CC) $(CFLAGS) parsing_expression/create_lexemes.c -o $(BUILD)/create_lexemes.o
 
+
+$(BUILD)/check_expression_and_count_lexemes.o: parsing_expression/check_expression_and_count_lexemes.c parsing_expression/check_expression_and_count_lexemes.h
+		$(CC) $(CFLAGS) parsing_expression/check_expression_and_count_lexemes.c -o $(BUILD)/check_expression_and_count_lexemes.o
+
+
+$(BUILD)/check_expression_and_count_lexemes_test.o: parsing_expression/check_expression_and_count_lexemes_test.c parsing_expression/check_expression_and_count_lexemes_test.h
+		$(CC) $(CFLAGS) parsing_expression/check_expression_and_count_lexemes_test.c -o $(BUILD)/check_expression_and_count_lexemes_test.o
 
 
 
