@@ -32,7 +32,7 @@ static void __compare_and_print_input_output_and_resolution(
 }
 
 void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char*, int, Lexeme **, int *)) {
-    printf("parse_to_lexemes_test():\n");
+    printf("\nparse_to_lexemes_test():\n");
     int silent_on_success = 1;
 
     {
@@ -102,11 +102,11 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         Lexeme expected3[7];
         const int expected_length3 = 7;
 
-        set_lexeme(expected3 + 0, LT_ACTION,  0.0,  '(' );
+        set_lexeme(expected3 + 0, LT_BRACE,   0.0,  '(' );
         set_lexeme(expected3 + 1, LT_OPERAND, 5.0, '\0');
         set_lexeme(expected3 + 2, LT_ACTION,  0.0,  '+' );
         set_lexeme(expected3 + 3, LT_OPERAND, 7.0,  '\0');
-        set_lexeme(expected3 + 4, LT_ACTION,  0.0,  ')' );
+        set_lexeme(expected3 + 4, LT_BRACE,   0.0,  ')' );
         set_lexeme(expected3 + 5, LT_ACTION,  0.0,  '/' );
         set_lexeme(expected3 + 6, LT_OPERAND, 2.0,  '\0');
 
@@ -135,11 +135,11 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         Lexeme expected4[7];
         const int expected_length4 = 7;
 
-        set_lexeme(expected4 + 0, LT_ACTION,  0.0,  '(' );
+        set_lexeme(expected4 + 0, LT_BRACE,   0.0,  '(' );
         set_lexeme(expected4 + 1, LT_OPERAND, 5.0, '\0');
         set_lexeme(expected4 + 2, LT_ACTION,  0.0,  '+' );
         set_lexeme(expected4 + 3, LT_OPERAND, 7.0,  '\0');
-        set_lexeme(expected4 + 4, LT_ACTION,  0.0,  ')' );
+        set_lexeme(expected4 + 4, LT_BRACE,   0.0,  ')' );
         set_lexeme(expected4 + 5, LT_ACTION,  0.0,  '/' );
         set_lexeme(expected4 + 6, LT_OPERAND, 2.0,  '\0');
 
@@ -169,13 +169,13 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
 
         set_lexeme(expected5 + 0, LT_OPERAND, 517.0, '\0');
         set_lexeme(expected5 + 1, LT_ACTION,  0.0,   '*' );
-        set_lexeme(expected5 + 2, LT_ACTION,  0.0,   '(' );
+        set_lexeme(expected5 + 2, LT_BRACE,   0.0,   '(' );
         set_lexeme(expected5 + 3, LT_OPERAND, 20.0,  '\0');
         set_lexeme(expected5 + 4, LT_ACTION,  0.0,   '+' );
         set_lexeme(expected5 + 5, LT_OPERAND, -1.0,  '\0');
         set_lexeme(expected5 + 6, LT_ACTION,  0.0,   '*' );
         set_lexeme(expected5 + 7, LT_OPERAND, 39.0,  '\0');
-        set_lexeme(expected5 + 8, LT_ACTION,  0.0,   ')' );
+        set_lexeme(expected5 + 8, LT_BRACE,   0.0,   ')' );
 
         Lexeme *actual5 = NULL;
         int actual_length5 = -1;
@@ -202,9 +202,9 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         const int expected_length6 = 4;
 
         set_lexeme(expected6 + 0, LT_ACTION,  0.0,  's');
-        set_lexeme(expected6 + 1, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected6 + 1, LT_BRACE,   0.0,   '(');
         set_lexeme(expected6 + 2, LT_OPERAND, 2.0, '\0');
-        set_lexeme(expected6 + 3, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected6 + 3, LT_BRACE,   0.0,   ')');
 
         Lexeme *actual6 = NULL;
         int actual_length6 = -1;
@@ -232,14 +232,14 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         const int expected_length7 = 9;
 
         set_lexeme(expected7 + 0, LT_ACTION,  0.0,   'c');
-        set_lexeme(expected7 + 1, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected7 + 1, LT_BRACE,   0.0,   '(');
         set_lexeme(expected7 + 2, LT_OPERAND, 14.0, '\0');
-        set_lexeme(expected7 + 3, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected7 + 3, LT_BRACE,   0.0,   ')');
         set_lexeme(expected7 + 4, LT_ACTION,  0.0,   '/');
         set_lexeme(expected7 + 5, LT_ACTION,  0.0,   'r');
-        set_lexeme(expected7 + 6, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected7 + 6, LT_BRACE,   0.0,   '(');
         set_lexeme(expected7 + 7, LT_OPERAND, 88.0, '\0');
-        set_lexeme(expected7 + 8, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected7 + 8, LT_BRACE,   0.0,   ')');
 
         Lexeme *actual7 = NULL;
         int actual_length7 = -1;
@@ -266,40 +266,40 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         Lexeme expected8[39];
         const int expected_length8 = 39;
 
-        set_lexeme(expected8 + 0,  LT_ACTION,  0.0,   '(');
+        set_lexeme(expected8 + 0,  LT_BRACE,   0.0,   '(');
     
         set_lexeme(expected8 + 1,  LT_ACTION,  0.0,   's');
-        set_lexeme(expected8 + 2,  LT_ACTION,  0.0,   '(');
+        set_lexeme(expected8 + 2,  LT_BRACE,   0.0,   '(');
         set_lexeme(expected8 + 3,  LT_OPERAND, 2.0,  '\0');
         set_lexeme(expected8 + 4,  LT_ACTION,  0.0,   '+');
         set_lexeme(expected8 + 5,  LT_OPERAND, 2.0,  '\0');
         set_lexeme(expected8 + 6,  LT_ACTION,  0.0,   '^');
         set_lexeme(expected8 + 7,  LT_OPERAND, 3.0,  '\0');
-        set_lexeme(expected8 + 8,  LT_ACTION,  0.0,   ')');
+        set_lexeme(expected8 + 8,  LT_BRACE,   0.0,   ')');
     
         set_lexeme(expected8 + 9,  LT_ACTION,  0.0,   '+');
 
         set_lexeme(expected8 + 10, LT_ACTION,  0.0,   't');
-        set_lexeme(expected8 + 11, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected8 + 11, LT_BRACE,   0.0,   '(');
         set_lexeme(expected8 + 12, LT_OPERAND, 1.0,  '\0');
-        set_lexeme(expected8 + 13, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected8 + 13, LT_BRACE,   0.0,   ')');
 
-        set_lexeme(expected8 + 14, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected8 + 14, LT_BRACE,   0.0,   ')');
 
 
         set_lexeme(expected8 + 15, LT_ACTION,  0.0,   '+');
 
 
         set_lexeme(expected8 + 16, LT_ACTION,  0.0,   'g');
-        set_lexeme(expected8 + 17, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected8 + 17, LT_BRACE,   0.0,   '(');
         set_lexeme(expected8 + 18, LT_OPERAND, 0.5,  '\0');
-        set_lexeme(expected8 + 19, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected8 + 19, LT_BRACE,   0.0,   ')');
 
         set_lexeme(expected8 + 20, LT_ACTION,  0.0,   '+');
 
 
         set_lexeme(expected8 + 21, LT_ACTION,  0.0,   'c');
-        set_lexeme(expected8 + 22, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected8 + 22, LT_BRACE,   0.0,   '(');
         set_lexeme(expected8 + 23, LT_OPERAND, 14.0, '\0');
         set_lexeme(expected8 + 24, LT_ACTION,  0.0,   '/');
         set_lexeme(expected8 + 25, LT_OPERAND, 88.0, '\0');
@@ -307,16 +307,16 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         set_lexeme(expected8 + 26, LT_ACTION,  0.0,   '+');
 
         set_lexeme(expected8 + 27, LT_ACTION,  0.0,   'r');
-        set_lexeme(expected8 + 28, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected8 + 28, LT_BRACE,   0.0,   '(');
         set_lexeme(expected8 + 29, LT_OPERAND, 9.0,  '\0');
-        set_lexeme(expected8 + 30, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected8 + 30, LT_BRACE,   0.0,   ')');
         set_lexeme(expected8 + 31, LT_ACTION,  0.0,   '*');
 
         set_lexeme(expected8 + 32, LT_ACTION,  0.0,   'l');
-        set_lexeme(expected8 + 33, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected8 + 33, LT_BRACE,   0.0,   '(');
         set_lexeme(expected8 + 34, LT_OPERAND, 88.0, '\0');
-        set_lexeme(expected8 + 35, LT_ACTION,  0.0,   ')');
-        set_lexeme(expected8 + 36, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected8 + 35, LT_BRACE,   0.0,   ')');
+        set_lexeme(expected8 + 36, LT_BRACE,   0.0,   ')');
 
         set_lexeme(expected8 + 37, LT_ACTION,  0.0,   '*');
         set_lexeme(expected8 + 38, LT_OPERAND, 69.0, '\0');
@@ -342,20 +342,20 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
 
     {
         const char *case9 = "cos(14)/sqrt(x)";
-        const int length_without_terminator_9 = 17;
+        const int length_without_terminator_9 = 15;
         
         Lexeme expected9[9];
         const int expected_length9 = 9;
 
         set_lexeme(expected9 + 0, LT_ACTION,              0.0,   'c');
-        set_lexeme(expected9 + 1, LT_ACTION,              0.0,   '(');
+        set_lexeme(expected9 + 1, LT_BRACE,               0.0,   '(');
         set_lexeme(expected9 + 2, LT_OPERAND,             14.0, '\0');
-        set_lexeme(expected9 + 3, LT_ACTION,              0.0,   ')');
+        set_lexeme(expected9 + 3, LT_BRACE,               0.0,   ')');
         set_lexeme(expected9 + 4, LT_ACTION,              0.0,   '/');
         set_lexeme(expected9 + 5, LT_ACTION,              0.0,   'r');
-        set_lexeme(expected9 + 6, LT_ACTION,              0.0,   '(');
+        set_lexeme(expected9 + 6, LT_BRACE,               0.0,   '(');
         set_lexeme(expected9 + 7, LT_OPERAND_PLACEHOLDER, 0.0,   'x');
-        set_lexeme(expected9 + 8, LT_ACTION,              0.0,   ')');
+        set_lexeme(expected9 + 8, LT_BRACE,               0.0,   ')');
 
         Lexeme *actual9 = NULL;
         int actual_length9 = -1;
@@ -382,40 +382,40 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         Lexeme expected10[41];
         const int expected_length10 = 41;
 
-        set_lexeme(expected10 + 0,  LT_ACTION,  0.0,   '(');
+        set_lexeme(expected10 + 0,  LT_BRACE,   0.0,   '(');
     
         set_lexeme(expected10 + 1,  LT_ACTION,  0.0,   's');
-        set_lexeme(expected10 + 2,  LT_ACTION,  0.0,   '(');
+        set_lexeme(expected10 + 2,  LT_BRACE,   0.0,   '(');
         set_lexeme(expected10 + 3,  LT_OPERAND, 2.0,  '\0');
         set_lexeme(expected10 + 4,  LT_ACTION,  0.0,   '+');
         set_lexeme(expected10 + 5,  LT_OPERAND, 2.0,  '\0');
         set_lexeme(expected10 + 6,  LT_ACTION,  0.0,   '^');
         set_lexeme(expected10 + 7,  LT_OPERAND, 3.0,  '\0');
-        set_lexeme(expected10 + 8,  LT_ACTION,  0.0,   ')');
+        set_lexeme(expected10 + 8,  LT_BRACE,   0.0,   ')');
     
         set_lexeme(expected10 + 9,  LT_ACTION,  0.0,   '+');
 
         set_lexeme(expected10 + 10, LT_ACTION,  0.0,   't');
-        set_lexeme(expected10 + 11, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected10 + 11, LT_BRACE,   0.0,   '(');
         set_lexeme(expected10 + 12, LT_OPERAND, 1.0,  '\0');
-        set_lexeme(expected10 + 13, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected10 + 13, LT_BRACE,   0.0,   ')');
 
-        set_lexeme(expected10 + 14, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected10 + 14, LT_BRACE,   0.0,   ')');
 
 
         set_lexeme(expected10 + 15, LT_ACTION,  0.0,   '+');
 
 
         set_lexeme(expected10 + 16, LT_ACTION,  0.0,   'g');
-        set_lexeme(expected10 + 17, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected10 + 17, LT_BRACE,   0.0,   '(');
         set_lexeme(expected10 + 18, LT_OPERAND, 0.5,  '\0');
-        set_lexeme(expected10 + 19, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected10 + 19, LT_BRACE,   0.0,   ')');
 
         set_lexeme(expected10 + 20, LT_ACTION,  0.0,   '+');
 
 
         set_lexeme(expected10 + 21, LT_ACTION,  0.0,   'c');
-        set_lexeme(expected10 + 22, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected10 + 22, LT_BRACE,   0.0,   '(');
         set_lexeme(expected10 + 23, LT_OPERAND, 14.0, '\0');
         set_lexeme(expected10 + 24, LT_ACTION,  0.0,   '/');
         set_lexeme(expected10 + 25, LT_OPERAND, 88.0, '\0');
@@ -425,16 +425,16 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         set_lexeme(expected10 + 28, LT_ACTION,  0.0,   '*');
 
         set_lexeme(expected10 + 29, LT_ACTION,  0.0,   'r');
-        set_lexeme(expected10 + 30, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected10 + 30, LT_BRACE,   0.0,   '(');
         set_lexeme(expected10 + 31, LT_OPERAND, 9.0,  '\0');
-        set_lexeme(expected10 + 32, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected10 + 32, LT_BRACE,   0.0,   ')');
         set_lexeme(expected10 + 33, LT_ACTION,  0.0,   '*');
 
         set_lexeme(expected10 + 34, LT_ACTION,  0.0,   'l');
-        set_lexeme(expected10 + 35, LT_ACTION,  0.0,   '(');
+        set_lexeme(expected10 + 35, LT_BRACE,   0.0,   '(');
         set_lexeme(expected10 + 36, LT_OPERAND, 88.0, '\0');
-        set_lexeme(expected10 + 37, LT_ACTION,  0.0,   ')');
-        set_lexeme(expected10 + 38, LT_ACTION,  0.0,   ')');
+        set_lexeme(expected10 + 37, LT_BRACE,   0.0,   ')');
+        set_lexeme(expected10 + 38, LT_BRACE,   0.0,   ')');
 
         set_lexeme(expected10 + 39, LT_ACTION,  0.0,   '*');
         set_lexeme(expected10 + 40, LT_OPERAND, 69.0, '\0');

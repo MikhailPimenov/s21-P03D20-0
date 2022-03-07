@@ -1,9 +1,10 @@
 #include "create_lexemes.h"
 
-const char *recognize_sinlge_symbol_and_create_lexeme(
+static const char *recognize_sinlge_symbol_and_create_lexeme(
     const char *infix_notation_row, 
     int length_without_terminator, 
-    char symbol_to_recognize, 
+    char symbol_to_recognize,
+    int not_operand_lexeme_type, 
     Lexeme *const lexeme_out,
     int *lexemes_created_out) {
 
@@ -19,35 +20,41 @@ const char *recognize_sinlge_symbol_and_create_lexeme(
 
     *lexemes_created_out += 1;
 
-    if (symbol_to_recognize == 'x') {
-        set_lexeme(lexeme_out, LT_OPERAND_PLACEHOLDER, 0.0, 'x');  
-        return infix_notation_row + 1;
-    }
+    // if (symbol_to_recognize == 'x') {
+    //     set_lexeme(lexeme_out, LT_OPERAND_PLACEHOLDER, 0.0, 'x');  
+    //     return infix_notation_row + 1;
+    // }
 
-    set_lexeme(lexeme_out, LT_ACTION, 0.0, symbol_to_recognize);
+    // if (symbol_to_recognize == '(' || symbol_to_recognize == ')') {
+    //     set_lexeme(lexeme_out, LT_BRACE, 0.0, symbol_to_recognize);
+    //     return infix_notation_row + 1;
+    // }
+
+    // set_lexeme(lexeme_out, LT_ACTION, 0.0, symbol_to_recognize);
+    set_lexeme(lexeme_out, not_operand_lexeme_type, 0.0, symbol_to_recognize);
     return infix_notation_row + 1;
 }
 
 const char *recognize_placeholder_symbol_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out) {
-    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, 'x', lexeme_out, lexemes_created_out);
+    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, 'x', LT_OPERAND_PLACEHOLDER, lexeme_out, lexemes_created_out);
 }
 const char *recognize_opening_brace_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out) {
-    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, '(', lexeme_out, lexemes_created_out);
+    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, '(', LT_BRACE, lexeme_out, lexemes_created_out);
 }
 const char *recognize_closing_brace_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out) {
-    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, ')', lexeme_out, lexemes_created_out);    
+    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, ')', LT_BRACE, lexeme_out, lexemes_created_out);    
 }
 const char *recognize_add_symbol_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out) {
-    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, '+', lexeme_out, lexemes_created_out);    
+    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, '+', LT_ACTION, lexeme_out, lexemes_created_out);    
 }
 const char *recognize_multiply_symbol_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out) {
-    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, '*', lexeme_out, lexemes_created_out);    
+    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, '*', LT_ACTION, lexeme_out, lexemes_created_out);    
 }
 const char *recognize_divide_symbol_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out) {
-    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, '/', lexeme_out, lexemes_created_out);    
+    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, '/', LT_ACTION, lexeme_out, lexemes_created_out);    
 }
 const char *recognize_power_symbol_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out) {
-    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, '^', lexeme_out, lexemes_created_out);    
+    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, '^', LT_ACTION, lexeme_out, lexemes_created_out);    
 }
 int are_strings_equal(const char *left, const char *right, int length_without_terminator) {
     for (int index = 0; index < length_without_terminator; ++index) {
@@ -82,7 +89,7 @@ char get_single_symbol_for_function(const char *function_name_as_string, int fun
     return '\0';
 }
 
-const char *recognize_function_and_create_lexeme(
+static const char *recognize_function_and_create_lexeme(
     const char *infix_notation_row, 
     int length_without_terminator, 
     const char *function_name_as_string, 

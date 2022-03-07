@@ -7,7 +7,8 @@
 enum Lexeme_types {
     LT_OPERAND = 0,
     LT_ACTION = 1,
-    LT_OPERAND_PLACEHOLDER = 2
+    LT_OPERAND_PLACEHOLDER = 2,
+    LT_BRACE = 3
 };
 
 typedef struct Lexeme {
@@ -44,7 +45,7 @@ int is_action(const Lexeme *lexeme);
 
 int is_brace(const Lexeme *lexeme);
 
-int get_precenence(const Lexeme *lexeme);
+int get_precedence(const Lexeme *lexeme);
 
 int has_lower_precedence(const Lexeme *left, const Lexeme *right);
 

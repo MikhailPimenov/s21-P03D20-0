@@ -10,7 +10,7 @@ static void __compare_and_print_input_output_and_resolution(
     int actual_output_length, 
     int silent_on_success
 ) {
-    printf("test #%d:\t", case_number);
+    printf("Test #%d:\t", case_number);
     if (expected_output_length == actual_output_length && are_lexeme_arrays_equal(expected_output, actual_output, expected_output_length)) {
         printf("ok\n");
         if (silent_on_success)
@@ -30,7 +30,7 @@ static void __compare_and_print_input_output_and_resolution(
 }
 
 void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexeme *, int *)) {
-    printf("shunting_yard_test():\n");
+    printf("\nshunting_yard_test():\n");
     // const char *case1 = "2 + 1";
     // const char *expected1 = "2 1 +";
 
@@ -82,11 +82,11 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
     {
         const int length3 = 7;
         Lexeme case3[7];
-        set_lexeme(case3 + 0, LT_ACTION,  0.0, '(' );
+        set_lexeme(case3 + 0, LT_BRACE,   0.0, '(' );
         set_lexeme(case3 + 1, LT_OPERAND, 5.0, '\0');
         set_lexeme(case3 + 2, LT_ACTION,  0.0, '+' );
         set_lexeme(case3 + 3, LT_OPERAND, 7.0, '\0');
-        set_lexeme(case3 + 4, LT_ACTION,  0.0, ')' );
+        set_lexeme(case3 + 4, LT_BRACE,   0.0, ')' );
         set_lexeme(case3 + 5, LT_ACTION,  0.0, '/' );
         set_lexeme(case3 + 6, LT_OPERAND, 2.0, '\0');
 
@@ -136,11 +136,11 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
         Lexeme case5[7];
         set_lexeme(case5 + 0, LT_OPERAND, 5.0, '\0');
         set_lexeme(case5 + 1, LT_ACTION,  0.0,  '*');
-        set_lexeme(case5 + 2, LT_ACTION,  0.0,  '(');
+        set_lexeme(case5 + 2, LT_BRACE,   0.0,  '(');
         set_lexeme(case5 + 3, LT_OPERAND, 2.0, '\0');
         set_lexeme(case5 + 4, LT_ACTION,  0.0, '-' );
         set_lexeme(case5 + 5, LT_OPERAND, 3.0, '\0');
-        set_lexeme(case5 + 6, LT_ACTION,  0.0, ')' );
+        set_lexeme(case5 + 6, LT_BRACE,   0.0,  ')');
 
         Lexeme expected5[5];
         set_lexeme(expected5 + 0, LT_OPERAND, 5.0, '\0');

@@ -30,13 +30,13 @@ void get_lexeme_test_visual(void get_lexeme(const Lexeme *const, double *const, 
     set_lexeme(lexemes + 22, LT_OPERAND, -0.0,  '\0');
     set_lexeme(lexemes + 23, LT_ACTION, 0.0 , 'm');
     set_lexeme(lexemes + 24, LT_ACTION, 0.0 , 's');
-    set_lexeme(lexemes + 25, LT_ACTION, 0.0 , '(');
+    set_lexeme(lexemes + 25, LT_BRACE, 0.0 , '(');
     set_lexeme(lexemes + 26, LT_OPERAND, -5.0, '\0');;
     set_lexeme(lexemes + 27, LT_OPERAND, 25.0, '\0');;
     set_lexeme(lexemes + 28, LT_OPERAND, -6.0, '\0');;
     set_lexeme(lexemes + 29, LT_ACTION, 0.0 , 'l');
     set_lexeme(lexemes + 30, LT_ACTION, 0.0 , 't');
-    set_lexeme(lexemes + 31, LT_ACTION, 0.0 , ')');
+    set_lexeme(lexemes + 31, LT_BRACE, 0.0 , ')');
     set_lexeme(lexemes + 32, LT_ACTION, 0.0 , 'g');
 
     const int length = 33;
@@ -48,8 +48,7 @@ void get_lexeme_test_visual(void get_lexeme(const Lexeme *const, double *const, 
         printf("%d ", index);
         if (lexemes[index].actual_type == LT_OPERAND) {
             printf("operand = %lf\n", operand);
-        }
-        if (lexemes[index].actual_type == LT_ACTION) {
+        } else {
             printf("action  = %c\n", action);
         }
     }

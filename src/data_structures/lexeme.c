@@ -4,21 +4,20 @@ void get_lexeme(const Lexeme *const lexeme, double *const operand_out, char *con
     *operand_out = 0;
     *action_out = '\0';
 
-    // expecting action (operator, action, symbol):
-    if (lexeme->actual_type == LT_ACTION) {
-        *action_out = lexeme->data[0];
-        return;
-    }
-
     // expecting operand (number, double):
     if (lexeme->actual_type == LT_OPERAND) {
         const double *const pointer_to_double = (const double *const)(lexeme->data);
         *operand_out = *pointer_to_double;
+        return;
     }
+
+    // expecting action, placeholder or brace (operator, action, symbol, etc):
+    *action_out = lexeme->data[0];
 }
 static int __is_actual_type_correct(int actual_type) {
     return actual_type != LT_OPERAND || 
-           actual_type != LT_ACTION  || 
+           actual_type != LT_ACTION  ||
+           actual_type != LT_BRACE   || 
            actual_type != LT_OPERAND_PLACEHOLDER;
 }
 static int __is_actual_type_not_correct(int actual_type) {
@@ -31,7 +30,9 @@ void set_lexeme(Lexeme *lexeme, int actual_type, double operand, char action) {
 
 
     lexeme->actual_type = actual_type;
-    if (lexeme->actual_type == LT_ACTION) {
+    if (lexeme->actual_type == LT_ACTION ||
+        lexeme->actual_type == LT_BRACE  ||
+        lexeme->actual_type == LT_OPERAND_PLACEHOLDER) {
         (lexeme->data)[0] = action;
         return;
     }
@@ -55,23 +56,37 @@ void set_lexeme_placeholders_array(Lexeme *lexemes, int length, double value_for
 }
 
 static void __print_lexeme_with_format(const Lexeme *const lexeme, int with_endline, int with_type) {
-    if (lexeme->actual_type == LT_ACTION ||
-        lexeme->actual_type == LT_OPERAND_PLACEHOLDER) {
+    const int lexeme_type = lexeme->actual_type;
+    if (lexeme_type == LT_OPERAND) {
         if (with_type)
-            printf("action : ");
+            printf("operand     : ");
 
-        printf("%c ", lexeme->data[0]);
+        printf("%.2lf ", *(double *)(lexeme->data));
 
         if (with_endline)
             printf("\n");
+        
         return;
     }
-    
-    
-    if (with_type)
-        printf("operand : ");
 
-    printf("%.2lf ", *(double *)(lexeme->data));
+    if (with_type) {
+        switch (lexeme_type) {
+            case LT_ACTION:
+                printf("action      : ");
+                break;
+            case LT_OPERAND_PLACEHOLDER:
+                printf("placeholder : ");
+                break;
+            case LT_BRACE:
+                printf("brace       : ");
+                break;
+            default:
+                printf("unknown type: ");
+                break;
+        } 
+    }
+
+    printf("%c ", lexeme->data[0]);
 
     if (with_endline)
         printf("\n");
@@ -88,15 +103,6 @@ void print_lexeme_with_endline_and_type(const Lexeme *const lexeme) {
     static const int with_type = 1;
     __print_lexeme_with_format(lexeme, with_endline, with_type);
 }
-
-// void print_lexeme(const Lexeme *const lexeme) {
-//     if (lexeme->actual_type == LT_ACTION) {
-//         printf("action : %c\n", lexeme->data[0]);
-//         return;
-//     }
-
-//     printf("operand: %lf\n", *(double *)(lexeme->data));
-// }
 
 void print_lexeme_array(const Lexeme *const array, int length) {
     for (int index = 0; index < length; ++index) {
@@ -121,14 +127,14 @@ int are_lexemes_equal(const Lexeme *const left, const Lexeme *const right) {
 
 
     if (left->actual_type == LT_ACTION ||
+        left->actual_type == LT_BRACE  ||
         left->actual_type == LT_OPERAND_PLACEHOLDER ) {  // right->actual_type is also LT_ACTION
         
         return action_left == action_right;
     }
 
-    static const int epsilon = 1e-12;
-    /*return*/ are_double_equal(operand_left, operand_right, epsilon);
-    return 1;
+    static const double epsilon = 1e-12;
+    return are_double_equal(operand_left, operand_right, epsilon);
 }
 
 int are_lexeme_arrays_equal(const Lexeme *const first, const Lexeme *const second, int length) {
@@ -149,14 +155,15 @@ int is_action(const Lexeme *lexeme) {
 
 int is_brace(const Lexeme *lexeme) {
     return lexeme->data[0] == ')' || lexeme->data[0] == '(';
+    // return lexeme->actual_type == LT_BRACE;
 }
 
 int is_not_brace(const Lexeme *lexeme) {
     return !is_brace(lexeme);
 }
 
-int get_precenence(const Lexeme *lexeme) {
-    double operand = -1;
+int get_precedence(const Lexeme *lexeme) {
+    double operand = 0.0;
     char action = '\0';
     get_lexeme(lexeme, &operand, &action);
 
@@ -190,8 +197,8 @@ int get_precenence(const Lexeme *lexeme) {
 }
 
 int has_lower_precedence(const Lexeme *left, const Lexeme *right) {
-    const int left_precedence = get_precenence(left);
-    const int right_precedence = get_precenence(right);
+    const int left_precedence = get_precedence(left);
+    const int right_precedence = get_precedence(right);
 
     return left_precedence < right_precedence;
 }

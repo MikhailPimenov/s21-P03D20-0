@@ -5,7 +5,6 @@
 #include "recognize_lexemes.h"
 
 
-const char *recognize_sinlge_symbol_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, char symbol_to_recognize, Lexeme *const lexeme_out, int *lexemes_created_out);
 const char *recognize_placeholder_symbol_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out);
 const char *recognize_opening_brace_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out);
 const char *recognize_closing_brace_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out);
@@ -23,7 +22,6 @@ const char *recognize_subtract_symbol_and_create_three_lexemes_instead_of_one(
     int *lexemes_created_out);
 
 
-const char *recognize_function_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, const char *function_name_as_string, int function_name_length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out);
 const char *recognize_sine_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out);
 const char *recognize_cosine_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out);
 const char *recognize_tangent_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out);

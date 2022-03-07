@@ -25,7 +25,7 @@ static void __compare_and_print_input_output_and_resolution(
 }
 
 void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_notation_function)(const Lexeme *const, int, double*)) {
-    printf("calculate_reverse_polish_notation_test():\n");
+    printf("\ncalculate_reverse_polish_notation_test():\n");
     
     static const double epsilon = 1e-12;
     static const int E_SUCCESS = 0;

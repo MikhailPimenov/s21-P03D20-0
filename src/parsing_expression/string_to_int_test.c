@@ -12,7 +12,7 @@ static void __compare_and_print_input_output_and_resolution(
     int actual_number,
     int silent_on_success
 ) {
-    printf("test #%d:\t", case_number);
+    printf("Test #%d:\t", case_number);
     if (expected_status  == actual_status  && 
         expected_pointer == actual_pointer && 
         expected_number  == actual_number) {

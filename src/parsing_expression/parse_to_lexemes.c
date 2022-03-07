@@ -1,7 +1,11 @@
 #include "parse_to_lexemes.h"
 
+enum string_check_codes {
+    SC_STRING_IS_INCORRECT = -1,
+    SC_STRING_IS_CORRECT = 0
+};
 
-int get_amount_of_lexemes(const char *infix_notation_row, int length_without_terminator) {
+int check_input_string_and_count_lexemes(const char *infix_notation_row, int length_without_terminator, int *amount_of_lexemes_out) {
     const char *current_position_in_string = infix_notation_row;
     
     int lexeme_counter = 0;
@@ -89,10 +93,18 @@ int get_amount_of_lexemes(const char *infix_notation_row, int length_without_ter
 
 
         if (current_position_in_string == old_position_in_string) {
-            return lexeme_counter;
+            break;
         }
     }
-
+    
+    if (current_position_in_string - infix_notation_row < length_without_terminator) {
+        *amount_of_lexemes_out = 0;    
+        // printf("STRING IS NOT CORRECT!\n");
+        return SC_STRING_IS_INCORRECT;
+    }
+    // printf("Congratulations! String is correct.\n");
+    *amount_of_lexemes_out = lexeme_counter;
+    return SC_STRING_IS_CORRECT;
 }
 
 void create_lexemes(const char *infix_notation_row, int length_without_terminator, Lexeme *lexemes, int lexemes_length) {
@@ -256,8 +268,13 @@ void parse_to_lexemes_allocate(const char *infix_notation_row, int length_withou
     //     infix_notation_out = NULL;
     // *lexeme_list_length_out = 0;
    
-    const int amount_of_lexemes = get_amount_of_lexemes(infix_notation_row, length_without_terminator);
+    int amount_of_lexemes = 0;
+    const int status_check = check_input_string_and_count_lexemes(infix_notation_row, length_without_terminator, &amount_of_lexemes);
     // printf("amount = %d\n", amount_of_lexemes);
+    if (status_check != SC_STRING_IS_CORRECT) {
+        printf("STRING IS NOT CORRECT!\n");
+        return;
+    }
 
     Lexeme *lexemes = malloc(amount_of_lexemes * sizeof(Lexeme));
     if (lexemes == NULL) {
