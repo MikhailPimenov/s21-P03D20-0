@@ -97,11 +97,12 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     __compare_and_print_input_output_and_resolution(4, status, E_SUCCESS, expected4, actual4, epsilon, case4, length4);
 
 
-    Lexeme case5[2];
-    const int length5 = 2;
+    Lexeme case5[3];
+    const int length5 = 3;
 
     set_lexeme(case5 +  0, LT_OPERAND,  88.0, '\0');
-    set_lexeme(case5 +  1, LT_ACTION,   0.0, 'm' );
+    set_lexeme(case5 +  1, LT_OPERAND,  -1.0, '\0');
+    set_lexeme(case5 +  2, LT_ACTION,    0.0, '*' );
 
     const double expected5 = -88.0;
     double actual5 = -15.88;

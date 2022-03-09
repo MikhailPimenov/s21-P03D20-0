@@ -154,8 +154,7 @@ int is_action(const Lexeme *lexeme) {
 }
 
 int is_brace(const Lexeme *lexeme) {
-    return lexeme->data[0] == ')' || lexeme->data[0] == '(';
-    // return lexeme->actual_type == LT_BRACE;
+    return lexeme->actual_type == LT_BRACE;
 }
 
 int is_not_brace(const Lexeme *lexeme) {
@@ -189,8 +188,6 @@ int get_precedence(const Lexeme *lexeme) {
         case 'r':  //  sqrt(x)
             return OP_HIGH;
         case 'l':  //  ln(x)
-            return OP_HIGH;
-        case 'm':  //  -x
             return OP_HIGH;
     };
     return OP_LOWEST;

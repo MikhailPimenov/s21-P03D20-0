@@ -33,10 +33,10 @@ static int __divide(double left_operand, double right_operand, double *result) {
 
     return E_SUCCESS;
 }
-static int __minus(double single_operand, double *result_out) {
-    *result_out = (-1.0) * single_operand;
-    return E_SUCCESS;
-}
+// static int __minus(double single_operand, double *result_out) {
+//     *result_out = (-1.0) * single_operand;
+//     return E_SUCCESS;
+// }
 static int __sine(double single_operand, double *result_out) {
     *result_out = sin(single_operand);
     return E_SUCCESS;
@@ -201,16 +201,16 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
             continue;
         }
 
-        case 'm': {
-            const int status = __take_single_operand_calculate_and_push_result(&stack, __minus);
-            if (status == E_EMPTY_STACK_ERROR) {
-                return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
-            }
-            if (status != E_SUCCESS) {
-                return status;
-            }
-            continue;
-        }
+        // case 'm': {
+        //     const int status = __take_single_operand_calculate_and_push_result(&stack, __minus);
+        //     if (status == E_EMPTY_STACK_ERROR) {
+        //         return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+        //     }
+        //     if (status != E_SUCCESS) {
+        //         return status;
+        //     }
+        //     continue;
+        // }
 
         case 's': {
             const int status = __take_single_operand_calculate_and_push_result(&stack, __sine);
