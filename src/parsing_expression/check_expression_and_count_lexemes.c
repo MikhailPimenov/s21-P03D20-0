@@ -32,7 +32,7 @@ int check_brace_sequence(const char *brace_sequence, int length_without_terminat
         }
 
         if (is_empty(stack)) {
-            result = EC_EXPRESSION_IS_INCORRECT;
+            result = EC_EXPRESSION_IS_NOT_CORRECT;
             break;
         }
 
@@ -40,7 +40,7 @@ int check_brace_sequence(const char *brace_sequence, int length_without_terminat
     }
 
     if (!is_empty(stack))
-        result = EC_EXPRESSION_IS_INCORRECT;
+        result = EC_EXPRESSION_IS_NOT_CORRECT;
 
     destroy(&stack);
 
@@ -62,8 +62,8 @@ int check_brace_sequence(const char *brace_sequence, int length_without_terminat
 int check_expression_and_count_lexemes(const char *infix_notation_row, int length_without_terminator, int *amount_of_lexemes_out) {
 
     const int status_check_brace_sequence = check_brace_sequence(infix_notation_row, length_without_terminator);
-    if (status_check_brace_sequence == EC_EXPRESSION_IS_INCORRECT)
-        return EC_EXPRESSION_IS_INCORRECT; 
+    if (status_check_brace_sequence == EC_EXPRESSION_IS_NOT_CORRECT)
+        return EC_EXPRESSION_IS_NOT_CORRECT; 
 
     const char *current_position_in_string = infix_notation_row;
     *amount_of_lexemes_out = -1;
@@ -95,7 +95,7 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
 
         if (is_binary_action_recognized && is_previous_an_binary_action) {
             // printf("return #1\n");
-            return EC_EXPRESSION_IS_INCORRECT;    
+            return EC_EXPRESSION_IS_NOT_CORRECT;    
         }
 
         if (is_binary_action_recognized) {
@@ -114,7 +114,7 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
 
         if (is_binary_action_recognized && is_previous_an_binary_action) {
             // printf("return #2\n");
-            return EC_EXPRESSION_IS_INCORRECT;    
+            return EC_EXPRESSION_IS_NOT_CORRECT;    
         }
 
         if (is_binary_action_recognized) {
@@ -133,7 +133,7 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
 
         if (is_binary_action_recognized && (is_previous_an_binary_action || is_first_lexeme)) {
             // printf("return #3\n");
-            return EC_EXPRESSION_IS_INCORRECT; 
+            return EC_EXPRESSION_IS_NOT_CORRECT; 
         }
 
         if (is_binary_action_recognized) {
@@ -152,7 +152,7 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
 
         if (is_binary_action_recognized && (is_previous_an_binary_action || is_first_lexeme)) {
             // printf("return #4\n");
-            return EC_EXPRESSION_IS_INCORRECT;    
+            return EC_EXPRESSION_IS_NOT_CORRECT;    
         }   
 
         if (is_binary_action_recognized) {
@@ -171,7 +171,7 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
 
         if (is_binary_action_recognized && (is_previous_an_binary_action || is_first_lexeme)) {
             // printf("return #5\n");
-            return EC_EXPRESSION_IS_INCORRECT;    
+            return EC_EXPRESSION_IS_NOT_CORRECT;    
         }    
 
         if (is_binary_action_recognized) {
@@ -190,7 +190,7 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
 
         if (is_unary_action_recognized && is_previous_an_unary_action) {
             // printf("return #6\n");
-            return EC_EXPRESSION_IS_INCORRECT;    
+            return EC_EXPRESSION_IS_NOT_CORRECT;    
         }    
 
         if (is_unary_action_recognized) {
@@ -209,7 +209,7 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
 
         if (is_unary_action_recognized && is_previous_an_unary_action) {
             // printf("return #7\n");
-            return EC_EXPRESSION_IS_INCORRECT;    
+            return EC_EXPRESSION_IS_NOT_CORRECT;    
         }    
 
         if (is_unary_action_recognized) {
@@ -228,7 +228,7 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
 
         if (is_unary_action_recognized && is_previous_an_unary_action) {
             // printf("return #8\n");
-            return EC_EXPRESSION_IS_INCORRECT;    
+            return EC_EXPRESSION_IS_NOT_CORRECT;    
         }    
 
         if (is_unary_action_recognized) {
@@ -247,7 +247,7 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
 
         if (is_unary_action_recognized && is_previous_an_unary_action) {
             // printf("return #9\n");
-            return EC_EXPRESSION_IS_INCORRECT;    
+            return EC_EXPRESSION_IS_NOT_CORRECT;    
         }    
 
         if (is_unary_action_recognized) {
@@ -266,7 +266,7 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
 
         if (is_unary_action_recognized && is_previous_an_unary_action) {
             // printf("return #10\n");
-            return EC_EXPRESSION_IS_INCORRECT;    
+            return EC_EXPRESSION_IS_NOT_CORRECT;    
         }    
 
         if (is_unary_action_recognized) {
@@ -285,7 +285,7 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
 
         if (is_unary_action_recognized && is_previous_an_unary_action) {
             // printf("return #11\n");
-            return EC_EXPRESSION_IS_INCORRECT;    
+            return EC_EXPRESSION_IS_NOT_CORRECT;    
         }    
 
         if (is_unary_action_recognized) {
@@ -333,7 +333,7 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
 
         if (is_operand_recognized && is_previous_an_operand) {
             // printf("return double\n");
-            return EC_EXPRESSION_IS_INCORRECT;
+            return EC_EXPRESSION_IS_NOT_CORRECT;
         }
 
         if (is_operand_recognized) {
@@ -355,7 +355,7 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
 
         if (is_operand_recognized && is_previous_an_operand) { 
             // printf("return operand\n");
-            return EC_EXPRESSION_IS_INCORRECT;
+            return EC_EXPRESSION_IS_NOT_CORRECT;
         }
 
         if (is_operand_recognized) {
@@ -375,7 +375,7 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
     
     if (current_position_in_string - infix_notation_row < length_without_terminator) {
         // printf("return break\n");
-        return EC_EXPRESSION_IS_INCORRECT;
+        return EC_EXPRESSION_IS_NOT_CORRECT;
     }
     // printf("Congratulations! String is correct.\n");
     *amount_of_lexemes_out = lexeme_counter;

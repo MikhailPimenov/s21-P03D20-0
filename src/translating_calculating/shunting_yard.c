@@ -42,6 +42,7 @@ static void process_lexeme(const Lexeme *lexeme, Lexeme *postfix_notation, int *
     push(stack_for_actions, *lexeme);
 }
 
+// TODO: remove int *length_out parameter. It is possible to find the length of the postfix_notation outside this function
 void shunting_yard(const Lexeme *infix_notation, int length, Lexeme *postfix_notation, int *length_out) {
     *length_out = get_length_of_postfix_notation(infix_notation, length);
     int last_index_postfix_notation = 0;

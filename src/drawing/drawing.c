@@ -1,9 +1,10 @@
 #include "drawing.h"
 
 int get_row_number_from_y(double y, int amount_of_rows) {
-    if (amount_of_rows < 0)
+    if (amount_of_rows < 0) {
         printf("get_row_number_from_y(): amount_of_rows should not be negative!\n");
         return 0;
+    }
 
     return (y + 1.0) * ((double)amount_of_rows) / 2.0;
 }
@@ -20,7 +21,7 @@ double get_x_from_column_number(int column, int minimum_column, int maximum_colu
 
 
 // TODO: pass here precalculated array of row values which should be represented as filled symbols (where graph line is)
-int set_field(char **field, int rows, int columns, double minimum_x, double maximum_x) {
+void set_field(char **field, int rows, int columns, double minimum_x, double maximum_x) {
     for (int column = 0; column < columns; ++column) {
 
         for (int row = 0; row < rows; ++row) {
@@ -37,7 +38,7 @@ int set_field(char **field, int rows, int columns, double minimum_x, double maxi
     }
 }
 
-int draw_line(char *line, int length) {
+void draw_line(char *line, int length) {
     for (int index = 0; index < length - 1; ++index)
         printf("%c ", line[index]);
 

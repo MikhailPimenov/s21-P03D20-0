@@ -3,7 +3,7 @@
 
 
 enum expression_check_error_codes {
-    EC_EXPRESSION_IS_INCORRECT = -1,
+    EC_EXPRESSION_IS_NOT_CORRECT = -1,
     EC_EXPRESSION_IS_CORRECT   = 0
 };
 

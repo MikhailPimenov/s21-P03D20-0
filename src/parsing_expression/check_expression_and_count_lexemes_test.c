@@ -254,7 +254,7 @@ void check_expression_and_count_lexemes_test(int (*check_expression_and_count_le
         const char *case11 = "(sin(2+2^3)+tg(1))*+ctg(0.5)+cos(14/88-sqrt(9)*ln(88))*69";
         const int length_without_terminator11 = 56;
        
-        const int expected_status11 = EC_EXPRESSION_IS_INCORRECT;
+        const int expected_status11 = EC_EXPRESSION_IS_NOT_CORRECT;
         const int expected_length11 = -1;
         
         int actual_length11 = -1;
@@ -275,7 +275,7 @@ void check_expression_and_count_lexemes_test(int (*check_expression_and_count_le
         const char *case12 = "(sin2+2^3)+tg(1))+ctg(0.5)+cos(14/88-sqrt(9)*ln(88))*69";
         const int length_without_terminator12 = 55;
        
-        const int expected_status12 = EC_EXPRESSION_IS_INCORRECT;
+        const int expected_status12 = EC_EXPRESSION_IS_NOT_CORRECT;
         const int expected_length12 = -1;
         
         int actual_length12 = -1;
@@ -296,7 +296,7 @@ void check_expression_and_count_lexemes_test(int (*check_expression_and_count_le
         const char *case13 = "*(sin(2+2^3)+tg(1))+ctg(0.5)+cos(14/88-sqrt(9)*ln(88))*69";
         const int length_without_terminator13 = 57;
        
-        const int expected_status13 = EC_EXPRESSION_IS_INCORRECT;
+        const int expected_status13 = EC_EXPRESSION_IS_NOT_CORRECT;
         const int expected_length13 = -1;
         
         int actual_length13 = -1;
@@ -317,7 +317,7 @@ void check_expression_and_count_lexemes_test(int (*check_expression_and_count_le
         const char *case14 = "(sin(2+2^3)+tg(1))+ctg(0.5)+cos(14/88-sqrt(9)*ln(88))*69-";
         const int length_without_terminator14 = 58;
        
-        const int expected_status14 = EC_EXPRESSION_IS_INCORRECT;
+        const int expected_status14 = EC_EXPRESSION_IS_NOT_CORRECT;
         const int expected_length14 = -1;
         
         int actual_length14 = -1;
@@ -380,7 +380,7 @@ void check_expression_and_count_lexemes_test(int (*check_expression_and_count_le
         const char *case17 = "+)sin(2+2^3)+tg(1))+ctg(0.5)+cos(14/88-sqrt(9)*ln(88))*69";
         const int length_without_terminator17 = 57;
        
-        const int expected_status17 = EC_EXPRESSION_IS_INCORRECT;
+        const int expected_status17 = EC_EXPRESSION_IS_NOT_CORRECT;
         const int expected_length17 = -1;
         
         int actual_length17 = -1;
