@@ -1,37 +1,27 @@
 #include "calculate_reverse_polish_notation.h"
 
-enum error_codes {
-    E_SUCCESS = 0,
-    E_ZERO_DIVISION_ERROR = 1,
-    E_EMPTY_STACK_ERROR = 2,
-    E_INVALID_REVERSE_POLISH_NOTATION_ERROR = 3,
-    E_UNKNOWN_ACTION_ERROR = 4,
-    E_NEGATIVE_ARGUMENT_FOR_LOGARITHM_ERROR = 5,
-    E_NEGATIVE_ARGUMENT_FOR_SQRT_ERROR = 6
-};
-
 static int __add(double left_operand, double right_operand, double *result) {
     *result = left_operand + right_operand; 
 
-    return E_SUCCESS;
+    return C_SUCCESS;
 }
 static int __subtract(double left_operand, double right_operand, double *result) {
     *result = left_operand - right_operand; 
 
-    return E_SUCCESS;
+    return C_SUCCESS;
 }
 static int __multiply(double left_operand, double right_operand, double *result) {
     *result = left_operand * right_operand; 
 
-    return E_SUCCESS;
+    return C_SUCCESS;
 }
 static int __divide(double left_operand, double right_operand, double *result) {
     if (are_double_equal(right_operand, 0.0, 1e-12))
-        return E_ZERO_DIVISION_ERROR;
+        return C_ZERO_DIVISION_ERROR;
     
     *result = left_operand / right_operand; 
 
-    return E_SUCCESS;
+    return C_SUCCESS;
 }
 // static int __minus(double single_operand, double *result_out) {
 //     *result_out = (-1.0) * single_operand;
@@ -39,44 +29,44 @@ static int __divide(double left_operand, double right_operand, double *result) {
 // }
 static int __sine(double single_operand, double *result_out) {
     *result_out = sin(single_operand);
-    return E_SUCCESS;
+    return C_SUCCESS;
 }
 static int __cosine(double single_operand, double *result_out) {
     *result_out = cos(single_operand);
-    return E_SUCCESS;
+    return C_SUCCESS;
 }
 static int __tangent(double single_operand, double *result_out) {
     const double pi_constant = acos(-1.0);
     if (are_double_equal(single_operand, pi_constant / 2.0, 1e-12)) {
-        return E_ZERO_DIVISION_ERROR;
+        return C_ZERO_DIVISION_ERROR;
     }
 
     *result_out = tan(single_operand);
-    return E_SUCCESS;
+    return C_SUCCESS;
 }
 static int __cotangent(double single_operand, double *result_out) {
     if (are_double_equal(single_operand, 0.0, 1e-12)) {
-        return E_ZERO_DIVISION_ERROR;
+        return C_ZERO_DIVISION_ERROR;
     }
 
     *result_out = tan(single_operand);
-    return E_SUCCESS;
+    return C_SUCCESS;
 }
 // static int __natural_logarithm(double single_operand, double *result_out) {
 //     if (single_operand < 1e-12) {
-//         return E_NEGATIVE_ARGUMENT_FOR_LOGARITHM_ERROR;
+//         return C_NEGATIVE_ARGUMENT_FOR_LOGARITHM_ERROR;
 //     }
 
 //     *result_out = log(single_operand);
-//     return E_SUCCESS;
+//     return C_SUCCESS;
 // }
 static int __square_root(double single_operand, double *result_out) {
     if (single_operand < 1e-12) {
-        return E_NEGATIVE_ARGUMENT_FOR_SQRT_ERROR;
+        return C_NEGATIVE_ARGUMENT_FOR_SQRT_ERROR;
     }
 
     *result_out = sqrt(single_operand);
-    return E_SUCCESS;
+    return C_SUCCESS;
 }
 static int __take_two_operands_calculate_and_push_result(Stack_node **stack, int (*function_with_two_operands)(double, double, double *)) {
     double right_operand = 0.0;
@@ -88,7 +78,7 @@ static int __take_two_operands_calculate_and_push_result(Stack_node **stack, int
     
     if (is_empty(*stack)) {
         printf("Stack is empty. Nothing to pop.\n");
-        return E_EMPTY_STACK_ERROR;
+        return C_EMPTY_STACK_ERROR;
     }
 
     const Lexeme right = pop(stack);
@@ -109,7 +99,7 @@ static int __take_two_operands_calculate_and_push_result(Stack_node **stack, int
 
     double result_operand = 0.0;
     const int status = function_with_two_operands(left_operand, right_operand, &result_operand);
-    if (status != E_SUCCESS) {
+    if (status != C_SUCCESS) {
         return status;
     }
 
@@ -117,7 +107,7 @@ static int __take_two_operands_calculate_and_push_result(Stack_node **stack, int
     set_lexeme(&result_lexeme, LT_OPERAND, result_operand, '\0');
     push(stack, result_lexeme);
 
-    return E_SUCCESS;
+    return C_SUCCESS;
 }
 static int __take_single_operand_calculate_and_push_result(Stack_node **stack, int (*function_with_single_operand)(double, double*)) {
     double single_operand = 0.0;
@@ -125,7 +115,7 @@ static int __take_single_operand_calculate_and_push_result(Stack_node **stack, i
 
     if (is_empty(*stack)) {
         printf("Stack is empty. Nothing to pop.\n");
-        return E_EMPTY_STACK_ERROR;
+        return C_EMPTY_STACK_ERROR;
     }
 
     const Lexeme single = pop(stack);
@@ -133,7 +123,7 @@ static int __take_single_operand_calculate_and_push_result(Stack_node **stack, i
     
     double result_operand = 0.0;
     const int status = function_with_single_operand(single_operand, &result_operand);
-    if (status != E_SUCCESS) {
+    if (status != C_SUCCESS) {
         return status;
     }
 
@@ -141,7 +131,7 @@ static int __take_single_operand_calculate_and_push_result(Stack_node **stack, i
     set_lexeme(&result_lexeme, LT_OPERAND, result_operand, '\0');
     push(stack, result_lexeme);
 
-    return E_SUCCESS;
+    return C_SUCCESS;
 }
 
 int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int length, double *result_out) {
@@ -162,40 +152,40 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
         switch (current_action) {
         case '+': {
             const int status = __take_two_operands_calculate_and_push_result(&stack, __add);
-            if (status == E_EMPTY_STACK_ERROR) {
-                return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            if (status == C_EMPTY_STACK_ERROR) {
+                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
             }
-            if (status != E_SUCCESS) {
+            if (status != C_SUCCESS) {
                 return status;
             }
             continue;
         }
         case '-': {
             const int status = __take_two_operands_calculate_and_push_result(&stack, __subtract);
-            if (status == E_EMPTY_STACK_ERROR) {
-                return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            if (status == C_EMPTY_STACK_ERROR) {
+                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
             }
-            if (status != E_SUCCESS) {
+            if (status != C_SUCCESS) {
                 return status;
             }
             continue;
         }
         case '*': {
             const int status = __take_two_operands_calculate_and_push_result(&stack, __multiply);
-            if (status == E_EMPTY_STACK_ERROR) {
-                return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            if (status == C_EMPTY_STACK_ERROR) {
+                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
             }
-            if (status != E_SUCCESS) {
+            if (status != C_SUCCESS) {
                 return status;
             }
             continue;
         }
         case '/': {
             const int status = __take_two_operands_calculate_and_push_result(&stack, __divide);
-            if (status == E_EMPTY_STACK_ERROR) {
-                return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            if (status == C_EMPTY_STACK_ERROR) {
+                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
             }
-            if (status != E_SUCCESS) {
+            if (status != C_SUCCESS) {
                 return status;
             }
             continue;
@@ -214,10 +204,10 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
 
         case 's': {
             const int status = __take_single_operand_calculate_and_push_result(&stack, __sine);
-            if (status == E_EMPTY_STACK_ERROR) {
-                return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            if (status == C_EMPTY_STACK_ERROR) {
+                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
             }
-            if (status != E_SUCCESS) {
+            if (status != C_SUCCESS) {
                 return status;
             }
             continue;
@@ -225,10 +215,10 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
 
         case 'c': {
             const int status = __take_single_operand_calculate_and_push_result(&stack, __cosine);
-            if (status == E_EMPTY_STACK_ERROR) {
-                return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            if (status == C_EMPTY_STACK_ERROR) {
+                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
             }
-            if (status != E_SUCCESS) {
+            if (status != C_SUCCESS) {
                 return status;
             }
             continue;
@@ -236,10 +226,10 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
 
         case 't': {
             const int status = __take_single_operand_calculate_and_push_result(&stack, __tangent);
-            if (status == E_EMPTY_STACK_ERROR) {
-                return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            if (status == C_EMPTY_STACK_ERROR) {
+                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
             }
-            if (status != E_SUCCESS) {
+            if (status != C_SUCCESS) {
                 return status;
             }
             continue;
@@ -247,10 +237,10 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
 
         case 'g': {
             const int status = __take_single_operand_calculate_and_push_result(&stack, __cotangent);
-            if (status == E_EMPTY_STACK_ERROR) {
-                return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            if (status == C_EMPTY_STACK_ERROR) {
+                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
             }
-            if (status != E_SUCCESS) {
+            if (status != C_SUCCESS) {
                 return status;
             }
             continue;
@@ -258,10 +248,10 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
 
         case 'r': {
             const int status = __take_single_operand_calculate_and_push_result(&stack, __square_root);
-            if (status == E_EMPTY_STACK_ERROR) {
-                return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            if (status == C_EMPTY_STACK_ERROR) {
+                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
             }
-            if (status != E_SUCCESS) {
+            if (status != C_SUCCESS) {
                 return status;
             }
             continue;
@@ -269,7 +259,7 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
 
         default:
             // printf("calculate_rpn(): default:\n");
-            return E_UNKNOWN_ACTION_ERROR;
+            return C_UNKNOWN_ACTION_ERROR;
         }
     }
 
@@ -278,8 +268,8 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
     get_lexeme(&result_lexeme, result_out, &action_dummy);
 
     if (!is_empty(stack)) {
-        return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+        return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
     }
 
-    return E_SUCCESS;
+    return C_SUCCESS;
 }

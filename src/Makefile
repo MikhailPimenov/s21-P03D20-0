@@ -63,11 +63,11 @@ $(BUILD)/common.o: translating_calculating/common.c translating_calculating/comm
 		$(CC) $(CFLAGS) translating_calculating/common.c -o $(BUILD)/common.o
 
 
-$(BUILD)/calculate_reverse_polish_notation_test.o: translating_calculating/calculate_reverse_polish_notation_test.c translating_calculating/calculate_reverse_polish_notation_test.h
+$(BUILD)/calculate_reverse_polish_notation_test.o: translating_calculating/calculate_reverse_polish_notation_test.c translating_calculating/calculate_reverse_polish_notation_test.h translating_calculating/calculation_error_codes.h
 		$(CC) $(CFLAGS) translating_calculating/calculate_reverse_polish_notation_test.c -o $(BUILD)/calculate_reverse_polish_notation_test.o 
 
 
-$(BUILD)/calculate_reverse_polish_notation.o: translating_calculating/calculate_reverse_polish_notation.c translating_calculating/calculate_reverse_polish_notation.h
+$(BUILD)/calculate_reverse_polish_notation.o: translating_calculating/calculate_reverse_polish_notation.c translating_calculating/calculate_reverse_polish_notation.h translating_calculating/calculation_error_codes.h
 		$(CC) $(CFLAGS) translating_calculating/calculate_reverse_polish_notation.c -o $(BUILD)/calculate_reverse_polish_notation.o
 
 
@@ -113,6 +113,7 @@ $(BUILD)/check_expression_and_count_lexemes_test.o: parsing_expression/check_exp
 
 $(BUILD)/drawing.o: drawing/drawing.c drawing/drawing.h
 		$(CC) $(CFLAGS) drawing/drawing.c -o $(BUILD)/drawing.o
+
 
 
 clean:

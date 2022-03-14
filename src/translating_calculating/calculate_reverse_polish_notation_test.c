@@ -28,7 +28,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     printf("\ncalculate_reverse_polish_notation_test():\n");
     
     static const double epsilon = 1e-12;
-    static const int E_SUCCESS = 0;
+    // static const int E_SUCCESS = 0;
     int status = -1;
     
     Lexeme case1[5];
@@ -43,7 +43,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected1 = 16.0;
     double actual1 = -14.87;
     status = calculate_reversed_polish_notation_function(case1, length1, &actual1);
-    __compare_and_print_input_output_and_resolution(1, status, E_SUCCESS, expected1, actual1, epsilon, case1, length1);
+    __compare_and_print_input_output_and_resolution(1, status, C_SUCCESS, expected1, actual1, epsilon, case1, length1);
 
 
     Lexeme case2[5];
@@ -58,7 +58,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected2 = 24.0;
     double actual2 = -14.89;
     status = calculate_reversed_polish_notation_function(case2, length2, &actual2);
-    __compare_and_print_input_output_and_resolution(2, status, E_SUCCESS, expected2, actual2, epsilon, case2, length2);
+    __compare_and_print_input_output_and_resolution(2, status, C_SUCCESS, expected2, actual2, epsilon, case2, length2);
 
 
     Lexeme case3[5];
@@ -73,7 +73,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected3 = -5.0;
     double actual3 = -13.88;
     status = calculate_reversed_polish_notation_function(case3, length3, &actual3);
-    __compare_and_print_input_output_and_resolution(3, status, E_SUCCESS, expected3, actual3, epsilon, case3, length3);
+    __compare_and_print_input_output_and_resolution(3, status, C_SUCCESS, expected3, actual3, epsilon, case3, length3);
 
 
     Lexeme case4[11];
@@ -94,7 +94,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected4 = 2.0;
     double actual4 = -15.88;
     status = calculate_reversed_polish_notation_function(case4, length4, &actual4);
-    __compare_and_print_input_output_and_resolution(4, status, E_SUCCESS, expected4, actual4, epsilon, case4, length4);
+    __compare_and_print_input_output_and_resolution(4, status, C_SUCCESS, expected4, actual4, epsilon, case4, length4);
 
 
     Lexeme case5[3];
@@ -107,7 +107,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected5 = -88.0;
     double actual5 = -15.88;
     status = calculate_reversed_polish_notation_function(case5, length5, &actual5);
-    __compare_and_print_input_output_and_resolution(5, status, E_SUCCESS, expected5, actual5, epsilon, case5, length5);
+    __compare_and_print_input_output_and_resolution(5, status, C_SUCCESS, expected5, actual5, epsilon, case5, length5);
 
 
     const double pi_constant = acos(-1);
@@ -120,7 +120,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected6 = 0.0;
     double actual6 = -15.88;
     status = calculate_reversed_polish_notation_function(case6, length6, &actual6);
-    __compare_and_print_input_output_and_resolution(6, status, E_SUCCESS, expected6, actual6, epsilon, case6, length6);
+    __compare_and_print_input_output_and_resolution(6, status, C_SUCCESS, expected6, actual6, epsilon, case6, length6);
 
 
     Lexeme case7[2];
@@ -132,7 +132,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected7 = 0.5;
     double actual7 = -15.88;
     status = calculate_reversed_polish_notation_function(case7, length7, &actual7);
-    __compare_and_print_input_output_and_resolution(7, status, E_SUCCESS, expected7, actual7, epsilon, case7, length7);
+    __compare_and_print_input_output_and_resolution(7, status, C_SUCCESS, expected7, actual7, epsilon, case7, length7);
 
 
     Lexeme case8[2];
@@ -144,7 +144,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected8 = -0.5;
     double actual8 = -15.88;
     status = calculate_reversed_polish_notation_function(case8, length8, &actual8);
-    __compare_and_print_input_output_and_resolution(8, status, E_SUCCESS, expected8, actual8, epsilon, case8, length8);
+    __compare_and_print_input_output_and_resolution(8, status, C_SUCCESS, expected8, actual8, epsilon, case8, length8);
 
 
     Lexeme case9[2];
@@ -156,7 +156,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected9 = 1.0;
     double actual9 = -15.88;
     status = calculate_reversed_polish_notation_function(case9, length9, &actual9);
-    __compare_and_print_input_output_and_resolution(9, status, E_SUCCESS, expected9, actual9, epsilon, case9, length9);
+    __compare_and_print_input_output_and_resolution(9, status, C_SUCCESS, expected9, actual9, epsilon, case9, length9);
 
 
     Lexeme case10[2];
@@ -168,7 +168,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected10 = -1.0;
     double actual10 = -15.88;
     status = calculate_reversed_polish_notation_function(case10, length10, &actual10);
-    __compare_and_print_input_output_and_resolution(10, status, E_SUCCESS, expected10, actual10, epsilon, case10, length10);
+    __compare_and_print_input_output_and_resolution(10, status, C_SUCCESS, expected10, actual10, epsilon, case10, length10);
 
 
     Lexeme case11[2];
@@ -180,7 +180,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected11 = 1.0;
     double actual11 = -15.88;
     status = calculate_reversed_polish_notation_function(case11, length11, &actual11);
-    __compare_and_print_input_output_and_resolution(11, status, E_SUCCESS, expected11, actual11, epsilon, case11, length11);
+    __compare_and_print_input_output_and_resolution(11, status, C_SUCCESS, expected11, actual11, epsilon, case11, length11);
 
 
     Lexeme case12[2];
@@ -192,7 +192,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected12 = 1.0;
     double actual12 = -15.88;
     status = calculate_reversed_polish_notation_function(case12, length12, &actual12);
-    __compare_and_print_input_output_and_resolution(12, status, E_SUCCESS, expected12, actual12, epsilon, case12, length12);
+    __compare_and_print_input_output_and_resolution(12, status, C_SUCCESS, expected12, actual12, epsilon, case12, length12);
 
 
     Lexeme case13[2];
@@ -204,7 +204,7 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const double expected13 = 2.0;
     double actual13 = -15.88;
     status = calculate_reversed_polish_notation_function(case13, length13, &actual13);
-    __compare_and_print_input_output_and_resolution(13, status, E_SUCCESS, expected13, actual13, epsilon, case13, length13);
+    __compare_and_print_input_output_and_resolution(13, status, C_SUCCESS, expected13, actual13, epsilon, case13, length13);
     
     //  TODO: create test-cases for zero-division, invalid tg, invalid ctg, invalid ln, invalid sqrt, invalid power
 }
