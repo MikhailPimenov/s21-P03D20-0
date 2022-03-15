@@ -55,6 +55,18 @@ void set_lexeme_placeholders_array(Lexeme *lexemes, int length, double value_for
         __set_lexeme_placeholder(lexemes + index, value_for_placeholder);
 }
 
+void __copy_lexeme(Lexeme *destination, const Lexeme *const source) {
+    destination->actual_type = source->actual_type;
+    
+    for (int byte_index = 0; byte_index < 8; ++byte_index)
+        (destination->data)[byte_index] = (source->data)[byte_index];
+}
+
+void copy_lexemes_array(Lexeme *destination, const Lexeme *const source, int length) {
+    for (int index = 0; index < length; ++index)
+        __copy_lexeme(destination + index, source + index);
+}
+
 static void __print_lexeme_with_format(const Lexeme *const lexeme, int with_endline, int with_type) {
     const int lexeme_type = lexeme->actual_type;
     if (lexeme_type == LT_OPERAND) {

@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-c -Wall -Werror -Wextra -std=c11
+CFLAGS=-c -Wall -Werror -Wextra -std=c11 -g
 
 BUILD=../build
 
@@ -19,8 +19,8 @@ test: $(BUILD)/graph_test.exe
 		# $(CC) $(BUILD)/graph.o $(BUILD)/translating.o  $(BUILD)/shunting_yard.o $(BUILD)/stack.o $(BUILD)/lexeme.o -o $(BUILD)/graph.exe
 
 
-$(BUILD)/graph_test.exe: $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o $(BUILD)/parse_to_lexemes.o $(BUILD)/parse_to_lexemes_test.o $(BUILD)/string_to_int.o $(BUILD)/string_to_int_test.o $(BUILD)/string_to_double.o $(BUILD)/string_to_double_test.o $(BUILD)/recognize_lexemes.o $(BUILD)/create_lexemes.o $(BUILD)/check_expression_and_count_lexemes_test.o $(BUILD)/check_expression_and_count_lexemes.o $(BUILD)/drawing.o
-		$(CC) $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o $(BUILD)/parse_to_lexemes.o $(BUILD)/parse_to_lexemes_test.o $(BUILD)/string_to_int.o $(BUILD)/string_to_int_test.o $(BUILD)/string_to_double.o $(BUILD)/string_to_double_test.o $(BUILD)/recognize_lexemes.o $(BUILD)/create_lexemes.o $(BUILD)/check_expression_and_count_lexemes_test.o $(BUILD)/check_expression_and_count_lexemes.o $(BUILD)/drawing.o -o $(BUILD)/graph_test.exe
+$(BUILD)/graph_test.exe: $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o $(BUILD)/parse_to_lexemes.o $(BUILD)/parse_to_lexemes_test.o $(BUILD)/string_to_int.o $(BUILD)/string_to_int_test.o $(BUILD)/string_to_double.o $(BUILD)/string_to_double_test.o $(BUILD)/recognize_lexemes.o $(BUILD)/create_lexemes.o $(BUILD)/check_expression_and_count_lexemes_test.o $(BUILD)/check_expression_and_count_lexemes.o $(BUILD)/drawing.o $(BUILD)/allocate_deallocate_field.o
+		$(CC) $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o $(BUILD)/parse_to_lexemes.o $(BUILD)/parse_to_lexemes_test.o $(BUILD)/string_to_int.o $(BUILD)/string_to_int_test.o $(BUILD)/string_to_double.o $(BUILD)/string_to_double_test.o $(BUILD)/recognize_lexemes.o $(BUILD)/create_lexemes.o $(BUILD)/check_expression_and_count_lexemes_test.o $(BUILD)/check_expression_and_count_lexemes.o $(BUILD)/drawing.o $(BUILD)/allocate_deallocate_field.o -o $(BUILD)/graph_test.exe
 
 
 $(BUILD)/graph_test.o: graph.c
@@ -114,6 +114,10 @@ $(BUILD)/check_expression_and_count_lexemes_test.o: parsing_expression/check_exp
 $(BUILD)/drawing.o: drawing/drawing.c drawing/drawing.h
 		$(CC) $(CFLAGS) drawing/drawing.c -o $(BUILD)/drawing.o
 
+
+
+$(BUILD)/allocate_deallocate_field.o: field/allocate_deallocate_field.c field/allocate_deallocate_field.h
+		$(CC) $(CFLAGS) field/allocate_deallocate_field.c -o $(BUILD)/allocate_deallocate_field.o
 
 
 clean:

@@ -1,6 +1,7 @@
 #ifndef SRC_DRAWING_DRAWING_H_
 #define SRC_DRAWING_DRAWING_H_
 
+#include <stdio.h>
 #include "../data_structures/lexeme.h"
 
 // TODO: add prototypes of other necessary functions from drawing.c

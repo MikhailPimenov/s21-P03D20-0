@@ -3,8 +3,11 @@
 static int get_length_of_postfix_notation(const Lexeme *infix_notation, int length) {
     int new_length = 0;
     for (int index = 0; index < length; ++index) {
-        if (is_operand(infix_notation + index) || (is_action(infix_notation + index) && !is_brace(infix_notation + index)))   //  TODO: simplify multiple condition if
-            ++new_length;
+        // if (is_operand(infix_notation + index) || (is_action(infix_notation + index) && !is_brace(infix_notation + index)))   //  TODO: simplify multiple condition if
+        if (is_brace(infix_notation + index))
+            continue;    
+        ++new_length;
+
     }
     return new_length;
 }

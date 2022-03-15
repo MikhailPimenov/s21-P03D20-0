@@ -133,17 +133,36 @@ int calculate_values_for_definition_area(
     int length_of_postfix_notation,
     int (*calculate_rpn_function)(const Lexeme *const, int, double*)
 ) {
+    Lexeme *postfix_notation_with_filled_placeholders = malloc(length_of_postfix_notation * sizeof(Lexeme));
+    copy_lexemes_array(postfix_notation_with_filled_placeholders, postfix_notation, length_of_postfix_notation);
+
     for (int column = 0; column < length; ++column) {
-        const int status = calculate_reversed_polish_notation(
-            postfix_notation,
+        set_lexeme_placeholders_array(
+            postfix_notation_with_filled_placeholders, 
+            length_of_postfix_notation, 
+            definition_area[column]
+        );
+        
+        const int status = calculate_rpn_function(
+            postfix_notation_with_filled_placeholders,
             length_of_postfix_notation,
             values + column
         );
 
         if (status != C_SUCCESS) {
+            if (postfix_notation_with_filled_placeholders) {
+                free(postfix_notation_with_filled_placeholders);
+                postfix_notation_with_filled_placeholders = NULL;
+            }
             return status;
         }
     }
+
+    if (postfix_notation_with_filled_placeholders) {
+        free(postfix_notation_with_filled_placeholders);
+        postfix_notation_with_filled_placeholders = NULL;
+    }
+
     return C_SUCCESS;
 }
 
@@ -174,7 +193,8 @@ void set_empty_field(char **field, int rows, int columns, char empty_symbol) {
 //     return free_on_exit(line, -1);
 // }
 void set_graph_on_empty_field(char **field, int rows, int columns, int *array_of_rows, int length, char filled_symbol) {
-    for (int column = 0; column < columns; ++column)
+    const int limiting_length = (length <=columns) ? length : columns;
+    for (int column = 0; column < limiting_length; ++column)
         if (0 <= array_of_rows[column] && array_of_rows[column] < rows) 
             field[array_of_rows[column]][column] = filled_symbol;
 }
@@ -371,11 +391,11 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
 
 
 
-
     set_empty_field(field, rows, columns, blank_symbol);
     set_graph_on_empty_field(field, rows, columns, array_of_rows, rows, filled_symbol);
 
     draw_field(field, rows, columns);
+
 
 
     // TODO: deallocate everything!
@@ -387,7 +407,7 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
 
 int main() {
 
-
+/*
     #ifdef TEST_GRAPH_
     printf("Test in main():\n");
     stack_test_visual();
@@ -399,8 +419,8 @@ int main() {
     parse_to_lexemes_test(parse_to_lexemes_allocate);
     check_expression_and_count_lexemes_test(check_expression_and_count_lexemes);
     #endif //  TEST_GRAPH_
-
-
+*/
+    program(30, 40, '*', '.');
     // shunting_yard_test(shunting_yard, "Testing shunting_yard:");
 
     // draw_field(example_field, rows, columns);

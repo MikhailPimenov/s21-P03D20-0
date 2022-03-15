@@ -35,6 +35,9 @@ void set_lexeme(Lexeme *const lexeme, int actual_type, double operand, char acti
 
 void set_lexeme_placeholders_array(Lexeme *lexemes, int length, double value_for_placeholder);
 
+void copy_lexemes_array(Lexeme *destination, const Lexeme *const source, int length);
+
+
 int are_lexemes_equal(const Lexeme *const left, const Lexeme *const right);
 
 int are_lexeme_arrays_equal(const Lexeme *const first, const Lexeme *const second, int length);
