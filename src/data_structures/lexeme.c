@@ -4,8 +4,9 @@ void get_lexeme(const Lexeme *const lexeme, double *const operand_out, char *con
     *operand_out = 0;
     *action_out = '\0';
 
+    const int type = lexeme->actual_type;
     // expecting operand (number, double):
-    if (lexeme->actual_type == LT_OPERAND) {
+    if (type == LT_OPERAND || type == LT_OPERAND_PLACEHOLDER) {
         const double *const pointer_to_double = (const double *const)(lexeme->data);
         *operand_out = *pointer_to_double;
         return;
@@ -15,10 +16,11 @@ void get_lexeme(const Lexeme *const lexeme, double *const operand_out, char *con
     *action_out = lexeme->data[0];
 }
 static int __is_actual_type_correct(int actual_type) {
-    return actual_type != LT_OPERAND || 
-           actual_type != LT_ACTION  ||
-           actual_type != LT_BRACE   || 
-           actual_type != LT_OPERAND_PLACEHOLDER;
+    return actual_type == LT_OPERAND || 
+           actual_type == LT_ACTION  ||
+           actual_type == LT_BRACE   ||
+           actual_type == LT_PLACEHOLDER ||  
+           actual_type == LT_OPERAND_PLACEHOLDER;
 }
 static int __is_actual_type_not_correct(int actual_type) {
     return !__is_actual_type_correct(actual_type);
@@ -47,7 +49,7 @@ void set_lexeme(Lexeme *lexeme, int actual_type, double operand, char action) {
 
 static void __set_lexeme_placeholder(Lexeme *lexeme, double value_for_placeholder) {
     if (lexeme->actual_type == LT_OPERAND_PLACEHOLDER)
-        set_lexeme(lexeme, LT_OPERAND, value_for_placeholder, '\0');
+        set_lexeme(lexeme, LT_OPERAND_PLACEHOLDER, value_for_placeholder, '\0');
 }
 
 void set_lexeme_placeholders_array(Lexeme *lexemes, int length, double value_for_placeholder) {
@@ -69,7 +71,7 @@ void copy_lexemes_array(Lexeme *destination, const Lexeme *const source, int len
 
 static void __print_lexeme_with_format(const Lexeme *const lexeme, int with_endline, int with_type) {
     const int lexeme_type = lexeme->actual_type;
-    if (lexeme_type == LT_OPERAND) {
+    if (lexeme_type == LT_OPERAND || lexeme_type == LT_OPERAND_PLACEHOLDER) {
         if (with_type)
             printf("operand     : ");
 
@@ -161,11 +163,16 @@ int are_lexeme_arrays_equal(const Lexeme *const first, const Lexeme *const secon
 int is_operand(const Lexeme *const lexeme) {
     return lexeme->actual_type == LT_OPERAND;
 }
-int is_placeholder(const Lexeme *const lexeme) {
+int is_operand_placeholder(const Lexeme *const lexeme) {
     return lexeme->actual_type == LT_OPERAND_PLACEHOLDER;
 }
+int is_placeholder(const Lexeme *const lexeme) {
+    return lexeme->actual_type == LT_PLACEHOLDER;
+}
 int is_operand_or_placeholder(const Lexeme *const lexeme) {
-    return is_operand(lexeme) || is_placeholder(lexeme);
+    return is_operand(lexeme) ||
+           is_operand_placeholder(lexeme) ||
+           is_placeholder(lexeme);
 }
 int is_action(const Lexeme *lexeme) {
     return lexeme->actual_type == LT_ACTION;
@@ -223,7 +230,7 @@ int has_top_higher_precedence(Lexeme top, Lexeme current_lexeme) {
 }
 
 int is_opening_brace(Lexeme lexeme) {
-    return lexeme.data[0] == '('; 
+    return is_brace(&lexeme) && lexeme.data[0] == '('; 
 }
 
 int is_not_opening_brace(Lexeme lexeme) {

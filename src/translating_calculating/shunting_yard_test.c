@@ -161,7 +161,7 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
         // const char *expected5 = "x 2 3 - *";
         const int length6 = 7;
         Lexeme case6[7];
-        set_lexeme(case6 + 0, LT_OPERAND_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(case6 + 0, LT_PLACEHOLDER,         0.0,  'x');
         set_lexeme(case6 + 1, LT_ACTION,              0.0,  '*');
         set_lexeme(case6 + 2, LT_BRACE,               0.0,  '(');
         set_lexeme(case6 + 3, LT_OPERAND,             2.0, '\0');
@@ -170,7 +170,7 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
         set_lexeme(case6 + 6, LT_BRACE,               0.0,  ')');
 
         Lexeme expected6[5];
-        set_lexeme(expected6 + 0, LT_OPERAND_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(expected6 + 0, LT_PLACEHOLDER,         0.0,  'x');
         set_lexeme(expected6 + 1, LT_OPERAND,             2.0, '\0');
         set_lexeme(expected6 + 2, LT_OPERAND,             3.0, '\0');
         set_lexeme(expected6 + 3, LT_ACTION,              0.0, '-' );
@@ -190,17 +190,17 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
         // const char *expected5 = "x x 3 - *";
         const int length7 = 7;
         Lexeme case7[7];
-        set_lexeme(case7 + 0, LT_OPERAND_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(case7 + 0, LT_PLACEHOLDER,         0.0,  'x');
         set_lexeme(case7 + 1, LT_ACTION,              0.0,  '*');
         set_lexeme(case7 + 2, LT_BRACE,               0.0,  '(');
-        set_lexeme(case7 + 3, LT_OPERAND_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(case7 + 3, LT_PLACEHOLDER,         0.0,  'x');
         set_lexeme(case7 + 4, LT_ACTION,              0.0,  '-');
         set_lexeme(case7 + 5, LT_OPERAND,             3.0, '\0');
         set_lexeme(case7 + 6, LT_BRACE,               0.0,  ')');
 
         Lexeme expected7[5];
-        set_lexeme(expected7 + 0, LT_OPERAND_PLACEHOLDER, 0.0,  'x');
-        set_lexeme(expected7 + 1, LT_OPERAND_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(expected7 + 0, LT_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(expected7 + 1, LT_PLACEHOLDER, 0.0,  'x');
         set_lexeme(expected7 + 2, LT_OPERAND,             3.0, '\0');
         set_lexeme(expected7 + 3, LT_ACTION,              0.0,  '-');
         set_lexeme(expected7 + 4, LT_ACTION,              0.0,  '*');
@@ -226,13 +226,13 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
         set_lexeme(case8 + 2, LT_BRACE,               0.0,  '(');
         set_lexeme(case8 + 3, LT_OPERAND,             2.0, '\0');
         set_lexeme(case8 + 4, LT_ACTION,              0.0,  '-');
-        set_lexeme(case8 + 5, LT_OPERAND_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(case8 + 5, LT_PLACEHOLDER,         0.0,  'x');
         set_lexeme(case8 + 6, LT_BRACE,               0.0,  ')');
 
         Lexeme expected8[5];
         set_lexeme(expected8 + 0, LT_OPERAND,             5.0, '\0');
         set_lexeme(expected8 + 1, LT_OPERAND,             2.0, '\0');
-        set_lexeme(expected8 + 2, LT_OPERAND_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(expected8 + 2, LT_PLACEHOLDER,         0.0,  'x');
         set_lexeme(expected8 + 3, LT_ACTION,              0.0,  '-');
         set_lexeme(expected8 + 4, LT_ACTION,              0.0,  '*');
 
@@ -252,18 +252,18 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
         // const char *expected5 = "x x x - *";
         const int length9 = 7;
         Lexeme case9[7];
-        set_lexeme(case9 + 0, LT_OPERAND_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(case9 + 0, LT_PLACEHOLDER,         0.0,  'x');
         set_lexeme(case9 + 1, LT_ACTION,              0.0,  '*');
         set_lexeme(case9 + 2, LT_BRACE,               0.0,  '(');
-        set_lexeme(case9 + 3, LT_OPERAND_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(case9 + 3, LT_PLACEHOLDER,         0.0,  'x');
         set_lexeme(case9 + 4, LT_ACTION,              0.0,  '-');
-        set_lexeme(case9 + 5, LT_OPERAND_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(case9 + 5, LT_PLACEHOLDER,         0.0,  'x');
         set_lexeme(case9 + 6, LT_BRACE,               0.0,  ')');
 
         Lexeme expected9[5];
-        set_lexeme(expected9 + 0, LT_OPERAND_PLACEHOLDER, 0.0,  'x');
-        set_lexeme(expected9 + 1, LT_OPERAND_PLACEHOLDER, 0.0,  'x');
-        set_lexeme(expected9 + 2, LT_OPERAND_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(expected9 + 0, LT_PLACEHOLDER,         0.0,  'x');
+        set_lexeme(expected9 + 1, LT_PLACEHOLDER,         0.0,  'x');
+        set_lexeme(expected9 + 2, LT_PLACEHOLDER,         0.0,  'x');
         set_lexeme(expected9 + 3, LT_ACTION,              0.0,  '-');
         set_lexeme(expected9 + 4, LT_ACTION,              0.0,  '*');
 

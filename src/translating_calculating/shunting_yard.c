@@ -29,7 +29,7 @@ static void process_lexeme(const Lexeme *lexeme, Lexeme *postfix_notation, int *
     }
 
     if (is_closing_brace(*lexeme)) {
-        while (!is_opening_brace(top(*stack_for_actions))) {
+        while (is_not_opening_brace(top(*stack_for_actions))) {
             const Lexeme action_from_stack = pop(stack_for_actions);
             push_to_postfix_notation(&action_from_stack, postfix_notation, last_index_postfix_notation);
         }

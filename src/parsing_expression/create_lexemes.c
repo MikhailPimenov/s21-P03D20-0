@@ -36,7 +36,7 @@ static const char *recognize_sinlge_symbol_and_create_lexeme(
 }
 
 const char *recognize_placeholder_symbol_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out) {
-    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, 'x', LT_OPERAND_PLACEHOLDER, lexeme_out, lexemes_created_out);
+    return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, 'x', LT_PLACEHOLDER, lexeme_out, lexemes_created_out);
 }
 const char *recognize_opening_brace_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out) {
     return recognize_sinlge_symbol_and_create_lexeme(infix_notation_row, length_without_terminator, '(', LT_BRACE, lexeme_out, lexemes_created_out);
