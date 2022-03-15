@@ -149,17 +149,18 @@ int calculate_values_for_definition_area(
 ) {
     Lexeme *postfix_notation_with_filled_placeholders = malloc(length_of_postfix_notation * sizeof(Lexeme));
     copy_lexemes_array(postfix_notation_with_filled_placeholders, postfix_notation, length_of_postfix_notation);
-    printf("Copy of lexeme array:\n");
-    print_lexeme_array(postfix_notation_with_filled_placeholders, length_of_postfix_notation);
+    // printf("Copy of lexeme array:\n");
+    // print_lexeme_array(postfix_notation_with_filled_placeholders, length_of_postfix_notation);
 
-    printf("Lexeme arrays with substituted placeholders:\n");
+    // printf("Lexeme arrays with substituted placeholders:\n");
     for (int column = 0; column < length; ++column) {
+        // printf("Value to fill placeholder: %lf\n", definition_area[column]);
         set_lexeme_placeholders_array(
             postfix_notation_with_filled_placeholders, 
             length_of_postfix_notation, 
             definition_area[column]
         );
-        print_lexeme_array(postfix_notation_with_filled_placeholders, length_of_postfix_notation);
+        // print_lexeme_array(postfix_notation_with_filled_placeholders, length_of_postfix_notation);
 
         
         const int status = calculate_rpn_function(
@@ -211,14 +212,20 @@ void set_empty_field(char **field, int rows, int columns, char empty_symbol) {
 // int free_on_failed_exit(char **line) {
 //     return free_on_exit(line, -1);
 // }
+
+
 void set_graph_on_empty_field(char **field, int rows, int columns, int *array_of_rows, int length, char filled_symbol) {
-    const int limiting_length = (length <=columns) ? length : columns;
-    for (int column = 0; column < limiting_length; ++column)
+    const int limiting_length = (length <= columns) ? length : columns;
+    for (int column = 0; column < limiting_length; ++column) {
+        printf("column #%d\n", column);
+        
         if (0 <= array_of_rows[column] && array_of_rows[column] < rows) 
             field[array_of_rows[column]][column] = filled_symbol;
+    }
 }
 
 int program(int rows, int columns, char filled_symbol, char blank_symbol) {
+    static const int show_every_stage = 1;
     char *expression = NULL;
     size_t allocated_length = 0u;
     printf("Enter expression without spaces and with braces, for example x+1 or sin(x):\n");
@@ -255,8 +262,11 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
     }
 
     create_lexemes(expression, length_without_terminator, infix_notation, amount_of_infix_lexemes);
-    printf("List of lexemes in infix notation:\n");
-    print_lexeme_array(infix_notation, amount_of_infix_lexemes);
+    
+    if (show_every_stage) {
+        printf("List of lexemes in infix notation:\n");
+        print_lexeme_array(infix_notation, amount_of_infix_lexemes);
+    }
     //  TODO: change shunting_yard(), it will be waiting already calculated length of postfix notation, not finding it by itself
     //  TODO: modify tests
 
@@ -276,9 +286,12 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
 
     int amount_of_postfix_lexemes = 0;
     shunting_yard(infix_notation, amount_of_infix_lexemes, postfix_notation, &amount_of_postfix_lexemes);
-    printf("List of lexemes in postfix notation:\n");
-    print_lexeme_array(postfix_notation, amount_of_postfix_lexemes);
     
+    if (show_every_stage) {
+        printf("List of lexemes in postfix notation:\n");
+        print_lexeme_array(postfix_notation, amount_of_postfix_lexemes);
+    }
+
     double *array_x = malloc(columns * sizeof(double));
     if (array_x == NULL) {
         printf("Error: could not allocate memory for definition area!\n");
@@ -299,9 +312,12 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
     }
     const double pi_constant = 3.14;
     create_definition_area(array_x, columns, 0.0, 4.0 * pi_constant);
-    printf("Discrete definition area:\n");
-    print_array_double(array_x, columns);
-
+    
+    if (show_every_stage) {
+        printf("Discrete definition area:\n");
+        print_array_double(array_x, columns);
+    }
+    
     double *array_y = malloc(columns * sizeof(double));
     if (array_y == NULL) {
         printf("Error: could not allocate memory for values!\n");
@@ -332,9 +348,12 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
         postfix_notation,
         amount_of_postfix_lexemes,
         calculate_reversed_polish_notation);
-    printf("Discrete values:\n");
-    print_array_double(array_y, columns);
 
+    if (show_every_stage) {
+        printf("Discrete values:\n");
+        print_array_double(array_y, columns);
+    }
+    
     if (status_caclulation != C_SUCCESS) {
         printf("Error: something went wrong during computation of reversed polish notation!\n");
 
@@ -390,8 +409,10 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
     }
     
     set_array_of_rows_from_y_values(array_of_rows, array_y, columns, rows);
-    print_array_int(array_of_rows, columns);
-
+    if (show_every_stage) {
+        printf("Numbers of rows which will be filled:\n");
+        print_array_int(array_of_rows, columns);
+    }
     char **field = NULL;
     const int status_allocation_field = allocate_field(&field, rows, columns);
     if (status_allocation_field != A_ALLOCATED_SUCCESSFULLY) {
@@ -423,7 +444,8 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
 
 
     set_empty_field(field, rows, columns, blank_symbol);
-    set_graph_on_empty_field(field, rows, columns, array_of_rows, rows, filled_symbol);
+    set_graph_on_empty_field(field, rows, columns, array_of_rows, columns, filled_symbol);
+
 
     draw_field(field, rows, columns);
 
@@ -443,15 +465,15 @@ int main() {
     printf("Test in main():\n");
     // stack_test_visual();
     // get_lexeme_test_visual(get_lexeme);  // TODO: modify to print lexeme type correctly
-    shunting_yard_test(shunting_yard);
-    calculate_reverse_polish_notation_test(calculate_reversed_polish_notation);
-    string_to_int_test(string_to_int);
-    string_to_double_test(string_to_double);
-    parse_to_lexemes_test(parse_to_lexemes_allocate);
-    check_expression_and_count_lexemes_test(check_expression_and_count_lexemes);
+    // shunting_yard_test(shunting_yard);
+    // calculate_reverse_polish_notation_test(calculate_reversed_polish_notation);
+    // string_to_int_test(string_to_int);
+    // string_to_double_test(string_to_double);
+    // parse_to_lexemes_test(parse_to_lexemes_allocate);
+    // check_expression_and_count_lexemes_test(check_expression_and_count_lexemes);
     #endif //  TEST_GRAPH_
 
-    program(30, 10, '*', '.');
+    program(20, 85, '*', '.');
     // shunting_yard_test(shunting_yard, "Testing shunting_yard:");
 
     // draw_field(example_field, rows, columns);

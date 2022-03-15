@@ -206,5 +206,20 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     status = calculate_reversed_polish_notation_function(case13, length13, &actual13);
     __compare_and_print_input_output_and_resolution(13, status, C_SUCCESS, expected13, actual13, epsilon, case13, length13);
     
+
+    Lexeme case14[3];
+    const int length14 = 3;
+
+    set_lexeme(case14 +  0, LT_OPERAND_PLACEHOLDER,  0.0, '\0');
+    set_lexeme(case14 +  1, LT_OPERAND,              1.0, '\0');
+    set_lexeme(case14 +  2, LT_ACTION,               0.0, '+' );
+
+    const double expected14 = 1.0;
+    double actual14 = -15.88;
+    status = calculate_reversed_polish_notation_function(case14, length14, &actual14);
+    __compare_and_print_input_output_and_resolution(14, status, C_SUCCESS, expected14, actual14, epsilon, case14, length14);
+
+
+
     //  TODO: create test-cases for zero-division, invalid tg, invalid ctg, invalid ln, invalid sqrt, invalid power
 }

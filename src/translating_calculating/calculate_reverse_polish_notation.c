@@ -23,10 +23,6 @@ static int __divide(double left_operand, double right_operand, double *result) {
 
     return C_SUCCESS;
 }
-// static int __minus(double single_operand, double *result_out) {
-//     *result_out = (-1.0) * single_operand;
-//     return E_SUCCESS;
-// }
 static int __sine(double single_operand, double *result_out) {
     *result_out = sin(single_operand);
     return C_SUCCESS;
@@ -52,14 +48,6 @@ static int __cotangent(double single_operand, double *result_out) {
     *result_out = tan(single_operand);
     return C_SUCCESS;
 }
-// static int __natural_logarithm(double single_operand, double *result_out) {
-//     if (single_operand < 1e-12) {
-//         return C_NEGATIVE_ARGUMENT_FOR_LOGARITHM_ERROR;
-//     }
-
-//     *result_out = log(single_operand);
-//     return C_SUCCESS;
-// }
 static int __square_root(double single_operand, double *result_out) {
     if (single_operand < 1e-12) {
         return C_NEGATIVE_ARGUMENT_FOR_SQRT_ERROR;
@@ -84,11 +72,6 @@ static int __take_two_operands_calculate_and_push_result(Stack_node **stack, int
     const Lexeme right = pop(stack);
     get_lexeme(&right, &right_operand, &right_action);
     
-    // if (right_operand_should_not_be_zero && are_double_equal(right_operand, 0.0, 1e-12)) {
-    //     printf("Zero-division error!\n");
-    //     return E_ZERO_DIVISION_ERROR;
-    // }
-
     if (is_empty(*stack)) {
         printf("Stack is empty. Nothing to pop.\n");
         return 0;
@@ -140,7 +123,7 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
     for (int index = 0; index < length; ++index) {
         const Lexeme current_lexeme = postfix_notation[index];
 
-        if (is_operand(&current_lexeme)) {
+        if (is_operand_or_operand_placeholder(&current_lexeme)) {
             push(&stack, current_lexeme);
             continue;
         }
@@ -150,116 +133,105 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
         get_lexeme(&current_lexeme, &current_operand, &current_action);
         
         switch (current_action) {
-        case '+': {
-            const int status = __take_two_operands_calculate_and_push_result(&stack, __add);
-            if (status == C_EMPTY_STACK_ERROR) {
-                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            case '+': {
+                const int status = __take_two_operands_calculate_and_push_result(&stack, __add);
+                if (status == C_EMPTY_STACK_ERROR) {
+                    return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+                }
+                if (status != C_SUCCESS) {
+                    return status;
+                }
+                continue;
             }
-            if (status != C_SUCCESS) {
-                return status;
+            case '-': {
+                const int status = __take_two_operands_calculate_and_push_result(&stack, __subtract);
+                if (status == C_EMPTY_STACK_ERROR) {
+                    return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+                }
+                if (status != C_SUCCESS) {
+                    return status;
+                }
+                continue;
             }
-            continue;
-        }
-        case '-': {
-            const int status = __take_two_operands_calculate_and_push_result(&stack, __subtract);
-            if (status == C_EMPTY_STACK_ERROR) {
-                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            case '*': {
+                const int status = __take_two_operands_calculate_and_push_result(&stack, __multiply);
+                if (status == C_EMPTY_STACK_ERROR) {
+                    return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+                }
+                if (status != C_SUCCESS) {
+                    return status;
+                }
+                continue;
             }
-            if (status != C_SUCCESS) {
-                return status;
+            case '/': {
+                const int status = __take_two_operands_calculate_and_push_result(&stack, __divide);
+                if (status == C_EMPTY_STACK_ERROR) {
+                    return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+                }
+                if (status != C_SUCCESS) {
+                    return status;
+                }
+                continue;
             }
-            continue;
-        }
-        case '*': {
-            const int status = __take_two_operands_calculate_and_push_result(&stack, __multiply);
-            if (status == C_EMPTY_STACK_ERROR) {
-                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
-            }
-            if (status != C_SUCCESS) {
-                return status;
-            }
-            continue;
-        }
-        case '/': {
-            const int status = __take_two_operands_calculate_and_push_result(&stack, __divide);
-            if (status == C_EMPTY_STACK_ERROR) {
-                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
-            }
-            if (status != C_SUCCESS) {
-                return status;
-            }
-            continue;
-        }
 
-        // case 'm': {
-        //     const int status = __take_single_operand_calculate_and_push_result(&stack, __minus);
-        //     if (status == E_EMPTY_STACK_ERROR) {
-        //         return E_INVALID_REVERSE_POLISH_NOTATION_ERROR;
-        //     }
-        //     if (status != E_SUCCESS) {
-        //         return status;
-        //     }
-        //     continue;
-        // }
+            case 's': {
+                const int status = __take_single_operand_calculate_and_push_result(&stack, __sine);
+                if (status == C_EMPTY_STACK_ERROR) {
+                    return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+                }
+                if (status != C_SUCCESS) {
+                    return status;
+                }
+                continue;
+            }
 
-        case 's': {
-            const int status = __take_single_operand_calculate_and_push_result(&stack, __sine);
-            if (status == C_EMPTY_STACK_ERROR) {
-                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            case 'c': {
+                const int status = __take_single_operand_calculate_and_push_result(&stack, __cosine);
+                if (status == C_EMPTY_STACK_ERROR) {
+                    return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+                }
+                if (status != C_SUCCESS) {
+                    return status;
+                }
+                continue;
             }
-            if (status != C_SUCCESS) {
-                return status;
-            }
-            continue;
-        }
 
-        case 'c': {
-            const int status = __take_single_operand_calculate_and_push_result(&stack, __cosine);
-            if (status == C_EMPTY_STACK_ERROR) {
-                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            case 't': {
+                const int status = __take_single_operand_calculate_and_push_result(&stack, __tangent);
+                if (status == C_EMPTY_STACK_ERROR) {
+                    return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+                }
+                if (status != C_SUCCESS) {
+                    return status;
+                }
+                continue;
             }
-            if (status != C_SUCCESS) {
-                return status;
-            }
-            continue;
-        }
 
-        case 't': {
-            const int status = __take_single_operand_calculate_and_push_result(&stack, __tangent);
-            if (status == C_EMPTY_STACK_ERROR) {
-                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            case 'g': {
+                const int status = __take_single_operand_calculate_and_push_result(&stack, __cotangent);
+                if (status == C_EMPTY_STACK_ERROR) {
+                    return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+                }
+                if (status != C_SUCCESS) {
+                    return status;
+                }
+                continue;
             }
-            if (status != C_SUCCESS) {
-                return status;
-            }
-            continue;
-        }
 
-        case 'g': {
-            const int status = __take_single_operand_calculate_and_push_result(&stack, __cotangent);
-            if (status == C_EMPTY_STACK_ERROR) {
-                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+            case 'r': {
+                const int status = __take_single_operand_calculate_and_push_result(&stack, __square_root);
+                if (status == C_EMPTY_STACK_ERROR) {
+                    return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+                }
+                if (status != C_SUCCESS) {
+                    return status;
+                }
+                continue;
             }
-            if (status != C_SUCCESS) {
-                return status;
-            }
-            continue;
-        }
 
-        case 'r': {
-            const int status = __take_single_operand_calculate_and_push_result(&stack, __square_root);
-            if (status == C_EMPTY_STACK_ERROR) {
-                return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
-            }
-            if (status != C_SUCCESS) {
-                return status;
-            }
-            continue;
-        }
-
-        default:
-            // printf("calculate_rpn(): default:\n");
-            return C_UNKNOWN_ACTION_ERROR;
+            default:
+                // printf("calculate_rpn(): default:\n");
+                return C_UNKNOWN_ACTION_ERROR;
         }
     }
 

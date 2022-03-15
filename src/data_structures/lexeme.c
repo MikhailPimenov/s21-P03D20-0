@@ -48,7 +48,8 @@ void set_lexeme(Lexeme *lexeme, int actual_type, double operand, char action) {
 }
 
 static void __set_lexeme_placeholder(Lexeme *lexeme, double value_for_placeholder) {
-    if (lexeme->actual_type == LT_PLACEHOLDER)
+    const int type = lexeme->actual_type;
+    if (type == LT_PLACEHOLDER || type == LT_OPERAND_PLACEHOLDER)
         set_lexeme(lexeme, LT_OPERAND_PLACEHOLDER, value_for_placeholder, '\0');
 }
 
@@ -172,6 +173,9 @@ int is_operand_placeholder(const Lexeme *const lexeme) {
 }
 int is_placeholder(const Lexeme *const lexeme) {
     return lexeme->actual_type == LT_PLACEHOLDER;
+}
+int is_operand_or_operand_placeholder(const Lexeme *const lexeme) {
+    return is_operand(lexeme) || is_operand_placeholder(lexeme);
 }
 int is_operand_or_placeholder_or_operand_placeholder(const Lexeme *const lexeme) {
     return is_operand(lexeme) ||

@@ -49,6 +49,8 @@ int is_placeholder(const Lexeme *const lexeme);
 
 int is_operand_placeholder(const Lexeme *const lexeme);
 
+int is_operand_or_operand_placeholder(const Lexeme *const lexeme);
+
 int is_operand_or_placeholder_or_operand_placeholder(const Lexeme *const lexeme);
 
 int is_action(const Lexeme *const lexeme);
