@@ -158,8 +158,14 @@ int are_lexeme_arrays_equal(const Lexeme *const first, const Lexeme *const secon
     return 1;
 }
 
-int is_operand(const Lexeme *lexeme) {
+int is_operand(const Lexeme *const lexeme) {
     return lexeme->actual_type == LT_OPERAND;
+}
+int is_placeholder(const Lexeme *const lexeme) {
+    return lexeme->actual_type == LT_OPERAND_PLACEHOLDER;
+}
+int is_operand_or_placeholder(const Lexeme *const lexeme) {
+    return is_operand(lexeme) || is_placeholder(lexeme);
 }
 int is_action(const Lexeme *lexeme) {
     return lexeme->actual_type == LT_ACTION;

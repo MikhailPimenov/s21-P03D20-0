@@ -254,7 +254,7 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
 
     int amount_of_postfix_lexemes = 0;
     shunting_yard(infix_notation, amount_of_infix_lexemes, postfix_notation, &amount_of_postfix_lexemes);
-
+    print_lexeme_array(postfix_notation, amount_of_postfix_lexemes);
     double *array_x = malloc(columns * sizeof(double));
     if (array_x == NULL) {
         printf("Error: could not allocate memory for definition area!\n");
@@ -407,11 +407,11 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
 
 int main() {
 
-/*
+
     #ifdef TEST_GRAPH_
     printf("Test in main():\n");
-    stack_test_visual();
-    get_lexeme_test_visual(get_lexeme);  
+    // stack_test_visual();
+    // get_lexeme_test_visual(get_lexeme);  
     shunting_yard_test(shunting_yard);
     calculate_reverse_polish_notation_test(calculate_reversed_polish_notation);
     string_to_int_test(string_to_int);
@@ -419,8 +419,8 @@ int main() {
     parse_to_lexemes_test(parse_to_lexemes_allocate);
     check_expression_and_count_lexemes_test(check_expression_and_count_lexemes);
     #endif //  TEST_GRAPH_
-*/
-    program(30, 40, '*', '.');
+
+    // program(30, 40, '*', '.');
     // shunting_yard_test(shunting_yard, "Testing shunting_yard:");
 
     // draw_field(example_field, rows, columns);

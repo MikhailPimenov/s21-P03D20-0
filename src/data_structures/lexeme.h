@@ -42,17 +42,21 @@ int are_lexemes_equal(const Lexeme *const left, const Lexeme *const right);
 
 int are_lexeme_arrays_equal(const Lexeme *const first, const Lexeme *const second, int length);
 
-int is_operand(const Lexeme *lexeme);
+int is_operand(const Lexeme *const lexeme);
 
-int is_action(const Lexeme *lexeme);
+int is_placeholder(const Lexeme *const lexeme);
 
-int is_brace(const Lexeme *lexeme);
+int is_operand_or_placeholder(const Lexeme *const lexeme);
 
-int is_not_brace(const Lexeme *lexeme);
+int is_action(const Lexeme *const lexeme);
 
-int get_precedence(const Lexeme *lexeme);
+int is_brace(const Lexeme *const lexeme);
 
-int has_lower_precedence(const Lexeme *left, const Lexeme *right);
+int is_not_brace(const Lexeme *const lexeme);
+
+int get_precedence(const Lexeme *const lexeme);
+
+int has_lower_precedence(const Lexeme *const left, const Lexeme *const right);
 
 int has_top_higher_precedence(Lexeme top, Lexeme current_lexeme);
 
