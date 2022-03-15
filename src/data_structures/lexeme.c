@@ -32,9 +32,9 @@ void set_lexeme(Lexeme *lexeme, int actual_type, double operand, char action) {
 
 
     lexeme->actual_type = actual_type;
-    if (lexeme->actual_type == LT_ACTION ||
-        lexeme->actual_type == LT_BRACE  ||
-        lexeme->actual_type == LT_OPERAND_PLACEHOLDER) {
+    if (actual_type == LT_ACTION ||
+        actual_type == LT_BRACE  ||
+        actual_type == LT_PLACEHOLDER) {
         (lexeme->data)[0] = action;
         return;
     }
@@ -48,7 +48,7 @@ void set_lexeme(Lexeme *lexeme, int actual_type, double operand, char action) {
 }
 
 static void __set_lexeme_placeholder(Lexeme *lexeme, double value_for_placeholder) {
-    if (lexeme->actual_type == LT_OPERAND_PLACEHOLDER)
+    if (lexeme->actual_type == LT_PLACEHOLDER)
         set_lexeme(lexeme, LT_OPERAND_PLACEHOLDER, value_for_placeholder, '\0');
 }
 
@@ -70,8 +70,8 @@ void copy_lexemes_array(Lexeme *destination, const Lexeme *const source, int len
 }
 
 static void __print_lexeme_with_format(const Lexeme *const lexeme, int with_endline, int with_type) {
-    const int lexeme_type = lexeme->actual_type;
-    if (lexeme_type == LT_OPERAND || lexeme_type == LT_OPERAND_PLACEHOLDER) {
+    const int type = lexeme->actual_type;
+    if (type == LT_OPERAND || type == LT_OPERAND_PLACEHOLDER) {
         if (with_type)
             printf("operand     : ");
 
@@ -84,19 +84,23 @@ static void __print_lexeme_with_format(const Lexeme *const lexeme, int with_endl
     }
 
     if (with_type) {
-        switch (lexeme_type) {
-            case LT_ACTION:
+        switch (type) {
+            case LT_ACTION: {
                 printf("action      : ");
                 break;
-            case LT_OPERAND_PLACEHOLDER:
+            }
+            case LT_PLACEHOLDER: {
                 printf("placeholder : ");
                 break;
-            case LT_BRACE:
+            }
+            case LT_BRACE: {
                 printf("brace       : ");
                 break;
-            default:
+            }
+            default: {
                 printf("unknown type: ");
                 break;
+            }
         } 
     }
 
@@ -108,7 +112,7 @@ static void __print_lexeme_with_format(const Lexeme *const lexeme, int with_endl
 
 void print_lexeme(const Lexeme *const lexeme) {
     static const int with_endline = 0;
-    static const int with_type = 0;
+    static const int with_type    = 0;
     __print_lexeme_with_format(lexeme, with_endline, with_type);
 }
 
@@ -142,7 +146,7 @@ int are_lexemes_equal(const Lexeme *const left, const Lexeme *const right) {
 
     if (left->actual_type == LT_ACTION ||
         left->actual_type == LT_BRACE  ||
-        left->actual_type == LT_OPERAND_PLACEHOLDER ) {  // right->actual_type is also LT_ACTION
+        left->actual_type == LT_PLACEHOLDER ) {  // right->actual_type is also LT_ACTION
         
         return action_left == action_right;
     }
@@ -169,7 +173,7 @@ int is_operand_placeholder(const Lexeme *const lexeme) {
 int is_placeholder(const Lexeme *const lexeme) {
     return lexeme->actual_type == LT_PLACEHOLDER;
 }
-int is_operand_or_placeholder(const Lexeme *const lexeme) {
+int is_operand_or_placeholder_or_operand_placeholder(const Lexeme *const lexeme) {
     return is_operand(lexeme) ||
            is_operand_placeholder(lexeme) ||
            is_placeholder(lexeme);

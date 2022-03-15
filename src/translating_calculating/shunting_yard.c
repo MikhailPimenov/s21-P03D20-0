@@ -18,7 +18,7 @@ static void push_to_postfix_notation(const Lexeme *lexeme_to_push, Lexeme *postf
 }
 
 static void process_lexeme(const Lexeme *lexeme, Lexeme *postfix_notation, int *last_index_postfix_notation, Stack_node **stack_for_actions) {
-    if (is_operand_or_placeholder(lexeme)) {
+    if (is_operand_or_placeholder_or_operand_placeholder(lexeme)) {
         push_to_postfix_notation(lexeme, postfix_notation, last_index_postfix_notation);
         return;
     }

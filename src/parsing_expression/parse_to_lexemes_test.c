@@ -354,7 +354,7 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         set_lexeme(expected9 + 4, LT_ACTION,              0.0,   '/');
         set_lexeme(expected9 + 5, LT_ACTION,              0.0,   'r');
         set_lexeme(expected9 + 6, LT_BRACE,               0.0,   '(');
-        set_lexeme(expected9 + 7, LT_OPERAND_PLACEHOLDER, 0.0,   'x');
+        set_lexeme(expected9 + 7, LT_PLACEHOLDER,         0.0,   'x');
         set_lexeme(expected9 + 8, LT_BRACE,               0.0,   ')');
 
         Lexeme *actual9 = NULL;

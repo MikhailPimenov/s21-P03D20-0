@@ -442,7 +442,7 @@ int main() {
     #ifdef TEST_GRAPH_
     printf("Test in main():\n");
     // stack_test_visual();
-    // get_lexeme_test_visual(get_lexeme);  
+    // get_lexeme_test_visual(get_lexeme);  // TODO: modify to print lexeme type correctly
     shunting_yard_test(shunting_yard);
     calculate_reverse_polish_notation_test(calculate_reversed_polish_notation);
     string_to_int_test(string_to_int);
