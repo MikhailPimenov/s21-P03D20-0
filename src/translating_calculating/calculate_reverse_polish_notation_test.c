@@ -220,16 +220,190 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     __compare_and_print_input_output_and_resolution(14, status, C_SUCCESS, expected14, actual14, epsilon, case14, length14);
 
 
-    // Lexeme case15[2];
-    // const int length15 = 2;
+    Lexeme case15[1];
+    const int length15 = 1;
 
-    // set_lexeme(case15 +  0, LT_OPERAND, 1.0, '\0');
-    // set_lexeme(case15 +  1, LT_ACTION,  0.0, '+' );
+    set_lexeme(case15 +  0, LT_OPERAND, 15.89, '\0');
 
-    // const double expected15 = 1.0;
-    // double actual15 = -15.88;
-    // status = calculate_reversed_polish_notation_function(case15, length15, &actual15);
-    // __compare_and_print_input_output_and_resolution(15, status, C_SUCCESS, expected15, actual15, epsilon, case15, length15);
+    const double expected15 = 15.89;
+    double actual15 = -15.88;
+    status = calculate_reversed_polish_notation_function(case15, length15, &actual15);
+    __compare_and_print_input_output_and_resolution(15, status, C_SUCCESS, expected15, actual15, epsilon, case15, length15);
 
+
+    Lexeme case16[3];
+    const int length16 = 3;
+
+    set_lexeme(case16 +  0, LT_OPERAND,              1.0, '\0');
+    set_lexeme(case16 +  1, LT_ACTION,               0.0, '^' );
+    set_lexeme(case16 +  2, LT_OPERAND,              1.0, '\0');
+
+    const double expected16 = 1.0;
+    double actual16 = -15.88;
+    status = calculate_reversed_polish_notation_function(case16, length16, &actual16);
+    __compare_and_print_input_output_and_resolution(16, status, C_SUCCESS, expected16, actual16, epsilon, case16, length16);
+
+
+    Lexeme case17[3];
+    const int length17 = 3;
+
+    set_lexeme(case17 +  0, LT_OPERAND,              2.0, '\0');
+    set_lexeme(case17 +  1, LT_ACTION,               0.0, '^' );
+    set_lexeme(case17 +  2, LT_OPERAND,              5.0, '\0');
+
+    const double expected17 = 32.0;
+    double actual17 = -15.88;
+    status = calculate_reversed_polish_notation_function(case17, length17, &actual17);
+    __compare_and_print_input_output_and_resolution(17, status, C_SUCCESS, expected17, actual17, epsilon, case17, length17);
+
+
+    Lexeme case18[3];
+    const int length18 = 3;
+
+    set_lexeme(case18 +  0, LT_OPERAND,              9.0, '\0');
+    set_lexeme(case18 +  1, LT_ACTION,               0.0, '^' );
+    set_lexeme(case18 +  2, LT_OPERAND,              3.0, '\0');
+
+    const double expected18 = 729.0;
+    double actual18 = -15.88;
+    status = calculate_reversed_polish_notation_function(case18, length18, &actual18);
+    __compare_and_print_input_output_and_resolution(18, status, C_SUCCESS, expected18, actual18, epsilon, case18, length18);
+
+
+
+    Lexeme case19[3];
+    const int length19 = 3;
+
+    set_lexeme(case19 +  0, LT_OPERAND,              2.0, '\0');
+    set_lexeme(case19 +  1, LT_ACTION,               0.0, '^' );
+    set_lexeme(case19 +  2, LT_OPERAND,             -3.0, '\0');
+
+    const double expected19 = 0.125;
+    double actual19 = -15.88;
+    status = calculate_reversed_polish_notation_function(case19, length19, &actual19);
+    __compare_and_print_input_output_and_resolution(19, status, C_SUCCESS, expected19, actual19, epsilon, case19, length19);
+
+
+    Lexeme case20[3];
+    const int length20 = 3;
+
+    set_lexeme(case20 +  0, LT_OPERAND,              3.0, '\0');
+    set_lexeme(case20 +  1, LT_ACTION,               0.0, '^' );
+    set_lexeme(case20 +  2, LT_OPERAND,             -1.0, '\0');
+
+    const double expected20 = 0.33333333333333333333333333333333333333333333333333333333;  //  depends on epsilon
+    double actual20 = -15.88;
+    status = calculate_reversed_polish_notation_function(case20, length20, &actual20);
+    __compare_and_print_input_output_and_resolution(20, status, C_SUCCESS, expected20, actual20, epsilon, case20, length20);
+
+
+    Lexeme case21[3];
+    const int length21 = 3;
+
+    set_lexeme(case21 +  0, LT_OPERAND,              0.0, '\0');
+    set_lexeme(case21 +  1, LT_ACTION,               0.0, '^' );
+    set_lexeme(case21 +  2, LT_OPERAND,             -1.0, '\0');
+
+    const double expected21 = 0.0;
+    double actual21 = -15.88;
+    status = calculate_reversed_polish_notation_function(case21, length21, &actual21);
+    __compare_and_print_input_output_and_resolution(21, status, C_SUCCESS, expected21, actual21, epsilon, case21, length21);
+
+
+    Lexeme case22[3];
+    const int length22 = 3;
+
+    set_lexeme(case22 +  0, LT_OPERAND,              0.0, '\0');
+    set_lexeme(case22 +  1, LT_ACTION,               0.0, '^' );
+    set_lexeme(case22 +  2, LT_OPERAND,             11.0, '\0');
+
+    const double expected22 = 0.0;
+    double actual22 = -15.88;
+    status = calculate_reversed_polish_notation_function(case22, length22, &actual22);
+    __compare_and_print_input_output_and_resolution(22, status, C_SUCCESS, expected22, actual22, epsilon, case22, length22);
+
+
+
+    Lexeme case23[3];
+    const int length23 = 3;
+
+    set_lexeme(case23 +  0, LT_OPERAND,              5.0, '\0');
+    set_lexeme(case23 +  1, LT_ACTION,               0.0, '^' );
+    set_lexeme(case23 +  2, LT_OPERAND,              0.0, '\0');
+
+    const double expected23 = 1.0;
+    double actual23 = -15.88;
+    status = calculate_reversed_polish_notation_function(case23, length23, &actual23);
+    __compare_and_print_input_output_and_resolution(23, status, C_SUCCESS, expected23, actual23, epsilon, case23, length23);
+
+
+
+    Lexeme case24[3];
+    const int length24 = 3;
+
+    set_lexeme(case24 +  0, LT_OPERAND,             -5.0, '\0');
+    set_lexeme(case24 +  1, LT_ACTION,               0.0, '^' );
+    set_lexeme(case24 +  2, LT_OPERAND,              0.0, '\0');
+
+    const double expected24 = 1.0;
+    double actual24 = -15.88;
+    status = calculate_reversed_polish_notation_function(case24, length24, &actual24);
+    __compare_and_print_input_output_and_resolution(24, status, C_SUCCESS, expected24, actual24, epsilon, case24, length24);
+
+
+    Lexeme case25[3];
+    const int length25 = 3;
+
+    set_lexeme(case25 +  0, LT_OPERAND,              2.5, '\0');
+    set_lexeme(case25 +  1, LT_ACTION,               0.0, '^' );
+    set_lexeme(case25 +  2, LT_OPERAND,              2.0, '\0');
+
+    const double expected25 = 6.25;
+    double actual25 = -15.88;
+    status = calculate_reversed_polish_notation_function(case25, length25, &actual25);
+    __compare_and_print_input_output_and_resolution(25, status, C_SUCCESS, expected25, actual25, epsilon, case25, length25);
+
+
+    Lexeme case26[3];
+    const int length26 = 3;
+
+    set_lexeme(case26 +  0, LT_OPERAND,              4.0, '\0');
+    set_lexeme(case26 +  1, LT_ACTION,               0.0, '^' );
+    set_lexeme(case26 +  2, LT_OPERAND,              2.5, '\0');
+
+    const double expected26 = 32.0;
+    double actual26 = -15.88;
+    status = calculate_reversed_polish_notation_function(case26, length26, &actual26);
+    __compare_and_print_input_output_and_resolution(26, status, C_SUCCESS, expected26, actual26, epsilon, case26, length26);
+
+
+
+    Lexeme case27[3];
+    const int length27 = 3;
+
+    set_lexeme(case27 +  0, LT_OPERAND,              9.0, '\0');
+    set_lexeme(case27 +  1, LT_ACTION,               0.0, '^' );
+    set_lexeme(case27 +  2, LT_OPERAND,              3.5, '\0');
+
+    const double expected27 = 2187.0;
+    double actual27 = -15.88;
+    status = calculate_reversed_polish_notation_function(case27, length27, &actual27);
+    __compare_and_print_input_output_and_resolution(27, status, C_SUCCESS, expected27, actual27, epsilon, case27, length27);
+
+
+
+    Lexeme case28[3];
+    const int length28 = 3;
+
+    set_lexeme(case28 +  0, LT_OPERAND,              9.0, '\0');
+    set_lexeme(case28 +  1, LT_ACTION,               0.0, '^' );
+    set_lexeme(case28 +  2, LT_OPERAND,             -3.5, '\0');
+
+    const double expected28 = 1.0 / 2187.0;
+    double actual28 = -15.88;
+    status = calculate_reversed_polish_notation_function(case28, length28, &actual28);
+    __compare_and_print_input_output_and_resolution(28, status, C_SUCCESS, expected28, actual28, epsilon, case28, length28);
+
+    //  TODO: 0^0
     //  TODO: create test-cases for zero-division, invalid tg, invalid ctg, invalid ln, invalid sqrt, invalid power
 }
