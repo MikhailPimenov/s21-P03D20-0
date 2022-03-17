@@ -13,10 +13,6 @@
 #include "check_expression_and_count_lexemes.h"
 
 
-
-
-// int check_expression_and_count_lexemes(const char *infix_notation_row, int length_without_terminator, int *amount_of_lexemes_out); 
-void create_lexemes(const char *infix_notation_row, int length_without_terminator, Lexeme *lexemes, int lexemes_length);
 void parse_to_lexemes_allocate(const char *infix_notation_row, int length, Lexeme **infix_notation_out, int *length_out);
 
 #endif  //  SRC_PARSING_EXPRESSION_PARSE_TO_LEXEMES_H_

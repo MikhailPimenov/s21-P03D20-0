@@ -39,9 +39,38 @@ const char *recognize_sinlge_symbol_and_count_it(
 
     // printf("%c\n", symbol_to_recognize);
     *lexeme_counter_out += 1;
-    
+
     if (symbol_to_recognize == '-')
         *lexeme_counter_out += 2;   //  because "3-5" will be treated like "3+(-1)*5" and then converted to  3, '+', -1, '*', 5
+
+    *is_recognized_out = 1;
+    return infix_notation_row + 1;
+}
+
+const char *recognize_first_sinlge_symbol_and_count_it(
+    const char *infix_notation_row, 
+    int length_without_terminator, 
+    char symbol_to_recognize,
+    int *lexeme_counter_out,
+    int *is_recognized_out) {
+
+    const int recognition_status = is_symbol_recognized(
+        infix_notation_row,
+        length_without_terminator,
+        symbol_to_recognize
+    );
+
+    if (recognition_status != RS_RECOGNIZED) {
+        *is_recognized_out = 0;
+        return infix_notation_row;
+    }
+
+    // printf("%c\n", symbol_to_recognize);
+    //  because "-5" will be treated like "(-1)*5" and then converted to  -1, '*', 5
+    //  and "+5" will be treated like "5" and then converted to just  5
+    if (symbol_to_recognize == '-')
+        *lexeme_counter_out += 2;     
+
 
     *is_recognized_out = 1;
     return infix_notation_row + 1;
@@ -72,7 +101,12 @@ const char *recognize_power_symbol_and_count_it(const char *infix_notation_row, 
     return recognize_sinlge_symbol_and_count_it(infix_notation_row, length_without_terminator, '^', lexeme_counter_out, is_recognized_out);    
 }
 
-
+const char *recognize_first_subtract_symbol_and_count_it(const char *infix_notation_row, int length_without_terminator, int *lexeme_counter_out, int *is_recognized_out) {
+    return recognize_first_sinlge_symbol_and_count_it(infix_notation_row, length_without_terminator, '-', lexeme_counter_out, is_recognized_out);    
+}
+const char *recognize_first_add_symbol_and_count_it(const char *infix_notation_row, int length_without_terminator, int *lexeme_counter_out, int *is_recognized_out) {
+    return recognize_first_sinlge_symbol_and_count_it(infix_notation_row, length_without_terminator, '+', lexeme_counter_out, is_recognized_out);    
+}
 
 int is_function_recognized(
     const char *infix_notation_row, 

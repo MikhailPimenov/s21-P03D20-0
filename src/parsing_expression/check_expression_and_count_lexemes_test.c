@@ -339,7 +339,7 @@ void check_expression_and_count_lexemes_test(int (*check_expression_and_count_le
         const int length_without_terminator15 = 57;
        
         const int expected_status15 = EC_EXPRESSION_IS_CORRECT;
-        const int expected_length15 = 44;
+        const int expected_length15 = 43;
         
         int actual_length15 = -1;
 
@@ -360,7 +360,7 @@ void check_expression_and_count_lexemes_test(int (*check_expression_and_count_le
         const int length_without_terminator16 = 57;
        
         const int expected_status16 = EC_EXPRESSION_IS_CORRECT;
-        const int expected_length16 = 42;
+        const int expected_length16 = 41;
         
         int actual_length16 = -1;
 
@@ -395,5 +395,248 @@ void check_expression_and_count_lexemes_test(int (*check_expression_and_count_le
             actual_status17,
             actual_length17,
             silent_on_success);
+    }
+
+
+    {
+        const char *case18 = "-14";
+        const int length_without_terminator_18 = 3;
+        const int expected_status18  = EC_EXPRESSION_IS_CORRECT;
+        const int expected_length18  = 3;
+     
+
+        int actual_length18 = -1;
+
+
+        const int actual_status18 = check_expression_and_count_lexemes_function(case18, length_without_terminator_18, &actual_length18);
+        __compare_and_print_input_output_and_resolution(
+            18, 
+            case18, 
+            length_without_terminator_18, 
+            expected_status18, 
+            expected_length18, 
+            actual_status18, 
+            actual_length18,
+            silent_on_success); 
+    }
+
+    {
+        const char *case19 = "+14";
+        const int length_without_terminator_19 = 3;
+        const int expected_status19  = EC_EXPRESSION_IS_CORRECT;
+        const int expected_length19  = 1;
+     
+
+        int actual_length19 = -1;
+
+
+        const int actual_status19 = check_expression_and_count_lexemes_function(case19, length_without_terminator_19, &actual_length19);
+        __compare_and_print_input_output_and_resolution(
+            19, 
+            case19, 
+            length_without_terminator_19, 
+            expected_status19, 
+            expected_length19, 
+            actual_status19, 
+            actual_length19,
+            silent_on_success); 
+    }
+
+    {
+        const char *case20 = "-(14+6)";
+        const int length_without_terminator_20 = 7;
+        const int expected_status20  = EC_EXPRESSION_IS_CORRECT;
+        const int expected_length20  = 7;
+     
+
+        int actual_length20 = -1;
+
+
+        const int actual_status20 = check_expression_and_count_lexemes_function(case20, length_without_terminator_20, &actual_length20);
+        __compare_and_print_input_output_and_resolution(
+            20, 
+            case20, 
+            length_without_terminator_20, 
+            expected_status20, 
+            expected_length20, 
+            actual_status20, 
+            actual_length20,
+            silent_on_success); 
+    }
+
+    {
+        const char *case21 = "+(14+6)";
+        const int length_without_terminator_21 = 7;
+        const int expected_status21  = EC_EXPRESSION_IS_CORRECT;
+        const int expected_length21  = 5;
+
+
+        int actual_length21 = -1;
+
+
+        const int actual_status21 = check_expression_and_count_lexemes_function(case21, length_without_terminator_21, &actual_length21);
+        __compare_and_print_input_output_and_resolution(
+            21, 
+            case21, 
+            length_without_terminator_21, 
+            expected_status21, 
+            expected_length21, 
+            actual_status21, 
+            actual_length21,
+            silent_on_success); 
+    }
+
+    {
+        const char *case22 = "+-(14+6)";
+        const int length_without_terminator_22 = 8;
+        const int expected_status22  = EC_EXPRESSION_IS_NOT_CORRECT;
+        const int expected_length22  = -1;
+     
+
+        int actual_length22 = -1;
+
+
+        const int actual_status22 = check_expression_and_count_lexemes_function(case22, length_without_terminator_22, &actual_length22);
+        __compare_and_print_input_output_and_resolution(
+            22, 
+            case22, 
+            length_without_terminator_22, 
+            expected_status22, 
+            expected_length22, 
+            actual_status22, 
+            actual_length22,
+            silent_on_success); 
+    }
+
+    {
+        const char *case23 = "-+(14+6)";
+        const int length_without_terminator_23 = 8;
+        const int expected_status23  = EC_EXPRESSION_IS_NOT_CORRECT;
+        const int expected_length23  = -1;
+     
+
+        int actual_length23 = -1;
+
+
+        const int actual_status23 = check_expression_and_count_lexemes_function(case23, length_without_terminator_23, &actual_length23);
+        __compare_and_print_input_output_and_resolution(
+            23, 
+            case23, 
+            length_without_terminator_23, 
+            expected_status23, 
+            expected_length23, 
+            actual_status23, 
+            actual_length23,
+            silent_on_success); 
+    }
+
+    {
+        const char *case24 = "-+14";
+        const int length_without_terminator_24 = 4;
+        const int expected_status24  = EC_EXPRESSION_IS_NOT_CORRECT;
+        const int expected_length24  = -1;
+     
+
+        int actual_length24 = -1;
+
+
+        const int actual_status24 = check_expression_and_count_lexemes_function(case24, length_without_terminator_24, &actual_length24);
+        __compare_and_print_input_output_and_resolution(
+            24, 
+            case24, 
+            length_without_terminator_24, 
+            expected_status24, 
+            expected_length24, 
+            actual_status24, 
+            actual_length24,
+            silent_on_success); 
+    }
+
+    {
+        const char *case25 = "+-14";
+        const int length_without_terminator_25 = 4;
+        const int expected_status25  = EC_EXPRESSION_IS_NOT_CORRECT;
+        const int expected_length25  = -1;
+     
+
+        int actual_length25 = -1;
+
+
+        const int actual_status25 = check_expression_and_count_lexemes_function(case25, length_without_terminator_25, &actual_length25);
+        __compare_and_print_input_output_and_resolution(
+            25, 
+            case25, 
+            length_without_terminator_25, 
+            expected_status25, 
+            expected_length25, 
+            actual_status25, 
+            actual_length25,
+            silent_on_success); 
+    }
+
+    {
+        const char *case26 = "-sin(14)";
+        const int length_without_terminator_26 = 8;
+        const int expected_status26  = EC_EXPRESSION_IS_CORRECT;
+        const int expected_length26  = 6;
+     
+
+        int actual_length26 = -1;
+
+
+        const int actual_status26 = check_expression_and_count_lexemes_function(case26, length_without_terminator_26, &actual_length26);
+        __compare_and_print_input_output_and_resolution(
+            26, 
+            case26, 
+            length_without_terminator_26, 
+            expected_status26, 
+            expected_length26, 
+            actual_status26, 
+            actual_length26,
+            silent_on_success); 
+    }
+
+    {
+        const char *case27 = "+sin(14)";
+        const int length_without_terminator_27 = 8;
+        const int expected_status27  = EC_EXPRESSION_IS_CORRECT;
+        const int expected_length27  = 4;
+
+
+        int actual_length27 = -1;
+
+
+        const int actual_status27 = check_expression_and_count_lexemes_function(case27, length_without_terminator_27, &actual_length27);
+        __compare_and_print_input_output_and_resolution(
+            27,
+            case27,
+            length_without_terminator_27, 
+            expected_status27, 
+            expected_length27, 
+            actual_status27, 
+            actual_length27,
+            silent_on_success); 
+    }
+
+    {
+        const char *case28 = "*sin(14)";
+        const int length_without_terminator_28 = 8;
+        const int expected_status28  = EC_EXPRESSION_IS_NOT_CORRECT;
+        const int expected_length28  = -1;
+
+
+        int actual_length28 = -1;
+
+
+        const int actual_status28 = check_expression_and_count_lexemes_function(case28, length_without_terminator_28, &actual_length28);
+        __compare_and_print_input_output_and_resolution(
+            28,
+            case28,
+            length_without_terminator_28, 
+            expected_status28, 
+            expected_length28, 
+            actual_status28, 
+            actual_length28,
+            silent_on_success); 
     }
 }

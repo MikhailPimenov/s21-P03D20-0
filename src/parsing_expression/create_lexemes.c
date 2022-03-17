@@ -20,17 +20,6 @@ static const char *recognize_sinlge_symbol_and_create_lexeme(
 
     *lexemes_created_out += 1;
 
-    // if (symbol_to_recognize == 'x') {
-    //     set_lexeme(lexeme_out, LT_OPERAND_PLACEHOLDER, 0.0, 'x');  
-    //     return infix_notation_row + 1;
-    // }
-
-    // if (symbol_to_recognize == '(' || symbol_to_recognize == ')') {
-    //     set_lexeme(lexeme_out, LT_BRACE, 0.0, symbol_to_recognize);
-    //     return infix_notation_row + 1;
-    // }
-
-    // set_lexeme(lexeme_out, LT_ACTION, 0.0, symbol_to_recognize);
     set_lexeme(lexeme_out, not_operand_lexeme_type, 0.0, symbol_to_recognize);
     return infix_notation_row + 1;
 }
@@ -114,6 +103,8 @@ static const char *recognize_function_and_create_lexeme(
     //  returning pointer to the next position in infix_notation to recognise
     return infix_notation_row + function_name_length_without_terminator;
 }
+
+// TODO: replace everywhere "sin", 3, with struct, "tg", 2 and so on
 const char *recognize_sine_and_create_lexeme(const char *infix_notation_row, int length_without_terminator, Lexeme *const lexeme_out, int *lexemes_created_out) {
     return recognize_function_and_create_lexeme(infix_notation_row, length_without_terminator, "sin", 3, lexeme_out, lexemes_created_out);
 }
@@ -152,14 +143,17 @@ const char *recognize_double_and_create_lexeme(const char *infix_notation_row, i
     return current_position_in_string;
 }
 
-const char *recognize_subtract_symbol_and_create_three_lexemes_instead_of_one(
+
+
+const char *recognize_subtract_symbol_and_create_several_lexemes_instead_of_one(
     const char *infix_notation_row,
     int length_without_terminator,
     Lexeme *const lexeme1_in_array_out,
     Lexeme *const lexeme2_in_array_out,
     Lexeme *const lexeme3_in_array_out,
     int lexemes_length,
-    int *lexemes_created_out) {
+    int *lexemes_created_out,
+    int is_not_first) {
 
     const char symbol_to_recognize = '-';
 
@@ -172,16 +166,247 @@ const char *recognize_subtract_symbol_and_create_three_lexemes_instead_of_one(
     if (recognition_status != RS_RECOGNIZED) 
         return infix_notation_row;
 
+    //  because "3-5" will be treated like "3+(-1)*5" and then converted to  3, '+', -1, '*', 5
+    //  or "-(5+1)" will be treated like "(-1)*(5+1)" and then converted to -1, '*', '(',  5, '+', ')'
+    const int amount_of_lexemes = is_not_first ? 3 : 2;
+
+
     // this error should be handled when calling this function, but not here
-    if (*lexemes_created_out + 2 >= lexemes_length)
+    if (*lexemes_created_out + amount_of_lexemes - 1 >= lexemes_length)
         return infix_notation_row;
 
-    *lexemes_created_out += 3;                   //  because "3-5" will be treated like "3+(-1)*5" and then converted to  3, '+', -1, '*', 5
+    *lexemes_created_out += amount_of_lexemes;                   
 
-
-    set_lexeme(lexeme1_in_array_out, LT_ACTION,   0.0,  '+');
+    if (is_not_first)
+        set_lexeme(lexeme1_in_array_out, LT_ACTION,   0.0,  '+');
+    
     set_lexeme(lexeme2_in_array_out, LT_OPERAND, -1.0, '\0');
     set_lexeme(lexeme3_in_array_out, LT_ACTION,   0.0,  '*');
 
     return infix_notation_row + 1;
+}
+
+const char *recognize_subtract_symbol_and_create_three_lexemes_instead_of_one(
+    const char *infix_notation_row,
+    int length_without_terminator,
+    Lexeme *const lexeme1_in_array_out,
+    Lexeme *const lexeme2_in_array_out,
+    Lexeme *const lexeme3_in_array_out,
+    int lexemes_length,
+    int *lexemes_created_out) {
+
+    const int is_not_first = 1;
+    return recognize_subtract_symbol_and_create_several_lexemes_instead_of_one(
+        infix_notation_row,
+        length_without_terminator,
+        lexeme1_in_array_out,
+        lexeme2_in_array_out,
+        lexeme3_in_array_out,
+        lexemes_length,
+        lexemes_created_out,
+        is_not_first);
+}
+
+const char *recognize_first_subtract_symbol_and_create_two_lexemes_instead_of_one(
+    const char *infix_notation_row,
+    int length_without_terminator,
+    Lexeme *const lexeme1_in_array_out,
+    Lexeme *const lexeme2_in_array_out,
+    int lexemes_length,
+    int *lexemes_created_out) {
+
+    const int is_not_first = 0;
+    return recognize_subtract_symbol_and_create_several_lexemes_instead_of_one(
+        infix_notation_row,
+        length_without_terminator,
+        NULL,
+        lexeme1_in_array_out,
+        lexeme2_in_array_out,
+        lexemes_length,
+        lexemes_created_out,
+        is_not_first);
+}
+
+const char *recognize_first_add_symbol_and_not_create_lexeme(const char *infix_notation_row, int length_without_terminator) {
+    const int recognition_status = is_symbol_recognized(
+        infix_notation_row,
+        length_without_terminator,
+        '+'
+    );
+    
+    if (recognition_status != RS_RECOGNIZED) {
+        return infix_notation_row;
+    }
+
+    return infix_notation_row + 1;
+}
+
+void create_lexemes(const char *infix_notation_row, int length_without_terminator, Lexeme *lexemes, int lexemes_length) {
+    const char *current_position_in_string = infix_notation_row;
+    
+    int lexemes_created = 0;
+    // printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+    // printf("create_lexemes(): lexemes length : %d\n", lexemes_length);
+    const int show_everything = 0;
+
+
+    current_position_in_string = recognize_first_subtract_symbol_and_create_two_lexemes_instead_of_one(
+        current_position_in_string,
+        length_without_terminator - (current_position_in_string - infix_notation_row),
+        lexemes + lexemes_created + 0,
+        lexemes + lexemes_created + 1,
+        lexemes_length,
+        &lexemes_created);
+    
+    current_position_in_string = recognize_first_add_symbol_and_not_create_lexeme(
+        current_position_in_string,
+        length_without_terminator - (current_position_in_string - infix_notation_row));
+
+    if (show_everything)
+        printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+
+    //  chain of responsibility design pattern
+    while (lexemes_created < lexemes_length) {
+        const char *old_position_in_string = current_position_in_string;
+
+        // printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+        current_position_in_string = recognize_subtract_symbol_and_create_three_lexemes_instead_of_one(
+            current_position_in_string,
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created + 0,
+            lexemes + lexemes_created + 1,
+            lexemes + lexemes_created + 2,
+            lexemes_length,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+        current_position_in_string = recognize_add_symbol_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+
+        current_position_in_string = recognize_multiply_symbol_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+        current_position_in_string = recognize_divide_symbol_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+        current_position_in_string = recognize_power_symbol_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+
+        current_position_in_string = recognize_opening_brace_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+        current_position_in_string = recognize_closing_brace_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+
+        current_position_in_string = recognize_sine_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+        current_position_in_string = recognize_cosine_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+        current_position_in_string = recognize_tangent_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+        current_position_in_string = recognize_cotangent_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+        current_position_in_string = recognize_square_root_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+        current_position_in_string = recognize_natural_logarithm_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+
+        current_position_in_string = recognize_double_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+        current_position_in_string = recognize_placeholder_symbol_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+        if (current_position_in_string == old_position_in_string) {
+            printf("Creating lexemes is done!\n");
+            printf("Lexemes created: %d\n", lexemes_created);
+            // printf("lexeme counted: %d\n", lexemes_created);
+            // return lexemes_created;
+            break;
+        }
+    }
+    // printf("Creating lexemes is done!\n");
+    // printf("Lexemes created: %d\n", lexemes_created);
 }

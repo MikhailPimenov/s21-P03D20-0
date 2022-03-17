@@ -83,6 +83,42 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
         ;
     }
 
+
+    current_position_in_string = recognize_first_add_symbol_and_count_it(
+        current_position_in_string,
+        length_without_terminator,
+        &lexeme_counter,
+        &is_binary_action_recognized);
+
+    if (is_binary_action_recognized) {
+        is_previous_an_operand       = 0;
+        is_previous_an_unary_action  = 0;
+        is_previous_an_binary_action = 1;
+        is_previous_an_brace         = 0;
+        is_binary_action_recognized  = 0;
+    }
+
+
+    current_position_in_string = recognize_first_subtract_symbol_and_count_it(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            &lexeme_counter,
+            &is_binary_action_recognized);
+
+    if (is_binary_action_recognized && is_previous_an_binary_action) {
+            // printf("return #0\n");
+        return EC_EXPRESSION_IS_NOT_CORRECT;    
+    }
+
+    if (is_binary_action_recognized) {
+        is_previous_an_operand       = 0;
+        is_previous_an_unary_action  = 0;
+        is_previous_an_binary_action = 1;
+        is_previous_an_brace         = 0;
+        is_binary_action_recognized  = 0;
+    }
+
+
     //  chain of responsibility design pattern
     while (1) {
         const char *old_position_in_string = current_position_in_string;

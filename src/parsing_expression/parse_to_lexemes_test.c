@@ -167,15 +167,15 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         Lexeme expected5[9];
         const int expected_length5 = 9;
 
-        set_lexeme(expected5 + 0, LT_OPERAND, 517.0, '\0');
-        set_lexeme(expected5 + 1, LT_ACTION,  0.0,   '*' );
-        set_lexeme(expected5 + 2, LT_BRACE,   0.0,   '(' );
-        set_lexeme(expected5 + 3, LT_OPERAND, 20.0,  '\0');
-        set_lexeme(expected5 + 4, LT_ACTION,  0.0,   '+' );
-        set_lexeme(expected5 + 5, LT_OPERAND, -1.0,  '\0');
-        set_lexeme(expected5 + 6, LT_ACTION,  0.0,   '*' );
-        set_lexeme(expected5 + 7, LT_OPERAND, 39.0,  '\0');
-        set_lexeme(expected5 + 8, LT_BRACE,   0.0,   ')' );
+        set_lexeme(expected5 + 0, LT_OPERAND, 517.0,  '\0');
+        set_lexeme(expected5 + 1, LT_ACTION,    0.0,  '*' );
+        set_lexeme(expected5 + 2, LT_BRACE,     0.0,  '(' );
+        set_lexeme(expected5 + 3, LT_OPERAND,  20.0,  '\0');
+        set_lexeme(expected5 + 4, LT_ACTION,    0.0,  '+' );
+        set_lexeme(expected5 + 5, LT_OPERAND,  -1.0,  '\0');
+        set_lexeme(expected5 + 6, LT_ACTION,    0.0,  '*' );
+        set_lexeme(expected5 + 7, LT_OPERAND,  39.0,  '\0');
+        set_lexeme(expected5 + 8, LT_BRACE,     0.0,  ')' );
 
         Lexeme *actual5 = NULL;
         int actual_length5 = -1;
@@ -243,7 +243,7 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
 
         Lexeme *actual7 = NULL;
         int actual_length7 = -1;
-        
+
         parse_to_lexemes_allocate_function(case7, length_without_terminator_7, &actual7, &actual_length7);
         __compare_and_print_input_output_and_resolution(
             7, 
@@ -456,4 +456,163 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         if (actual10)
             free(actual10);
     }
+
+    {
+        const char *case11 = "-14";
+        const int length_without_terminator_11 = 3;
+
+        Lexeme expected11[3];
+        const int expected_length11 = 3;
+
+        set_lexeme(expected11 + 0, LT_OPERAND, -1.0, '\0');
+        set_lexeme(expected11 + 1, LT_ACTION,   0.0,  '*');
+        set_lexeme(expected11 + 2, LT_OPERAND, 14.0, '\0');
+
+        Lexeme *actual11 = NULL;
+        int actual_length11 = -1;
+
+        parse_to_lexemes_allocate_function(case11, length_without_terminator_11, &actual11, &actual_length11);
+        __compare_and_print_input_output_and_resolution(
+            11, 
+            case11, 
+            length_without_terminator_11, 
+            expected11, 
+            expected_length11, 
+            actual11, 
+            actual_length11,
+            silent_on_success); 
+
+        if (actual11)
+            free(actual11);
+    }
+
+    {
+        const char *case12 = "0-14";
+        const int length_without_terminator_12 = 4;
+
+        Lexeme expected12[5];
+        const int expected_length12 = 5;
+
+        set_lexeme(expected12 + 0, LT_OPERAND,  0.0, '\0');
+        set_lexeme(expected12 + 1, LT_ACTION,   0.0,  '+');
+        set_lexeme(expected12 + 2, LT_OPERAND, -1.0, '\0');
+        set_lexeme(expected12 + 3, LT_ACTION,   0.0,  '*');
+        set_lexeme(expected12 + 4, LT_OPERAND, 14.0, '\0');
+
+        Lexeme *actual12 = NULL;
+        int actual_length12 = -1;
+
+        parse_to_lexemes_allocate_function(case12, length_without_terminator_12, &actual12, &actual_length12);
+        __compare_and_print_input_output_and_resolution(
+            12, 
+            case12, 
+            length_without_terminator_12, 
+            expected12, 
+            expected_length12, 
+            actual12, 
+            actual_length12,
+            silent_on_success); 
+
+        if (actual12)
+            free(actual12);
+    }
+    {
+        const char *case13 = "-(14)";
+        const int length_without_terminator_13 = 5;
+
+        Lexeme expected13[5];
+        const int expected_length13 = 5;
+
+        set_lexeme(expected13 + 0, LT_OPERAND, -1.0, '\0');
+        set_lexeme(expected13 + 1, LT_ACTION,   0.0,  '*');
+        set_lexeme(expected13 + 2, LT_BRACE,    0.0,  '(');
+        set_lexeme(expected13 + 3, LT_OPERAND, 14.0, '\0');
+        set_lexeme(expected13 + 4, LT_BRACE,    0.0,  ')');
+
+        Lexeme *actual13 = NULL;
+        int actual_length13 = -1;
+
+        parse_to_lexemes_allocate_function(case13, length_without_terminator_13, &actual13, &actual_length13);
+        __compare_and_print_input_output_and_resolution(
+            13,
+            case13, 
+            length_without_terminator_13, 
+            expected13, 
+            expected_length13, 
+            actual13, 
+            actual_length13,
+            silent_on_success); 
+
+        if (actual13)
+            free(actual13);
+    }
+
+    {
+        const char *case14 = "-(14+sin(x)*88)";
+        const int length_without_terminator_14 = 15;
+
+        Lexeme expected14[12];
+        const int expected_length14 = 12;
+
+        set_lexeme(expected14 +  0, LT_OPERAND,    -1.0, '\0');
+        set_lexeme(expected14 +  1, LT_ACTION,      0.0,  '*');
+        set_lexeme(expected14 +  2, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected14 +  3, LT_OPERAND,    14.0, '\0');
+        set_lexeme(expected14 +  4, LT_ACTION,      0.0,  '+');
+        set_lexeme(expected14 +  5, LT_ACTION,      0.0,  's');
+        set_lexeme(expected14 +  6, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected14 +  7, LT_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(expected14 +  8, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected14 +  9, LT_ACTION,      0.0,  '*');
+        set_lexeme(expected14 + 10, LT_OPERAND,    88.0, '\0');
+        set_lexeme(expected14 + 11, LT_BRACE,       0.0,  ')');
+
+        Lexeme *actual14 = NULL;
+        int actual_length14 = -1;
+
+        parse_to_lexemes_allocate_function(case14, length_without_terminator_14, &actual14, &actual_length14);
+        __compare_and_print_input_output_and_resolution(
+            14,
+            case14, 
+            length_without_terminator_14, 
+            expected14, 
+            expected_length14, 
+            actual14, 
+            actual_length14,
+            silent_on_success); 
+
+        if (actual14)
+            free(actual14);
+    }
+
+
+
+    {
+        const char *case15 = "+14";
+        const int length_without_terminator_15 = 3;
+
+        Lexeme expected15[1];
+        const int expected_length15 = 1;
+
+        set_lexeme(expected15 + 0, LT_OPERAND, 14.0, '\0');
+
+        Lexeme *actual15 = NULL;
+        int actual_length15 = -1;
+
+        parse_to_lexemes_allocate_function(case15, length_without_terminator_15, &actual15, &actual_length15);
+        __compare_and_print_input_output_and_resolution(
+            15, 
+            case15, 
+            length_without_terminator_15, 
+            expected15, 
+            expected_length15, 
+            actual15, 
+            actual_length15,
+            silent_on_success); 
+
+        if (actual15)
+            free(actual15);
+    }
 }
+
+

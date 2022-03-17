@@ -24,6 +24,10 @@ const char *recognize_divide_symbol_and_count_it(const char *infix_notation_row,
 const char *recognize_power_symbol_and_count_it(const char *infix_notation_row, int length_without_terminator, int *lexeme_counter_out, int *is_recognized_out);
 
 
+const char *recognize_first_subtract_symbol_and_count_it(const char *infix_notation_row, int length_without_terminator, int *lexeme_counter_out, int *is_recognized_out);
+const char *recognize_first_add_symbol_and_count_it(const char *infix_notation_row, int length_without_terminator, int *lexeme_counter_out, int *is_recognized_out);
+
+
 int is_function_recognized(const char *infix_notation_row, int length_without_terminator, const char *function_name_as_string, int function_name_length_without_terminator);
 const char *recognize_function_and_count_it(const char *infix_notation_row, int length_without_terminator, const char *function_name_as_string, int function_name_length_without_terminator, int *lexeme_counter_out, int *is_recognized_out);
 const char *recognize_sine_and_count_it(const char *infix_notation_row, int length_without_terminator, int *lexeme_counter_out, int *is_recognized_out);
