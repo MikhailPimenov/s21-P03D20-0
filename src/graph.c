@@ -127,20 +127,39 @@ void create_definition_area(double *definition_area_already_allocated, int amoun
 
 void print_array_int(const int *const array, int length) {
     for (int index = 0; index < length; ++index) {
-        printf("%d ", array[index]);
+        printf("%d\n", array[index]);
     }
     printf("\n");
 }
 void print_array_double(const double *const array, int length) {
     for (int index = 0; index < length; ++index) {
-        printf("%lf ", array[index]);
+        printf("%lf\n", array[index]);
     }
     printf("\n");
 }
 
+// TODO: move somewhere this struct, it is supposed to be in header file, perhaps in drawing module
+typedef struct Value {
+    double value;
+    int row;
+    int is_not_empty;
+} Value;
+
+void print_graph(const double *const x, const Value *const values, int length) {
+    printf("   x\t\t\tcolumn\t\t  y\t\t\trow\t\tstatus\n");
+    for (int index = 0; index < length; ++index) {
+        printf(
+            "%lf\t\t%d\t\t%lf\t\t%d\t\t%s\n", 
+            x[index], 
+            index, 
+            values[index].value, 
+            values[index].row, 
+            (values[index].is_not_empty? "filled" : "empty" ));
+    }
+}
 
 int calculate_values_for_definition_area(
-    double *values,
+    Value *values,
     double *definition_area,
     int length,
     const Lexeme *const postfix_notation,
@@ -166,17 +185,18 @@ int calculate_values_for_definition_area(
         const int status = calculate_rpn_function(
             postfix_notation_with_filled_placeholders,
             length_of_postfix_notation,
-            values + column
+            &(values[column].value)
         );
 
+        values[column].is_not_empty = (status == C_SUCCESS) ? 1 : 0;
         // TODO: not to return, but assign status to array of statuses for each x
-        if (status != C_SUCCESS) {
-            if (postfix_notation_with_filled_placeholders) {
-                free(postfix_notation_with_filled_placeholders);
-                postfix_notation_with_filled_placeholders = NULL;
-            }
-            return status;
-        }
+        // if (status != C_SUCCESS) {
+            // if (postfix_notation_with_filled_placeholders) {
+                // free(postfix_notation_with_filled_placeholders);
+                // postfix_notation_with_filled_placeholders = NULL;
+            // }
+            // return status;
+        // }
     }
 
     if (postfix_notation_with_filled_placeholders) {
@@ -188,10 +208,15 @@ int calculate_values_for_definition_area(
 }
 
 
-void set_array_of_rows_from_y_values(int *array_of_rows_out, const double *const array_of_y, int length, int amount_of_possible_rows) {
+void set_array_of_rows_from_y_values(/*int *array_of_rows_out,*/  Value *const array_of_y, int length, int amount_of_possible_rows) {
     for (int index = 0; index < length; ++index) {
-        const int filled_row = get_row_number_from_y(array_of_y[index], amount_of_possible_rows);
-        array_of_rows_out[index] = filled_row;
+        if (array_of_y[index].is_not_empty) {
+            const int filled_row = get_row_number_from_y(array_of_y[index].value, amount_of_possible_rows);
+            // array_of_rows_out[index] = filled_row;
+            array_of_y[index].row = filled_row;
+            continue;
+        }
+        array_of_y[index].row = 0; 
     }
 }
 
@@ -215,13 +240,13 @@ void set_empty_field(char **field, int rows, int columns, char empty_symbol) {
 // }
 
 
-void set_graph_on_empty_field(char **field, int rows, int columns, int *array_of_rows, int length, char filled_symbol) {
+void set_graph_on_empty_field(char **field, int rows, int columns, /*int *array_of_rows*/const Value *const array_of_rows, int length, char filled_symbol) {
     const int limiting_length = (length <= columns) ? length : columns;
     for (int column = 0; column < limiting_length; ++column) {
-        printf("column #%d\n", column);
+        // printf("column #%d\n", column);
         
-        if (0 <= array_of_rows[column] && array_of_rows[column] < rows) 
-            field[array_of_rows[column]][column] = filled_symbol;
+        if (array_of_rows[column].is_not_empty && 0 <= array_of_rows[column].row && array_of_rows[column].row < rows) 
+            field[array_of_rows[column].row][column] = filled_symbol;
     }
 }
 
@@ -314,12 +339,12 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
     const double pi_constant = 3.14;
     create_definition_area(array_x, columns, 0.0, 4.0 * pi_constant);
     
-    if (show_every_stage) {
-        printf("Discrete definition area:\n");
-        print_array_double(array_x, columns);
-    }
+    // if (show_every_stage) {
+        // printf("Discrete definition area:\n");
+        // print_array_double(array_x, columns);
+    // }
     
-    double *array_y = malloc(columns * sizeof(double));
+    Value *array_y = malloc(columns * sizeof(Value));
     if (array_y == NULL) {
         printf("Error: could not allocate memory for values!\n");
 
@@ -342,7 +367,7 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
         return -1;
     }
 
-    const int status_caclulation = calculate_values_for_definition_area(
+    /*const int status_caclulation =*/ calculate_values_for_definition_area(
         array_y,
         array_x,
         columns,
@@ -350,70 +375,71 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
         amount_of_postfix_lexemes,
         calculate_reversed_polish_notation);
 
-    if (show_every_stage) {
-        printf("Discrete values:\n");
-        print_array_double(array_y, columns);
-    }
+    // if (show_every_stage) {
+        // printf("Discrete values:\n");
+        // print_array_double(array_y, columns);
+    // }
     
-    if (status_caclulation != C_SUCCESS) {
-        printf("Error: something went wrong during computation of reversed polish notation!\n");
+    // if (status_caclulation != C_SUCCESS) {
+    //     printf("Error: something went wrong during computation of reversed polish notation!\n");
 
-        if (array_y) {
-            free(array_y);
-            array_y = NULL;
-        }
-        if (array_x) {
-            free(array_x);
-            array_x = NULL;
-        }
-        if (postfix_notation) {
-            free(postfix_notation);
-            postfix_notation = NULL;
-        }
-        if (infix_notation) {
-            free(infix_notation);
-            infix_notation = NULL;
-        }
-        if (expression) {
-            free(expression);
-            expression = NULL;
-        }
+    //     if (array_y) {
+    //         free(array_y);
+    //         array_y = NULL;
+    //     }
+    //     if (array_x) {
+    //         free(array_x);
+    //         array_x = NULL;
+    //     }
+    //     if (postfix_notation) {
+    //         free(postfix_notation);
+    //         postfix_notation = NULL;
+    //     }
+    //     if (infix_notation) {
+    //         free(infix_notation);
+    //         infix_notation = NULL;
+    //     }
+    //     if (expression) {
+    //         free(expression);
+    //         expression = NULL;
+    //     }
 
-        return -1;
-    }
+    //     return -1;
+    // }
 
-    int *array_of_rows = malloc(columns * sizeof(int));
-    if (array_of_rows == NULL) {
-        printf("Error: could not allocate memory for array of rows!\n");
+    // int *array_of_rows = malloc(columns * sizeof(int));
+    // if (array_of_rows == NULL) {
+    //     printf("Error: could not allocate memory for array of rows!\n");
 
-        if (array_y) {
-            free(array_y);
-            array_y = NULL;
-        }
-        if (array_x) {
-            free(array_x);
-            array_x = NULL;
-        }
-        if (postfix_notation) {
-            free(postfix_notation);
-            postfix_notation = NULL;
-        }
-        if (infix_notation) {
-            free(infix_notation);
-            infix_notation = NULL;
-        }
-        if (expression) {
-            free(expression);
-            expression = NULL;
-        }
-        return -1;
-    }
+    //     if (array_y) {
+    //         free(array_y);
+    //         array_y = NULL;
+    //     }
+    //     if (array_x) {
+    //         free(array_x);
+    //         array_x = NULL;
+    //     }
+    //     if (postfix_notation) {
+    //         free(postfix_notation);
+    //         postfix_notation = NULL;
+    //     }
+    //     if (infix_notation) {
+    //         free(infix_notation);
+    //         infix_notation = NULL;
+    //     }
+    //     if (expression) {
+    //         free(expression);
+    //         expression = NULL;
+    //     }
+    //     return -1;
+    // }
     
-    set_array_of_rows_from_y_values(array_of_rows, array_y, columns, rows);
-    if (show_every_stage) {
-        printf("Numbers of rows which will be filled:\n");
-        print_array_int(array_of_rows, columns);
-    }
+    set_array_of_rows_from_y_values(/*array_of_rows, */array_y, columns, rows);
+    print_graph(array_x, array_y, columns);
+    // if (show_every_stage) {
+    //     printf("Numbers of rows which will be filled:\n");
+    //     print_array_int(array_of_rows, columns);
+    // }
     char **field = NULL;
     const int status_allocation_field = allocate_field(&field, rows, columns);
     if (status_allocation_field != A_ALLOCATED_SUCCESSFULLY) {
@@ -445,7 +471,7 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
 
 
     set_empty_field(field, rows, columns, blank_symbol);
-    set_graph_on_empty_field(field, rows, columns, array_of_rows, columns, filled_symbol);
+    set_graph_on_empty_field(field, rows, columns, /*array_of_rows,*/array_y, columns, filled_symbol);
 
 
     draw_field(field, rows, columns);
@@ -454,6 +480,10 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
 
     deallocate_field(&field);
 
+    // if (array_of_rows) {
+        // free(array_of_rows);
+        // array_of_rows = NULL;
+    // }
     if (array_y) {
         free(array_y);
         array_y = NULL;
@@ -497,21 +527,6 @@ int main() {
     #endif //  TEST_GRAPH_
 
     program(35, 85, '*', '.');
-    // shunting_yard_test(shunting_yard, "Testing shunting_yard:");
-
-    // draw_field(example_field, rows, columns);
-
-    // printf("After draw_print():\n");
-    // char *expression = NULL;
-    // size_t allocated_length = 0u;
-    // ssize_t actual_length = getline(&expression, &allocated_length, stdin);
-
-
-    // Defined in header <stdio.h>
-    // char *lineptr = NULL;
-    // size_t n = 0u;
-    // ssize_t actual_length =  getline_allocate(&lineptr, &n, stdin);
-
 
     return 0;
 }
