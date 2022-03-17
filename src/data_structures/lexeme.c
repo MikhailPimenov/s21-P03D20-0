@@ -208,7 +208,7 @@ int get_precedence(const Lexeme *lexeme) {
             return OP_MEDIUM;
         case '/':
             return OP_MEDIUM;
-        case 'p':  //  x^y
+        case '^':  //  x^y this is power but not xor
             return OP_HIGH;
         case 's':  //  sin(x)
             return OP_HIGH;

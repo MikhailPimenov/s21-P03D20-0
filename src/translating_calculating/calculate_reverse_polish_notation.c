@@ -23,6 +23,24 @@ static int __divide(double left_operand, double right_operand, double *result) {
 
     return C_SUCCESS;
 }
+static int __is_exponent_integer(double exponent) {
+    return are_double_equal(exponent, (int)exponent, 1e-12);
+}
+static int __is_exponent_not_integer(double exponent) {
+    return !__is_exponent_integer(exponent);
+}
+static int __power(double left_operand, double right_operand, double *result) {
+    if (__is_exponent_not_integer(right_operand) && left_operand < 0.0)
+        return C_NEGATIVE_BASE_FOR_REAL_EXPONENT_ERROR;
+
+    if (are_double_equal(left_operand, 0.0, 1e-12) && right_operand < 0.0)
+        return C_NEGATIVE_EXPONENT_FOR_ZERO_BASE_ERROR;
+
+    *result = pow(left_operand, right_operand);
+
+    return C_SUCCESS;
+}
+
 static int __sine(double single_operand, double *result_out) {
     *result_out = sin(single_operand);
     return C_SUCCESS;
@@ -118,6 +136,7 @@ static int __take_single_operand_calculate_and_push_result(Stack_node **stack, i
 }
 
 int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int length, double *result_out) {
+    *result_out = -1.0;
     Stack_node *stack = NULL;
 
     for (int index = 0; index < length; ++index) {
@@ -128,9 +147,9 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
             continue;
         }
 
-        char current_action    = '\0';
-        double current_operand = 0.0;  //  no need in that
-        get_lexeme(&current_lexeme, &current_operand, &current_action);
+        char current_action          = '\0';
+        double current_operand_dummy = 0.0;  
+        get_lexeme(&current_lexeme, &current_operand_dummy, &current_action);
         
         switch (current_action) {
             case '+': {
@@ -165,6 +184,16 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
             }
             case '/': {
                 const int status = __take_two_operands_calculate_and_push_result(&stack, __divide);
+                if (status == C_EMPTY_STACK_ERROR) {
+                    return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+                }
+                if (status != C_SUCCESS) {
+                    return status;
+                }
+                continue;
+            }
+            case '^': {
+                const int status = __take_two_operands_calculate_and_push_result(&stack, __power);
                 if (status == C_EMPTY_STACK_ERROR) {
                     return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
                 }

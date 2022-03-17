@@ -169,6 +169,7 @@ int calculate_values_for_definition_area(
             values + column
         );
 
+        // TODO: not to return, but assign status to array of statuses for each x
         if (status != C_SUCCESS) {
             if (postfix_notation_with_filled_placeholders) {
                 free(postfix_notation_with_filled_placeholders);

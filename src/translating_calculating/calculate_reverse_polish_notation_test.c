@@ -235,8 +235,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const int length16 = 3;
 
     set_lexeme(case16 +  0, LT_OPERAND,              1.0, '\0');
-    set_lexeme(case16 +  1, LT_ACTION,               0.0, '^' );
-    set_lexeme(case16 +  2, LT_OPERAND,              1.0, '\0');
+    set_lexeme(case16 +  1, LT_OPERAND,              1.0, '\0');
+    set_lexeme(case16 +  2, LT_ACTION,               0.0, '^' );
 
     const double expected16 = 1.0;
     double actual16 = -15.88;
@@ -248,8 +248,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const int length17 = 3;
 
     set_lexeme(case17 +  0, LT_OPERAND,              2.0, '\0');
-    set_lexeme(case17 +  1, LT_ACTION,               0.0, '^' );
-    set_lexeme(case17 +  2, LT_OPERAND,              5.0, '\0');
+    set_lexeme(case17 +  1, LT_OPERAND,              5.0, '\0');
+    set_lexeme(case17 +  2, LT_ACTION,               0.0, '^' );
 
     const double expected17 = 32.0;
     double actual17 = -15.88;
@@ -261,8 +261,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const int length18 = 3;
 
     set_lexeme(case18 +  0, LT_OPERAND,              9.0, '\0');
-    set_lexeme(case18 +  1, LT_ACTION,               0.0, '^' );
-    set_lexeme(case18 +  2, LT_OPERAND,              3.0, '\0');
+    set_lexeme(case18 +  1, LT_OPERAND,              3.0, '\0');
+    set_lexeme(case18 +  2, LT_ACTION,               0.0, '^' );
 
     const double expected18 = 729.0;
     double actual18 = -15.88;
@@ -275,8 +275,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const int length19 = 3;
 
     set_lexeme(case19 +  0, LT_OPERAND,              2.0, '\0');
-    set_lexeme(case19 +  1, LT_ACTION,               0.0, '^' );
-    set_lexeme(case19 +  2, LT_OPERAND,             -3.0, '\0');
+    set_lexeme(case19 +  1, LT_OPERAND,             -3.0, '\0');
+    set_lexeme(case19 +  2, LT_ACTION,               0.0, '^' );
 
     const double expected19 = 0.125;
     double actual19 = -15.88;
@@ -288,8 +288,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const int length20 = 3;
 
     set_lexeme(case20 +  0, LT_OPERAND,              3.0, '\0');
-    set_lexeme(case20 +  1, LT_ACTION,               0.0, '^' );
-    set_lexeme(case20 +  2, LT_OPERAND,             -1.0, '\0');
+    set_lexeme(case20 +  1, LT_OPERAND,             -1.0, '\0');
+    set_lexeme(case20 +  2, LT_ACTION,               0.0, '^' );
 
     const double expected20 = 0.33333333333333333333333333333333333333333333333333333333;  //  depends on epsilon
     double actual20 = -15.88;
@@ -301,8 +301,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const int length21 = 3;
 
     set_lexeme(case21 +  0, LT_OPERAND,              0.0, '\0');
-    set_lexeme(case21 +  1, LT_ACTION,               0.0, '^' );
-    set_lexeme(case21 +  2, LT_OPERAND,             -1.0, '\0');
+    set_lexeme(case21 +  1, LT_OPERAND,            14.78, '\0');
+    set_lexeme(case21 +  2, LT_ACTION,               0.0, '^' );
 
     const double expected21 = 0.0;
     double actual21 = -15.88;
@@ -314,8 +314,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const int length22 = 3;
 
     set_lexeme(case22 +  0, LT_OPERAND,              0.0, '\0');
-    set_lexeme(case22 +  1, LT_ACTION,               0.0, '^' );
-    set_lexeme(case22 +  2, LT_OPERAND,             11.0, '\0');
+    set_lexeme(case22 +  1, LT_OPERAND,             11.0, '\0');
+    set_lexeme(case22 +  2, LT_ACTION,               0.0, '^' );
 
     const double expected22 = 0.0;
     double actual22 = -15.88;
@@ -328,8 +328,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const int length23 = 3;
 
     set_lexeme(case23 +  0, LT_OPERAND,              5.0, '\0');
-    set_lexeme(case23 +  1, LT_ACTION,               0.0, '^' );
-    set_lexeme(case23 +  2, LT_OPERAND,              0.0, '\0');
+    set_lexeme(case23 +  1, LT_OPERAND,              0.0, '\0');
+    set_lexeme(case23 +  2, LT_ACTION,               0.0, '^' );
 
     const double expected23 = 1.0;
     double actual23 = -15.88;
@@ -342,8 +342,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const int length24 = 3;
 
     set_lexeme(case24 +  0, LT_OPERAND,             -5.0, '\0');
-    set_lexeme(case24 +  1, LT_ACTION,               0.0, '^' );
-    set_lexeme(case24 +  2, LT_OPERAND,              0.0, '\0');
+    set_lexeme(case24 +  1, LT_OPERAND,              0.0, '\0');
+    set_lexeme(case24 +  2, LT_ACTION,               0.0, '^' );
 
     const double expected24 = 1.0;
     double actual24 = -15.88;
@@ -355,8 +355,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const int length25 = 3;
 
     set_lexeme(case25 +  0, LT_OPERAND,              2.5, '\0');
-    set_lexeme(case25 +  1, LT_ACTION,               0.0, '^' );
-    set_lexeme(case25 +  2, LT_OPERAND,              2.0, '\0');
+    set_lexeme(case25 +  1, LT_OPERAND,              2.0, '\0');
+    set_lexeme(case25 +  2, LT_ACTION,               0.0, '^' );
 
     const double expected25 = 6.25;
     double actual25 = -15.88;
@@ -368,8 +368,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const int length26 = 3;
 
     set_lexeme(case26 +  0, LT_OPERAND,              4.0, '\0');
-    set_lexeme(case26 +  1, LT_ACTION,               0.0, '^' );
-    set_lexeme(case26 +  2, LT_OPERAND,              2.5, '\0');
+    set_lexeme(case26 +  1, LT_OPERAND,              2.5, '\0');
+    set_lexeme(case26 +  2, LT_ACTION,               0.0, '^' );
 
     const double expected26 = 32.0;
     double actual26 = -15.88;
@@ -382,8 +382,8 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const int length27 = 3;
 
     set_lexeme(case27 +  0, LT_OPERAND,              9.0, '\0');
-    set_lexeme(case27 +  1, LT_ACTION,               0.0, '^' );
-    set_lexeme(case27 +  2, LT_OPERAND,              3.5, '\0');
+    set_lexeme(case27 +  1, LT_OPERAND,              3.5, '\0');
+    set_lexeme(case27 +  2, LT_ACTION,               0.0, '^' );
 
     const double expected27 = 2187.0;
     double actual27 = -15.88;
@@ -396,13 +396,28 @@ void calculate_reverse_polish_notation_test(int (*calculate_reversed_polish_nota
     const int length28 = 3;
 
     set_lexeme(case28 +  0, LT_OPERAND,              9.0, '\0');
-    set_lexeme(case28 +  1, LT_ACTION,               0.0, '^' );
-    set_lexeme(case28 +  2, LT_OPERAND,             -3.5, '\0');
+    set_lexeme(case28 +  1, LT_OPERAND,             -3.5, '\0');
+    set_lexeme(case28 +  2, LT_ACTION,               0.0, '^' );
 
     const double expected28 = 1.0 / 2187.0;
     double actual28 = -15.88;
     status = calculate_reversed_polish_notation_function(case28, length28, &actual28);
     __compare_and_print_input_output_and_resolution(28, status, C_SUCCESS, expected28, actual28, epsilon, case28, length28);
+
+
+    // 0.0 ^ (NEGATIVE_EXPONENT) IS MATHEMATICALLY UNDEFINED, it is 1/0
+    Lexeme case29[3];
+    const int length29 = 3;
+
+    set_lexeme(case29 +  0, LT_OPERAND,              0.0, '\0');
+    set_lexeme(case29 +  1, LT_OPERAND,             -1.0, '\0');
+    set_lexeme(case29 +  2, LT_ACTION,               0.0, '^' );
+
+    const double expected29 = sg_failed_result_for_calculating_rpn;
+    double actual29 = -15.88;
+    status = calculate_reversed_polish_notation_function(case29, length29, &actual29);
+    __compare_and_print_input_output_and_resolution(29, status, C_NEGATIVE_EXPONENT_FOR_ZERO_BASE_ERROR, expected29, actual29, epsilon, case29, length29);
+
 
     //  TODO: 0^0
     //  TODO: create test-cases for zero-division, invalid tg, invalid ctg, invalid ln, invalid sqrt, invalid power

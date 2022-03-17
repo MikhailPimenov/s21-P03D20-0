@@ -246,8 +246,7 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
 
     }
 
-
-    {
+     {
         // const char *case5 = " x * ( x - x )";
         // const char *expected5 = "x x x - *";
         const int length9 = 7;
@@ -274,4 +273,89 @@ void shunting_yard_test(void (*shunting_yard_function)(const Lexeme *, int, Lexe
         __compare_and_print_input_output_and_resolution(9, case9, length9, expected9, expected_length9, actual9, actual_length9, silent_on_success);
 
     }
+
+    {
+        // const char *case5 = " -1.0 * x ^ 2.0 ";
+        // const char *expected5 = " -1.0 x 2.0 ^ * ";
+        const int length10 = 5;
+        Lexeme case10[5];
+        set_lexeme(case10 + 0, LT_OPERAND,     -1.0, '\0');
+        set_lexeme(case10 + 1, LT_ACTION,       0.0,  '*');
+        set_lexeme(case10 + 2, LT_PLACEHOLDER,  0.0,  'x');
+        set_lexeme(case10 + 3, LT_ACTION,       0.0,  '^');
+        set_lexeme(case10 + 4, LT_OPERAND,      2.0, '\0');
+
+
+        Lexeme expected10[5];
+        set_lexeme(expected10 + 0, LT_OPERAND,     -1.0, '\0');
+        set_lexeme(expected10 + 1, LT_PLACEHOLDER,  0.0,  'x');
+        set_lexeme(expected10 + 2, LT_OPERAND,      2.0, '\0');
+        set_lexeme(expected10 + 3, LT_ACTION,       0.0,  '^');
+        set_lexeme(expected10 + 4, LT_ACTION,       0.0,  '*');
+
+
+        Lexeme actual10[5];
+        const int expected_length10 = 5;
+        int actual_length10 = -1;
+        shunting_yard_function(case10, length10, actual10, &actual_length10);
+        __compare_and_print_input_output_and_resolution(10, case10, length10, expected10, expected_length10, actual10, actual_length10, silent_on_success);
+    }
+
+    {
+        // const char *case5 = " ( -1.0 * x ) ^ 2.0 ";
+        // const char *expected5 = " -1.0 x * 2.0 ^";
+        const int length11 = 7;
+        Lexeme case11[7];
+        set_lexeme(case11 + 0, LT_BRACE,        0.0,  '(');
+        set_lexeme(case11 + 1, LT_OPERAND,     -1.0, '\0');
+        set_lexeme(case11 + 2, LT_ACTION,       0.0,  '*');
+        set_lexeme(case11 + 3, LT_PLACEHOLDER,  0.0,  'x');
+        set_lexeme(case11 + 4, LT_BRACE,        0.0,  ')');
+        set_lexeme(case11 + 5, LT_ACTION,       0.0,  'p');
+        set_lexeme(case11 + 6, LT_OPERAND,      2.0, '\0');
+
+
+        Lexeme expected11[5];
+        set_lexeme(expected11 + 0, LT_OPERAND,     -1.0, '\0');
+        set_lexeme(expected11 + 1, LT_PLACEHOLDER,  0.0,  'x');
+        set_lexeme(expected11 + 2, LT_ACTION,       0.0,  '*');
+        set_lexeme(expected11 + 3, LT_OPERAND,      2.0, '\0');
+        set_lexeme(expected11 + 4, LT_ACTION,       0.0,  'p');
+
+
+        Lexeme actual11[5];
+        const int expected_length11 = 5;
+        int actual_length11 = -1;
+        shunting_yard_function(case11, length11, actual11, &actual_length11);
+        __compare_and_print_input_output_and_resolution(11, case11, length11, expected11, expected_length11, actual11, actual_length11, silent_on_success);
+
+    }
+
+    // {
+    //     // const char *case5 = " -1.00 * x ^ 2.00 ";
+    //     // const char *expected5 = "x x x - *";
+    //     const int length9 = 7;
+    //     Lexeme case9[7];
+    //     set_lexeme(case9 + 0, LT_PLACEHOLDER,         0.0,  'x');
+    //     set_lexeme(case9 + 1, LT_ACTION,              0.0,  '*');
+    //     set_lexeme(case9 + 2, LT_BRACE,               0.0,  '(');
+    //     set_lexeme(case9 + 3, LT_PLACEHOLDER,         0.0,  'x');
+    //     set_lexeme(case9 + 4, LT_ACTION,              0.0,  '-');
+    //     set_lexeme(case9 + 5, LT_PLACEHOLDER,         0.0,  'x');
+    //     set_lexeme(case9 + 6, LT_BRACE,               0.0,  ')');
+
+    //     Lexeme expected9[5];
+    //     set_lexeme(expected9 + 0, LT_PLACEHOLDER,         0.0,  'x');
+    //     set_lexeme(expected9 + 1, LT_PLACEHOLDER,         0.0,  'x');
+    //     set_lexeme(expected9 + 2, LT_PLACEHOLDER,         0.0,  'x');
+    //     set_lexeme(expected9 + 3, LT_ACTION,              0.0,  '-');
+    //     set_lexeme(expected9 + 4, LT_ACTION,              0.0,  '*');
+
+    //     Lexeme actual9[5];
+    //     const int expected_length9 = 5;
+    //     int actual_length9 = -1;
+    //     shunting_yard_function(case9, length9, actual9, &actual_length9);
+    //     __compare_and_print_input_output_and_resolution(9, case9, length9, expected9, expected_length9, actual9, actual_length9, silent_on_success);
+
+    // }
 }
