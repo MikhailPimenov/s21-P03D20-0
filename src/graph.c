@@ -451,7 +451,29 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
 
 
 
-    // TODO: deallocate everything!
+    deallocate_field(&field);
+
+    if (array_y) {
+        free(array_y);
+        array_y = NULL;
+    }
+    if (array_x) {
+        free(array_x);
+        array_x = NULL;
+    }
+    if (postfix_notation) {
+        free(postfix_notation);
+        postfix_notation = NULL;
+    }
+    if (infix_notation) {
+        free(infix_notation);
+        infix_notation = NULL;
+    }
+    if (expression) {
+        free(expression);
+        expression = NULL;
+    }
+
     return 0;
 }
 

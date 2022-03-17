@@ -12,7 +12,7 @@ enum allocation_error_codes {
 
 
 int allocate_field(char ***field, int rows, int columns);
-void free_field(char ***field);
+void deallocate_field(char ***field);
 
 
 #endif  //  SRC_FIELD_ALLOCATE_DEALLOCATE_FIELD_H_

@@ -16,7 +16,7 @@ int allocate_field(char ***field, int rows, int columns) {
     return A_ALLOCATED_SUCCESSFULLY;
 }
 
-void free_field(char ***field) {
+void deallocate_field(char ***field) {
     if (*field) {
         free(*field);
         *field = NULL;
