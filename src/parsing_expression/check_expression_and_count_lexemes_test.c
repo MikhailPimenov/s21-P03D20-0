@@ -639,4 +639,232 @@ void check_expression_and_count_lexemes_test(int (*check_expression_and_count_le
             actual_length28,
             silent_on_success); 
     }
+
+
+
+    {
+        const char *case29 = "(-(-((x+1))))";  // -> '(' , -1.0, '*', '(', -1.0, '*', '(', '(', 'x', '+', '1', ')', ')', ')', ')'
+        const int length_without_terminator_29 = 13;
+
+        const int expected_status29  = EC_EXPRESSION_IS_CORRECT;
+        const int expected_length29  = 15;
+
+
+        int actual_length29 = -1;
+
+        const int actual_status29 = check_expression_and_count_lexemes_function(case29, length_without_terminator_29, &actual_length29);
+        __compare_and_print_input_output_and_resolution(
+            29,
+            case29,
+            length_without_terminator_29,
+            expected_status29,
+            expected_length29,
+            actual_status29,
+            actual_length29,
+            silent_on_success);
+    }
+    
+    {
+        const char *case30 = "+(-(-(+(x+1))))";  // -> '(' , -1.0, '*', '(', -1.0, '*', '(', '(', 'x', '+', '1', ')', ')', ')', ')'
+        const int length_without_terminator_30 = 15;
+
+        const int expected_status30  = EC_EXPRESSION_IS_CORRECT;
+        const int expected_length30  = 15;
+
+
+        int actual_length30 = -1;
+
+        const int actual_status30 = check_expression_and_count_lexemes_function(case30, length_without_terminator_30, &actual_length30);
+        __compare_and_print_input_output_and_resolution(
+            30,
+            case30,
+            length_without_terminator_30,
+            expected_status30,
+            expected_length30,
+            actual_status30,
+            actual_length30,
+            silent_on_success);
+    }
+    
+    {
+        const char *case31 = "+(-(((-((((((+(x+1))))))))))+1)";  
+        // -> '(' , -1.0, '*', '(', '(', '(', -1.0, '*', 
+        // '(', '(', '(', '(', '(', '(', '(', 'x', '+', 
+        // '1', ')', ')', ')', ')', ')', ')', ')', ')', ')', ')', '+', 1.0, ')' 
+
+        const int length_without_terminator_31 = 31;
+
+        const int expected_status31  = EC_EXPRESSION_IS_CORRECT;
+        const int expected_length31  = 31;
+
+
+        int actual_length31 = -1;
+
+        const int actual_status31 = check_expression_and_count_lexemes_function(case31, length_without_terminator_31, &actual_length31);
+        __compare_and_print_input_output_and_resolution(
+            31,
+            case31,
+            length_without_terminator_31,
+            expected_status31,
+            expected_length31,
+            actual_status31,
+            actual_length31,
+            silent_on_success);
+    }
+
+    {
+        const char *case32 = "+(-(((+-((((((+(x+1))))))))))+1)";  
+        const int length_without_terminator_32 = 32;
+
+        const int expected_status32  = EC_EXPRESSION_IS_NOT_CORRECT;
+        const int expected_length32  = -1;
+
+
+        int actual_length32 = -1;
+
+        const int actual_status32 = check_expression_and_count_lexemes_function(case32, length_without_terminator_32, &actual_length32);
+        __compare_and_print_input_output_and_resolution(
+            32,
+            case32,
+            length_without_terminator_32,
+            expected_status32,
+            expected_length32,
+            actual_status32,
+            actual_length32,
+            silent_on_success);
+    }
+
+    {
+        const char *case33 = "+(-(((+-((()((((+(x+1))))))))))+1)";  
+        const int length_without_terminator_33 = 34;
+
+        const int expected_status33  = EC_EXPRESSION_IS_NOT_CORRECT;
+        const int expected_length33  = -1;
+
+
+        int actual_length33 = -1;
+
+        const int actual_status33 = check_expression_and_count_lexemes_function(case33, length_without_terminator_33, &actual_length33);
+        __compare_and_print_input_output_and_resolution(
+            33,
+            case33,
+            length_without_terminator_33,
+            expected_status33,
+            expected_length33,
+            actual_status33,
+            actual_length33,
+            silent_on_success);
+    }
+
+    {
+        const char *case34 = "+(-(((+-((((((())))))))))+1)";  
+        const int length_without_terminator_34 = 28;
+
+        const int expected_status34  = EC_EXPRESSION_IS_NOT_CORRECT;
+        const int expected_length34  = -1;
+
+
+        int actual_length34 = -1;
+
+        const int actual_status34 = check_expression_and_count_lexemes_function(case34, length_without_terminator_34, &actual_length34);
+        __compare_and_print_input_output_and_resolution(
+            34,
+            case34,
+            length_without_terminator_34,
+            expected_status34,
+            expected_length34,
+            actual_status34,
+            actual_length34,
+            silent_on_success);
+    }
+
+
+    {
+        const char *case35 = "+(-(((+-((((((()))))))))))";  
+        const int length_without_terminator_35 = 26;
+
+        const int expected_status35  = EC_EXPRESSION_IS_NOT_CORRECT;
+        const int expected_length35  = -1;
+
+
+        int actual_length35 = -1;
+
+        const int actual_status35 = check_expression_and_count_lexemes_function(case35, length_without_terminator_35, &actual_length35);
+        __compare_and_print_input_output_and_resolution(
+            35,
+            case35,
+            length_without_terminator_35,
+            expected_status35,
+            expected_length35,
+            actual_status35,
+            actual_length35,
+            silent_on_success);
+    }
+
+    {
+        const char *case36 = "((((((((((()))))))))))";  
+        const int length_without_terminator_36 = 22;
+
+        const int expected_status36  = EC_EXPRESSION_IS_NOT_CORRECT;
+        const int expected_length36  = -1;
+
+
+        int actual_length36 = -1;
+
+        const int actual_status36 = check_expression_and_count_lexemes_function(case36, length_without_terminator_36, &actual_length36);
+        __compare_and_print_input_output_and_resolution(
+            36,
+            case36,
+            length_without_terminator_36,
+            expected_status36,
+            expected_length36,
+            actual_status36,
+            actual_length36,
+            silent_on_success);
+    }
+
+    {
+        const char *case37 = "(((((((((((x)))))))))))";  
+        const int length_without_terminator_37 = 23;
+
+        const int expected_status37  = EC_EXPRESSION_IS_CORRECT;
+        const int expected_length37  = 23;
+
+
+        int actual_length37 = -1;
+
+        const int actual_status37 = check_expression_and_count_lexemes_function(case37, length_without_terminator_37, &actual_length37);
+        __compare_and_print_input_output_and_resolution(
+            37,
+            case37,
+            length_without_terminator_37,
+            expected_status37,
+            expected_length37,
+            actual_status37,
+            actual_length37,
+            silent_on_success);
+    }
+
+
+    {
+        const char *case38 = "((((((((((()*x))))))))))";  
+        const int length_without_terminator_38 = 24;
+
+        const int expected_status38  = EC_EXPRESSION_IS_NOT_CORRECT;
+        const int expected_length38  = -1;
+
+
+        int actual_length38 = -1;
+
+        const int actual_status38 = check_expression_and_count_lexemes_function(case38, length_without_terminator_38, &actual_length38);
+        __compare_and_print_input_output_and_resolution(
+            38,
+            case38,
+            length_without_terminator_38,
+            expected_status38,
+            expected_length38,
+            actual_status38,
+            actual_length38,
+            silent_on_success);
+    }
 }

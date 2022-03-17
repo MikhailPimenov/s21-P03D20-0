@@ -74,6 +74,14 @@ static int __square_root(double single_operand, double *result_out) {
     *result_out = sqrt(single_operand);
     return C_SUCCESS;
 }
+static int __natural_logarithm(double single_operand, double *reslut_out) {
+    if (single_operand < 1e-12) {
+        return C_NEGATIVE_ARGUMENT_FOR_LOGARITHM_ERROR;
+    }
+
+    *reslut_out = log(single_operand);
+    return C_SUCCESS;
+}
 static int __take_two_operands_calculate_and_push_result(Stack_node **stack, int (*function_with_two_operands)(double, double, double *)) {
     double right_operand = 0.0;
     char right_action    = '\0';
@@ -249,6 +257,17 @@ int calculate_reversed_polish_notation(const Lexeme *const postfix_notation, int
 
             case 'r': {
                 const int status = __take_single_operand_calculate_and_push_result(&stack, __square_root);
+                if (status == C_EMPTY_STACK_ERROR) {
+                    return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
+                }
+                if (status != C_SUCCESS) {
+                    return status;
+                }
+                continue;
+            }
+
+            case 'l': {
+                const int status = __take_single_operand_calculate_and_push_result(&stack, __natural_logarithm);
                 if (status == C_EMPTY_STACK_ERROR) {
                     return C_INVALID_REVERSE_POLISH_NOTATION_ERROR;
                 }

@@ -613,6 +613,151 @@ void parse_to_lexemes_test(void (*parse_to_lexemes_allocate_function)(const char
         if (actual15)
             free(actual15);
     }
+
+    {
+        const char *case16 = "(-(-((x+1))))";  // -> '(' , -1.0, '*', '(', -1.0, '*', '(', '(', 'x', '+', '1', ')', ')', ')', ')'
+        const int length_without_terminator_16 = 13;
+
+        Lexeme expected16[15];
+        const int expected_length16 = 15;
+
+        set_lexeme(expected16 +  0, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected16 +  1, LT_OPERAND,    -1.0, '\0');
+        set_lexeme(expected16 +  2, LT_ACTION,      0.0,  '*');
+        set_lexeme(expected16 +  3, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected16 +  4, LT_OPERAND,    -1.0, '\0');
+        set_lexeme(expected16 +  5, LT_ACTION,      0.0,  '*');
+        set_lexeme(expected16 +  6, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected16 +  7, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected16 +  8, LT_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(expected16 +  9, LT_ACTION,      0.0,  '+');
+        set_lexeme(expected16 + 10, LT_OPERAND,     1.0, '\0');
+        set_lexeme(expected16 + 11, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected16 + 12, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected16 + 13, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected16 + 14, LT_BRACE,       0.0,  ')');
+
+        Lexeme *actual16 = NULL;
+        int actual_length16 = -1;
+
+        parse_to_lexemes_allocate_function(case16, length_without_terminator_16, &actual16, &actual_length16);
+        __compare_and_print_input_output_and_resolution(
+            16, 
+            case16, 
+            length_without_terminator_16, 
+            expected16, 
+            expected_length16, 
+            actual16, 
+            actual_length16,
+            silent_on_success); 
+
+        if (actual16)
+            free(actual16);
+    }
+
+    {
+        const char *case17 = "+(-(-(+(x+1))))";  // -> '(' , -1.0, '*', '(', -1.0, '*', '(', '(', 'x', '+', '1', ')', ')', ')', ')'
+        const int length_without_terminator_17 = 15;
+
+        Lexeme expected17[15];
+        const int expected_length17 = 15;
+
+        set_lexeme(expected17 +  0, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected17 +  1, LT_OPERAND,    -1.0, '\0');
+        set_lexeme(expected17 +  2, LT_ACTION,      0.0,  '*');
+        set_lexeme(expected17 +  3, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected17 +  4, LT_OPERAND,    -1.0, '\0');
+        set_lexeme(expected17 +  5, LT_ACTION,      0.0,  '*');
+        set_lexeme(expected17 +  6, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected17 +  7, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected17 +  8, LT_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(expected17 +  9, LT_ACTION,      0.0,  '+');
+        set_lexeme(expected17 + 10, LT_OPERAND,     1.0, '\0');
+        set_lexeme(expected17 + 11, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected17 + 12, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected17 + 13, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected17 + 14, LT_BRACE,       0.0,  ')');
+
+        Lexeme *actual17 = NULL;
+        int actual_length17 = -1;
+
+        parse_to_lexemes_allocate_function(case17, length_without_terminator_17, &actual17, &actual_length17);
+        __compare_and_print_input_output_and_resolution(
+            17, 
+            case17, 
+            length_without_terminator_17, 
+            expected17, 
+            expected_length17, 
+            actual17, 
+            actual_length17,
+            silent_on_success); 
+
+        if (actual17)
+            free(actual17);
+    }
+
+
+
+    {
+        const char *case18 = "+(-(((-((((((+(x+1))))))))))+1)";  
+        // -> '(' , -1.0, '*', '(', '(', '(', -1.0, '*', 
+        // '(', '(', '(', '(', '(', '(', '(', 'x', '+', 
+        // '1', ')', ')', ')', ')', ')', ')', ')', ')', ')', ')', '+', 1.0, ')' 
+
+        const int length_without_terminator_18 = 31;
+
+        Lexeme expected18[31];
+        const int expected_length18 = 31;
+
+        set_lexeme(expected18 +  0, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected18 +  1, LT_OPERAND,    -1.0, '\0');
+        set_lexeme(expected18 +  2, LT_ACTION,      0.0,  '*');
+        set_lexeme(expected18 +  3, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected18 +  4, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected18 +  5, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected18 +  6, LT_OPERAND,    -1.0, '\0');
+        set_lexeme(expected18 +  7, LT_ACTION,      0.0,  '*');
+        set_lexeme(expected18 +  8, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected18 +  9, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected18 + 10, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected18 + 11, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected18 + 12, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected18 + 13, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected18 + 14, LT_BRACE,       0.0,  '(');
+        set_lexeme(expected18 + 15, LT_PLACEHOLDER, 0.0,  'x');
+        set_lexeme(expected18 + 16, LT_ACTION,      0.0,  '+');
+        set_lexeme(expected18 + 17, LT_OPERAND,     1.0, '\0');
+        set_lexeme(expected18 + 18, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected18 + 19, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected18 + 20, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected18 + 21, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected18 + 22, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected18 + 23, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected18 + 24, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected18 + 25, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected18 + 26, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected18 + 27, LT_BRACE,       0.0,  ')');
+        set_lexeme(expected18 + 28, LT_ACTION,      0.0,  '+');
+        set_lexeme(expected18 + 29, LT_OPERAND,     1.0, '\0');
+        set_lexeme(expected18 + 30, LT_BRACE,       0.0,  ')');
+
+        Lexeme *actual18 = NULL;
+        int actual_length18 = -1;
+
+        parse_to_lexemes_allocate_function(case18, length_without_terminator_18, &actual18, &actual_length18);
+        __compare_and_print_input_output_and_resolution(
+            18, 
+            case18, 
+            length_without_terminator_18, 
+            expected18, 
+            expected_length18, 
+            actual18, 
+            actual_length18,
+            silent_on_success); 
+
+        if (actual18)
+            free(actual18);
+    }
 }
 
 

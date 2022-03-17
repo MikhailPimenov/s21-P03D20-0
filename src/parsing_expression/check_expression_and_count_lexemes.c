@@ -78,45 +78,72 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
     int is_previous_an_operand        = 0;
     int is_previous_an_brace          = 0;
     int is_first_lexeme               = 1; 
-   
+    int are_operands_not_found        = 1;
+    
     if (is_previous_an_brace){
         ;
     }
 
+    while(1) {
+        const char *old_position_in_string = current_position_in_string;
 
-    current_position_in_string = recognize_first_add_symbol_and_count_it(
-        current_position_in_string,
-        length_without_terminator,
-        &lexeme_counter,
-        &is_binary_action_recognized);
-
-    if (is_binary_action_recognized) {
-        is_previous_an_operand       = 0;
-        is_previous_an_unary_action  = 0;
-        is_previous_an_binary_action = 1;
-        is_previous_an_brace         = 0;
-        is_binary_action_recognized  = 0;
-    }
-
-
-    current_position_in_string = recognize_first_subtract_symbol_and_count_it(
-            current_position_in_string, 
+        current_position_in_string = recognize_first_add_symbol_and_not_count_it(
+            current_position_in_string,
             length_without_terminator - (current_position_in_string - infix_notation_row),
             &lexeme_counter,
             &is_binary_action_recognized);
 
-    if (is_binary_action_recognized && is_previous_an_binary_action) {
-            // printf("return #0\n");
-        return EC_EXPRESSION_IS_NOT_CORRECT;    
+        if (is_binary_action_recognized && is_previous_an_binary_action) {
+                // printf("return #0\n");
+            return EC_EXPRESSION_IS_NOT_CORRECT;    
+        }
+
+        if (is_binary_action_recognized) {
+            is_previous_an_operand       = 0;
+            is_previous_an_unary_action  = 0;
+            is_previous_an_binary_action = 1;
+            is_previous_an_brace         = 0;
+            is_binary_action_recognized  = 0;
+        }
+
+
+        current_position_in_string = recognize_first_subtract_symbol_and_count_it(
+                current_position_in_string, 
+                length_without_terminator - (current_position_in_string - infix_notation_row),
+                &lexeme_counter,
+                &is_binary_action_recognized);
+
+        if (is_binary_action_recognized && is_previous_an_binary_action) {
+                // printf("return #0\n");
+            return EC_EXPRESSION_IS_NOT_CORRECT;    
+        }
+
+        if (is_binary_action_recognized) {
+            is_previous_an_operand       = 0;
+            is_previous_an_unary_action  = 0;
+            is_previous_an_binary_action = 1;
+            is_previous_an_brace         = 0;
+            is_binary_action_recognized  = 0;
+        }
+
+        current_position_in_string = recognize_opening_brace_and_count_it(
+                current_position_in_string, 
+                length_without_terminator - (current_position_in_string - infix_notation_row),
+                &lexeme_counter,
+                &is_brace_recognized);
+
+        if (is_brace_recognized) {
+            is_previous_an_operand        = 0;
+            is_previous_an_unary_action   = 0;
+            is_previous_an_binary_action  = 0;
+            is_previous_an_brace          = 1;
+            is_brace_recognized           = 0;
+        }
+
+        if (old_position_in_string == current_position_in_string)
+            break;
     }
 
-    if (is_binary_action_recognized) {
-        is_previous_an_operand       = 0;
-        is_previous_an_unary_action  = 0;
-        is_previous_an_binary_action = 1;
-        is_previous_an_brace         = 0;
-        is_binary_action_recognized  = 0;
-    }
 
 
     //  chain of responsibility design pattern
@@ -367,6 +394,9 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
             &lexeme_counter,
             &is_operand_recognized);
 
+        if (is_operand_recognized && are_operands_not_found)
+            are_operands_not_found = 0;
+
         if (is_operand_recognized && is_previous_an_operand) {
             // printf("return double\n");
             return EC_EXPRESSION_IS_NOT_CORRECT;
@@ -388,6 +418,9 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
             length_without_terminator - (current_position_in_string - infix_notation_row),
             &lexeme_counter,
             &is_operand_recognized);
+
+        if (is_operand_recognized && are_operands_not_found)
+            are_operands_not_found = 0;
 
         if (is_operand_recognized && is_previous_an_operand) { 
             // printf("return operand\n");
@@ -411,6 +444,10 @@ int check_expression_and_count_lexemes(const char *infix_notation_row, int lengt
     
     if (current_position_in_string - infix_notation_row < length_without_terminator) {
         // printf("return break\n");
+        return EC_EXPRESSION_IS_NOT_CORRECT;
+    }
+    
+    if (are_operands_not_found) {
         return EC_EXPRESSION_IS_NOT_CORRECT;
     }
     // printf("Congratulations! String is correct.\n");

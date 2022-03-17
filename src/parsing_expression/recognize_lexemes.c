@@ -104,7 +104,7 @@ const char *recognize_power_symbol_and_count_it(const char *infix_notation_row, 
 const char *recognize_first_subtract_symbol_and_count_it(const char *infix_notation_row, int length_without_terminator, int *lexeme_counter_out, int *is_recognized_out) {
     return recognize_first_sinlge_symbol_and_count_it(infix_notation_row, length_without_terminator, '-', lexeme_counter_out, is_recognized_out);    
 }
-const char *recognize_first_add_symbol_and_count_it(const char *infix_notation_row, int length_without_terminator, int *lexeme_counter_out, int *is_recognized_out) {
+const char *recognize_first_add_symbol_and_not_count_it(const char *infix_notation_row, int length_without_terminator, int *lexeme_counter_out, int *is_recognized_out) {
     return recognize_first_sinlge_symbol_and_count_it(infix_notation_row, length_without_terminator, '+', lexeme_counter_out, is_recognized_out);    
 }
 

@@ -249,22 +249,47 @@ void create_lexemes(const char *infix_notation_row, int length_without_terminato
     // printf("create_lexemes(): lexemes length : %d\n", lexemes_length);
     const int show_everything = 0;
 
+    while (lexemes_created < lexemes_length) {
+        const char *old_position_in_string = current_position_in_string;
 
-    current_position_in_string = recognize_first_subtract_symbol_and_create_two_lexemes_instead_of_one(
-        current_position_in_string,
-        length_without_terminator - (current_position_in_string - infix_notation_row),
-        lexemes + lexemes_created + 0,
-        lexemes + lexemes_created + 1,
-        lexemes_length,
-        &lexemes_created);
+        current_position_in_string = recognize_first_subtract_symbol_and_create_two_lexemes_instead_of_one(
+            current_position_in_string,
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created + 0,
+            lexemes + lexemes_created + 1,
+            lexemes_length,
+            &lexemes_created);
+        
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+        current_position_in_string = recognize_first_add_symbol_and_not_create_lexeme(
+            current_position_in_string,
+            length_without_terminator - (current_position_in_string - infix_notation_row));
+
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
+
+
+        current_position_in_string = recognize_opening_brace_and_create_lexeme(
+            current_position_in_string, 
+            length_without_terminator - (current_position_in_string - infix_notation_row),
+            lexemes + lexemes_created,
+            &lexemes_created);
+
+
+        if (show_everything)
+            printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
     
-    current_position_in_string = recognize_first_add_symbol_and_not_create_lexeme(
-        current_position_in_string,
-        length_without_terminator - (current_position_in_string - infix_notation_row));
+        if (current_position_in_string == old_position_in_string) {
+            // printf("Creating lexemes is done!\n");
+            // printf("Lexemes created: %d\n", lexemes_created);
+            // printf("lexeme counted: %d\n", lexemes_created);
+            // return lexemes_created;
+            break;
+        }
 
-    if (show_everything)
-        printf("create_lexemes(): lexemes created: %d\n", lexemes_created);
-
+    }
 
     //  chain of responsibility design pattern
     while (lexemes_created < lexemes_length) {
