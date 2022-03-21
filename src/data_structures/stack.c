@@ -57,13 +57,13 @@ void destroy(Stack_node **stack) {
 void print_stack(Stack_node *stack) {
     printf("------Top of the stack:---------\n");
     while (stack) {        
-        #if defined(LEXEME_T_)
-        printf("         ");
-        print_lexeme_with_endline_and_type(&(stack->this));
+        #if defined(ACTION_T_)
+        printf("         %c\n", stack->this);  //  default type
         #elif defined(OPERAND_T_)
         printf("         %lf\n", stack->this);
         #else
-        printf("         %c\n", stack->this);  //  default type
+        printf("         ");
+        print_lexeme_with_endline_and_type(&(stack->this));
         #endif //  LEXEME_T_
 
         stack = stack->previous;

@@ -33,7 +33,25 @@ char get_random_operand() {
 
 
 
-#if defined(LEXEME_T_)
+#if defined(ACTION_T_)
+static char get_element_for_testing() {  
+    return get_random_action();
+}
+static void print_element(char element) {
+    printf("%c\n", element);
+}
+
+#elif defined(OPERAND_T_)
+static double get_element_for_testing() {
+    return get_random_operand();
+}
+static void print_element(double element) {
+    printf("%lf\n", element);
+}
+#else
+
+
+
 static Lexeme get_element_for_testing() {
     Lexeme lexeme;
 
@@ -53,21 +71,7 @@ static void print_element(Lexeme lexeme) {
     print_lexeme_with_endline_and_type(&lexeme);
 }
 
-#elif defined(OPERAND_T_)
-static double get_element_for_testing() {
-    return get_random_operand();
-}
-static void print_element(double element) {
-    printf("%lf\n", element);
-}
-#else
-static char get_element_for_testing() {  //  default type
-    return get_random_action();
-}
-static void print_element(char element) {
-    printf("%c\n", element);
-}
-#endif //  LEXEME_T_
+#endif // ACTION_
 
 
 

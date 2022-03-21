@@ -1,19 +1,23 @@
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra -std=c11 -c
-# DEPFLAGS=-MT $@ -MMD -MP -MF $(DEPENDENCY_DIRECTORY)/$*.d
 
 
+SOURCE_DIRECTORIES=data_structures field translating_calculating drawing parsing_expression
 
-SOURCE_DIRECTORIES=. data_structures field translating_calculating drawing parsing_expression
 BUILD_DIRECTORY=../build
+
 TARGET=$(BUILD_DIRECTORY)/graph.exe
-# DEPENDENCY_DIRECTORY=../dependencies
-# DEPENDENCY_FILES=$(SOURCE_FILES_ALL:%.c=$(DEPENDENCY_DIRECTORY)/%.d)
+TARGET_TEST=$(BUILD_DIRECTORY)/graph_test.exe
+
+
+OBJECT_MAIN=$(BUILD_DIRECTORY)/graph.o
+OBJECT_MAIN_TEST=$(BUILD_DIRECTORY)/graph_test.o
+
 
 
 SOURCE_FILES_ALL=$(foreach directory_as_variable, $(SOURCE_DIRECTORIES),$(wildcard $(directory_as_variable)/*.c))
-# DEPENDENCY_FILES=$(patsubst %.o,%.d,$(SOURCE_FILES_ALL))
-
+SOURCE_FILES=$(filter-out %_test.c, $(SOURCE_FILES_ALL))
+SOURCE_FILES_TESTS=$(filter %_test.c, $(SOURCE_FILES_ALL))
 
 
 
@@ -21,44 +25,47 @@ OBJECT_FILES_ALL_IN_SOURCE_DIRECTORIES=$(patsubst %.c,%.o,$(SOURCE_FILES_ALL))
 OBJECT_FILES_ALL_IN_BUILD_DIRECTORIES=$(addprefix $(BUILD_DIRECTORY)/,$(OBJECT_FILES_ALL_IN_SOURCE_DIRECTORIES))
 
 
+OBJECT_FILES_TESTS_IN_SOURCE_DIRECTORIES=$(patsubst %.c,%.o,$(SOURCE_FILES_TESTS))
+OBJECT_FILES_TESTS_IN_BUILD_DIRECTORIES=$(addprefix $(BUILD_DIRECTORY)/,$(OBJECT_FILES_TESTS_IN_SOURCE_DIRECTORIES))
+
+
+OBJECT_FILES_IN_SOURCE_DIRECTORIES=$(patsubst %.c,%.o,$(SOURCE_FILES))
+OBJECT_FILES_IN_BUILD_DIRECTORIES=$(addprefix $(BUILD_DIRECTORY)/,$(OBJECT_FILES_IN_SOURCE_DIRECTORIES))
+
+
+
 all: $(TARGET)
 
 
-$(TARGET): $(OBJECT_FILES_ALL_IN_BUILD_DIRECTORIES)
+test: $(TARGET_TEST)
+
+
+compile: $(OBJECT_FILES_IN_BUILD_DIRECTORIES)
+
+
+compile_test: $(OBJECT_FILES_TESTS_IN_BUILD_DIRECTORIES)
+
+
+$(OBJECT_MAIN): graph.c
+		$(CC) $(CFLAGS) -o $@ $^
+
+
+$(OBJECT_MAIN_TEST): graph.c
+		$(CC) $(CFLAGS) -o $@ $^ -D TEST_GRAPH_
+
+
+
+$(TARGET): $(OBJECT_FILES_IN_BUILD_DIRECTORIES) $(OBJECT_MAIN)
 		$(CC) -o $@ $^
 
-compile: $(OBJECT_FILES_ALL_IN_BUILD_DIRECTORIES)
 
-
-# dependency: $(SOURCE_FILES_ALL)
-
-# $(SOURCE_FILES_ALL): 
-
-# deps = $(patsubst %.o,%.d,$(OBJECT_FILES_ALL_IN_BUILD_DIRECTORIES))
-# -include $(deps)
-
-# DEPFLAGS = -MMD -MF $(@:.o=.d)
+$(TARGET_TEST): $(OBJECT_FILES_IN_BUILD_DIRECTORIES) $(OBJECT_MAIN_TEST) $(OBJECT_FILES_TESTS_IN_BUILD_DIRECTORIES) 
+		$(CC) -o $@ $^
 
 
 $(OBJECT_FILES_ALL_IN_BUILD_DIRECTORIES): $(BUILD_DIRECTORY)/%.o: %.c
 		mkdir -p $(dir $@)
-		$(CC) $(CFLAGS) $< -o $@  
-
-
-
-# $(DEPENDENCY_DIRECTORY):
-		# mkdir -p $@
-	    # foreach dependency_directory_as_variable, $(dir $(DEPENDENCY_FILES)) mkdir -p dependency_directory_as_variable
-
-
-
-
-print:
-		echo $(OBJECT_FILES_ALL_IN_BUILD_DIRECTORIES)
-
-
-
-
+		$(CC) $(CFLAGS) $< -o $@
 
 
 clean: 

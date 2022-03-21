@@ -6,12 +6,12 @@
 
 #include "lexeme.h"
 
-#if defined(LEXEME_T_)
-typedef Lexeme Type_t;
+#if defined(ACTION_T_)
+typedef char Type_t;
 #elif defined(OPERAND_T_)
 typedef double Type_t;
 #else
-typedef char Type_t;  //  default type
+typedef Lexeme Type_t;  //  default type
 #endif //  LEXEME_T
 
 

@@ -3,7 +3,6 @@
 
 #include "drawing/drawing.h"
 #include "translating_calculating/calculate_reverse_polish_notation.h"
-#include "translating_calculating/translating.h"
 #include "translating_calculating/shunting_yard.h"
 
 #include "data_structures/lexeme.h"
@@ -254,7 +253,7 @@ int program(int rows, int columns, char filled_symbol, char blank_symbol) {
     static const int show_every_stage = 1;
     char *expression = NULL;
     size_t allocated_length = 0u;
-    printf("Enter expression without spaces and with braces, for example x+1 or sin(x):\n");
+    printf("Enter expression without spaces and with braces, for example -0.5*x or sin(x), or sin(cos(2*x)):\n");
     const ssize_t actual_length = getline_allocate(&expression, &allocated_length, stdin);
 
     if (actual_length == -1) {
