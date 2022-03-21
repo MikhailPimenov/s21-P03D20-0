@@ -5,6 +5,8 @@
 #include "translating_calculating/calculate_reverse_polish_notation.h"
 #include "translating_calculating/shunting_yard.h"
 
+#include "drawing/special_for_grap.h"
+
 #include "data_structures/lexeme.h"
 #include "data_structures/stack.h"
 
@@ -526,6 +528,6 @@ int main() {
     #endif //  TEST_GRAPH_
 
     program(35, 85, '*', '.');
-
+//
     return 0;
 }
