@@ -1,125 +1,101 @@
 CC=gcc
-CFLAGS=-c -Wall -Werror -Wextra -std=c11
+CFLAGS=-Wall -Werror -Wextra -std=c11 -c
 
-BUILD=../build
+SOURCE_DIRECTORIES=data_structures field translating_calculating drawing parsing_expression input program
 
+DEPENDENCY_DIRECTORY=../dependencies
+BUILD_DIRECTORY=../build
 
-# all: $(BUILD)/graph.exe
-
-
-# run: $(BUILD)/graph.exe
-		# $(BUILD)/graph.exe	
-
-
-test: $(BUILD)/graph_test.exe
-		$(BUILD)/graph_test.exe	
+TARGET=$(BUILD_DIRECTORY)/graph.exe
+TARGET_TEST=$(BUILD_DIRECTORY)/graph_test.exe
 
 
-# $(BUILD)/graph.exe: $(BUILD)/translating.o $(BUILD)/graph.o $(BUILD)/shunting_yard.o $(BUILD)/stack.o $(BUILD)/lexeme.o
-		# $(CC) $(BUILD)/graph.o $(BUILD)/translating.o  $(BUILD)/shunting_yard.o $(BUILD)/stack.o $(BUILD)/lexeme.o -o $(BUILD)/graph.exe
-
-
-$(BUILD)/graph_test.exe: $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o $(BUILD)/parse_to_lexemes.o $(BUILD)/parse_to_lexemes_test.o $(BUILD)/string_to_int.o $(BUILD)/string_to_int_test.o $(BUILD)/string_to_double.o $(BUILD)/string_to_double_test.o $(BUILD)/recognize_lexemes.o $(BUILD)/create_lexemes.o $(BUILD)/check_expression_and_count_lexemes_test.o $(BUILD)/check_expression_and_count_lexemes.o $(BUILD)/drawing.o $(BUILD)/allocate_deallocate_field.o
-		$(CC) $(BUILD)/graph_test.o $(BUILD)/lexeme.o $(BUILD)/lexeme_test.o $(BUILD)/stack_lexeme.o $(BUILD)/stack_lexeme_test.o $(BUILD)/shunting_yard.o $(BUILD)/shunting_yard_test.o $(BUILD)/common.o $(BUILD)/calculate_reverse_polish_notation.o $(BUILD)/calculate_reverse_polish_notation_test.o $(BUILD)/parse_to_lexemes.o $(BUILD)/parse_to_lexemes_test.o $(BUILD)/string_to_int.o $(BUILD)/string_to_int_test.o $(BUILD)/string_to_double.o $(BUILD)/string_to_double_test.o $(BUILD)/recognize_lexemes.o $(BUILD)/create_lexemes.o $(BUILD)/check_expression_and_count_lexemes_test.o $(BUILD)/check_expression_and_count_lexemes.o $(BUILD)/drawing.o $(BUILD)/allocate_deallocate_field.o -o $(BUILD)/graph_test.exe
-
-
-$(BUILD)/graph_test.o: graph.c
-		$(CC) $(CFLAGS) graph.c -D TEST_GRAPH_ -o $(BUILD)/graph_test.o
-
-
-$(BUILD)/stack_lexeme.o: data_structures/stack.c data_structures/stack.h
-		$(CC) $(CFLAGS) data_structures/stack.c -D LEXEME_T_ -o $(BUILD)/stack_lexeme.o
-
-
-$(BUILD)/stack_lexeme_test.o: data_structures/stack_test.c data_structures/stack_test.h
-		$(CC) $(CFLAGS) data_structures/stack_test.c -D LEXEME_T_ -o $(BUILD)/stack_lexeme_test.o
-
-
-$(BUILD)/graph.o: graph.c
-		$(CC) $(CFLAGS) graph.c -o $(BUILD)/graph.o
-
-
-# $(BUILD)/translating.o: translating_calculating/translating.c
-		# $(CC) $(CFLAGS) translating_calculating/translating.c -o $(BUILD)/translating.o
-
-
-$(BUILD)/shunting_yard_test.o: translating_calculating/shunting_yard_test.c translating_calculating/shunting_yard_test.h
-		$(CC) $(CFLAGS) translating_calculating/shunting_yard_test.c -o $(BUILD)/shunting_yard_test.o
-
-
-$(BUILD)/shunting_yard.o: translating_calculating/shunting_yard.c translating_calculating/shunting_yard.h
-		$(CC) $(CFLAGS) translating_calculating/shunting_yard.c -o $(BUILD)/shunting_yard.o
-
-
-$(BUILD)/lexeme.o: data_structures/lexeme.c data_structures/lexeme.h
-		$(CC) $(CFLAGS) data_structures/lexeme.c -o $(BUILD)/lexeme.o
-
-
-$(BUILD)/lexeme_test.o: data_structures/lexeme_test.c data_structures/lexeme_test.h
-		$(CC) $(CFLAGS) data_structures/lexeme_test.c -o $(BUILD)/lexeme_test.o
-
-
-$(BUILD)/common.o: translating_calculating/common.c translating_calculating/common.h
-		$(CC) $(CFLAGS) translating_calculating/common.c -o $(BUILD)/common.o
-
-
-$(BUILD)/calculate_reverse_polish_notation_test.o: translating_calculating/calculate_reverse_polish_notation_test.c translating_calculating/calculate_reverse_polish_notation_test.h translating_calculating/calculation_error_codes.h
-		$(CC) $(CFLAGS) translating_calculating/calculate_reverse_polish_notation_test.c -o $(BUILD)/calculate_reverse_polish_notation_test.o 
-
-
-$(BUILD)/calculate_reverse_polish_notation.o: translating_calculating/calculate_reverse_polish_notation.c translating_calculating/calculate_reverse_polish_notation.h translating_calculating/calculation_error_codes.h
-		$(CC) $(CFLAGS) translating_calculating/calculate_reverse_polish_notation.c -o $(BUILD)/calculate_reverse_polish_notation.o
-
-
-$(BUILD)/parse_to_lexemes.o: parsing_expression/parse_to_lexemes.c parsing_expression/parse_to_lexemes.h
-		$(CC) $(CFLAGS) parsing_expression/parse_to_lexemes.c -o $(BUILD)/parse_to_lexemes.o
-
-
-$(BUILD)/parse_to_lexemes_test.o: parsing_expression/parse_to_lexemes_test.c parsing_expression/parse_to_lexemes_test.h
-		$(CC) $(CFLAGS) parsing_expression/parse_to_lexemes_test.c -o $(BUILD)/parse_to_lexemes_test.o
-
-
-$(BUILD)/string_to_int_test.o: parsing_expression/string_to_int_test.c parsing_expression/string_to_int_test.h parsing_expression/string_to_number_error_codes.h
-		$(CC) $(CFLAGS) parsing_expression/string_to_int_test.c -o $(BUILD)/string_to_int_test.o
-
-
-$(BUILD)/string_to_int.o: parsing_expression/string_to_int.c parsing_expression/string_to_int.h parsing_expression/string_to_number_error_codes.h
-		$(CC) $(CFLAGS) parsing_expression/string_to_int.c -o $(BUILD)/string_to_int.o
-
-
-$(BUILD)/string_to_double_test.o: parsing_expression/string_to_double_test.c parsing_expression/string_to_double_test.h parsing_expression/string_to_number_error_codes.h
-		$(CC) $(CFLAGS) parsing_expression/string_to_double_test.c -o $(BUILD)/string_to_double_test.o
-
-
-$(BUILD)/string_to_double.o: parsing_expression/string_to_double.c parsing_expression/string_to_double.h parsing_expression/string_to_number_error_codes.h
-		$(CC) $(CFLAGS) parsing_expression/string_to_double.c -o $(BUILD)/string_to_double.o
-
-
-$(BUILD)/recognize_lexemes.o: parsing_expression/recognize_lexemes.c parsing_expression/recognize_lexemes.h
-		$(CC) $(CFLAGS) parsing_expression/recognize_lexemes.c -o $(BUILD)/recognize_lexemes.o
-
-
-$(BUILD)/create_lexemes.o: parsing_expression/create_lexemes.c parsing_expression/create_lexemes.h
-		$(CC) $(CFLAGS) parsing_expression/create_lexemes.c -o $(BUILD)/create_lexemes.o
-
-
-$(BUILD)/check_expression_and_count_lexemes.o: parsing_expression/check_expression_and_count_lexemes.c parsing_expression/check_expression_and_count_lexemes.h
-		$(CC) $(CFLAGS) parsing_expression/check_expression_and_count_lexemes.c -o $(BUILD)/check_expression_and_count_lexemes.o
-
-
-$(BUILD)/check_expression_and_count_lexemes_test.o: parsing_expression/check_expression_and_count_lexemes_test.c parsing_expression/check_expression_and_count_lexemes_test.h
-		$(CC) $(CFLAGS) parsing_expression/check_expression_and_count_lexemes_test.c -o $(BUILD)/check_expression_and_count_lexemes_test.o
-
-
-$(BUILD)/drawing.o: drawing/drawing.c drawing/drawing.h
-		$(CC) $(CFLAGS) drawing/drawing.c -o $(BUILD)/drawing.o
+OBJECT_MAIN=$(BUILD_DIRECTORY)/graph.o
+OBJECT_MAIN_TEST=$(BUILD_DIRECTORY)/graph_test.o
 
 
 
-$(BUILD)/allocate_deallocate_field.o: field/allocate_deallocate_field.c field/allocate_deallocate_field.h
-		$(CC) $(CFLAGS) field/allocate_deallocate_field.c -o $(BUILD)/allocate_deallocate_field.o
+SOURCE_FILES_ALL=$(foreach directory_as_variable, $(SOURCE_DIRECTORIES),$(wildcard $(directory_as_variable)/*.c))
+SOURCE_FILES=$(filter-out %_test.c, $(SOURCE_FILES_ALL))
+SOURCE_FILES_TESTS=$(filter %_test.c, $(SOURCE_FILES_ALL))
 
 
-clean:
-		rm -rf $(BUILD)/*.o $(BUILD)/*.exe
 
+OBJECT_FILES_ALL_IN_SOURCE_DIRECTORIES=$(patsubst %.c,%.o,$(SOURCE_FILES_ALL))
+OBJECT_FILES_ALL_IN_BUILD_DIRECTORIES=$(addprefix $(BUILD_DIRECTORY)/,$(OBJECT_FILES_ALL_IN_SOURCE_DIRECTORIES))
+
+
+OBJECT_FILES_TESTS_IN_SOURCE_DIRECTORIES=$(patsubst %.c,%.o,$(SOURCE_FILES_TESTS))
+OBJECT_FILES_TESTS_IN_BUILD_DIRECTORIES=$(addprefix $(BUILD_DIRECTORY)/,$(OBJECT_FILES_TESTS_IN_SOURCE_DIRECTORIES))
+
+
+OBJECT_FILES_IN_SOURCE_DIRECTORIES=$(patsubst %.c,%.o,$(SOURCE_FILES))
+OBJECT_FILES_IN_BUILD_DIRECTORIES=$(addprefix $(BUILD_DIRECTORY)/,$(OBJECT_FILES_IN_SOURCE_DIRECTORIES))
+
+
+DEPENDENCY_FILES_ALL_IN_SOURCE_DIRECTORIES=$(patsubst %.c,%.d,$(SOURCE_FILES_ALL))
+DEPENDENCY_FILES_ALL_IN_DEPENDENCY_DIRECTORIES=$(addprefix $(DEPENDENCY_DIRECTORY)/,$(DEPENDENCY_FILES_ALL_IN_SOURCE_DIRECTORIES))
+DEPENDENCY_FILES_ALL_IN_DEPENDENCY_DIRECTORIES+=$(DEPENDENCY_DIRECTORY)/graph.d
+
+DEPENDENCY_DIRECTORIES=$(dir $(DEPENDENCY_FILES_ALL_IN_DEPENDENCY_DIRECTORIES))
+
+DEPFLAGS=-MT $@ -MMD -MP -MF $(DEPENDENCY_DIRECTORY)/$*.d
+
+
+
+run: all
+		$(TARGET)
+
+
+all: $(TARGET)
+
+
+run_test: test
+		$(TARGET_TEST)
+
+
+test: $(TARGET_TEST)
+
+
+$(TARGET): $(OBJECT_FILES_IN_BUILD_DIRECTORIES) $(OBJECT_MAIN)
+		$(CC) -o $@ $^
+
+
+$(TARGET_TEST): $(OBJECT_FILES_IN_BUILD_DIRECTORIES) $(OBJECT_MAIN_TEST) $(OBJECT_FILES_TESTS_IN_BUILD_DIRECTORIES) 
+		$(CC) -o $@ $^
+
+
+
+$(OBJECT_MAIN): graph.c $(DEPENDENCY_DIRECTORY)/graph.d | $(DEPENDENCY_DIRECTORY)
+		mkdir -p $(DEPENDENCY_DIRECTORY)/$(dir $*)
+		$(CC) $(CFLAGS) -o $@ $< -MT $@ -MMD -MP -MF $(DEPENDENCY_DIRECTORY)/graph.d
+
+
+$(OBJECT_MAIN_TEST): graph.c $(DEPENDENCY_DIRECTORY)/graph.d | $(DEPENDENCY_DIRECTORY)
+		mkdir -p $(DEPENDENCY_DIRECTORY)/$(dir $*)
+		$(CC) $(CFLAGS) -D TEST_GRAPH_ -o $@ $<  -MT $@ -MMD -MP -MF $(DEPENDENCY_DIRECTORY)/graph.d
+
+
+
+$(OBJECT_FILES_ALL_IN_BUILD_DIRECTORIES): $(BUILD_DIRECTORY)/%.o: %.c $(DEPENDENCY_DIRECTORY)/%.d | $(DEPENDENCY_DIRECTORY)
+		mkdir -p $(dir $@)
+		mkdir -p $(DEPENDENCY_DIRECTORY)/$(dir $*)
+		$(CC) $(CFLAGS) $< -o $@ $(DEPFLAGS)
+
+
+$(DEPENDENCY_DIRECTORY):
+		mkdir -p $(DEPENDENCY_DIRECTORY)
+
+
+$(DEPENDENCY_FILES_ALL_IN_DEPENDENCY_DIRECTORIES):
+
+
+
+
+clean: 
+		rm -rf $(BUILD_DIRECTORY)/* $(DEPENDENCY_DIRECTORY)/*
+
+
+
+
+include $(wildcard $(DEPENDENCY_FILES_ALL_IN_DEPENDENCY_DIRECTORIES))
