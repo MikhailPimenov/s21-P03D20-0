@@ -1,49 +1,52 @@
 #include <stdio.h>
-#include <math.h>
 #include <stdlib.h>
-#include <string.h>
 
-#include "get_fun_to_one.h"
-#include "work_with_input.c"
-#include "stack_process.c"
-#include "work_with_massiv.c"
-#define width 80
-#define height 25
-int main(void) {
-    char **matrix = (char**) malloc(height * sizeof(char*));
-    for (int i = 0; i < height; i++)
-        matrix[i] = (char*) malloc(width * sizeof(char));
-    init_mas(matrix);
-    // consol_show(matrix);
-    char* mas = (char*) malloc(1 * sizeof(char));
-    char* out_mas = (char*) malloc(1 * sizeof(char));
-    char* input_str = "x + 1";
+#include "program/program.h"
 
-    int length_mas = reverse(mas, input_str);
 
-    int len = convert_mas_to_postfix(out_mas, mas, length_mas);
-    for (int i = 0; i < len; i++) {
-        printf("%c", out_mas[i]);
-    }
+#ifdef TEST_GRAPH_
+#include "data_structures/lexeme.h"
+#include "data_structures/lexeme_test.h"
 
-    printf("\n");
-    double Ox = 0.005;
-    double Oy = 0;
-    int j = 0;
-    for (int i = 0; i <= 80; i++) {
-        Oy = calculate(out_mas, len, &top, Ox);
-        j = round(Oy/0.08)-1;
-        Ox = Ox + 0.005;
-        printf("%d %lf %lf\n", j, Oy, Ox);
-        if (j >= 0 && j <= 25) {
-            matrix[j][i] = '*';
-        } else {
-            continue;
-        }
-    }
-    consol_show(matrix);
-    free(matrix);
-    free(mas);
-    free(out_mas);
+#include "data_structures/stack.h"
+#include "data_structures/stack_test.h"
+
+#include "translating_calculating/shunting_yard.h"
+#include "translating_calculating/shunting_yard_test.h"
+
+#include "translating_calculating/calculate_reverse_polish_notation.h"
+#include "translating_calculating/calculate_reverse_polish_notation_test.h"
+
+#include "parsing_expression/parse_to_lexemes.h"
+#include "parsing_expression/parse_to_lexemes_test.h"
+
+#include "parsing_expression/string_to_int.h"
+#include "parsing_expression/string_to_int_test.h"
+
+#include "parsing_expression/string_to_double.h"
+#include "parsing_expression/string_to_double_test.h"
+
+#include "parsing_expression/check_expression_and_count_lexemes.h"
+#include "parsing_expression/check_expression_and_count_lexemes_test.h"
+#endif //  TEST_GRAPH_
+
+
+int main() {
+    #ifdef TEST_GRAPH_
+    printf("Test in main():\n");
+    stack_test_visual();
+    get_lexeme_test_visual(get_lexeme);  // TODO: modify to print lexeme type correctly
+    string_to_int_test(string_to_int);
+    string_to_double_test(string_to_double);
+    check_expression_and_count_lexemes_test(check_expression_and_count_lexemes);
+    parse_to_lexemes_test(parse_to_lexemes_allocate);
+    shunting_yard_test(shunting_yard);
+    calculate_reverse_polish_notation_test(calculate_reversed_polish_notation);
+    #endif //  TEST_GRAPH_
+
+
+    program(35, 85, '*', '.');
+
+
     return 0;
 }
